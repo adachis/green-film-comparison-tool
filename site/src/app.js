@@ -19,7 +19,8 @@
       if (kg < 1) return sig(kg * 1000, d) + " g";
       if (kg < 1000) return sig(kg, d) + " kg";
       if (kg < 1e9) return sig(kg / 1000, d) + " t";
-      return sig(kg / 1e9, d) + " Mt";
+      if (kg < 1e12) return sig(kg / 1e9, d) + " million t";
+      return sig(kg / 1e12, d) + " billion t";
     },
     kwh(k, d = 2) {
       if (k < 1) return sig(k * 1000, d) + " Wh";
@@ -37,6 +38,14 @@
       if (x < 1e6) return "$" + sig(x, x < 100 ? d : Math.max(d, 2));
       return "$" + sig(x / 1e6, d) + "M";
     },
+  };
+  // CO2e inside a sentence, with metric tons spelled out.
+  const co2Words = (kg) => {
+    if (kg < 1) return sig(kg * 1000, 2) + " grams";
+    if (kg < 1000) return sig(kg, 2) + " kg";
+    if (kg < 1e9) return sig(kg / 1000, 2) + (sig(kg / 1000, 2) === "1" ? " metric ton" : " metric tons");
+    if (kg < 1e12) return sig(kg / 1e9, 2) + " million metric tons";
+    return sig(kg / 1e12, 2) + " billion metric tons";
   };
   const rangeTxt = (f, r) => f(r.lo) + "–" + f(r.hi);
   const times = (x) => sig(x, 2) + "×";
@@ -119,7 +128,8 @@
     const x = (v) => x0 + ((Math.log10(v) - lo) / (hi - lo)) * (x1 - x0);
     const H = top + rows.length * rowH + axisH;
     let s = `<svg class="logchart" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opts.aria || "Range chart")}">`;
-    const maxLabels = Math.max(2, Math.floor((x1 - x0) / 62) + 1);
+    const longest = Math.max(...Array.from({ length: hi - lo + 1 }, (_, i) => fmt(Math.pow(10, lo + i), 1).length));
+    const maxLabels = Math.max(2, Math.floor((x1 - x0) / Math.max(62, longest * 6.2 + 14)) + 1);
     const step = Math.max(1, Math.ceil((hi - lo) / (maxLabels - 1)));
     for (let p = lo; p <= hi; p += 1) {
       const gx = x(Math.pow(10, p));
@@ -253,13 +263,13 @@
     $("verdict").textContent = co2Call === "less" ? `Generating it emits about ${times(ratio)} less CO2e.` : co2Call === "more" ? `Generating it emits about ${times(1 / ratio)} more CO2e.` : "On carbon, it's too close to call.";
     const costRatio = convCost.c / aiCost.c;
     const costCall = callLower(aiCost, convCost);
-    const costLine = costCall === "less" ? `It ${co2Call === "less" ? "also " : ""}costs about ${times(costRatio)} less, mostly because of people, not generation.` : costCall === "more" ? `It costs about ${times(1 / costRatio)} more.` : "On cost, it's too close to call.";
+    const costLine = costCall === "less" ? `It ${co2Call === "less" ? "also " : ""}costs about ${times(costRatio)} less, and the gap is mostly people's time, not generation fees.` : costCall === "more" ? `It costs about ${times(1 / costRatio)} more.` : "On cost, it's too close to call.";
     $("verdictSub").textContent = `That's ${sig(ai.genSec, 3)} seconds of AI video (${fmtRatio(S.ratio)}) against ${BENCH_NOUN[f.bench]}.  ${co2Call === "close" ? "The likely ranges overlap too much to say which is lower.  " : ""}${costLine}`;
 
     const metrics = [
       { name: "CO2e", fmt: unitFmt.co2, a: ai.co2Kg, c: conv },
-      { name: "Energy", fmt: unitFmt.kwh, a: ai.kWh, c: convKWh, note: "Shoot energy is estimated from its footprint: fuel and power, about 70% of it." },
-      { name: "Water", fmt: unitFmt.water, a: ai.waterL, c: convWater, note: "AI water includes cooling and the water behind the electricity.  Shoot water counts on-set use only." },
+      { name: "Energy", fmt: unitFmt.kwh, a: ai.kWh, c: convKWh, note: "Shoot reports list carbon, not energy, so we estimate energy from the fuel and power that make up about 70% of a shoot's footprint." },
+      { name: "Water", fmt: unitFmt.water, a: ai.waterL, c: convWater, note: "AI water counts the water used to cool the data center and to generate its electricity.  Shoot water counts only what's used on set." },
       { name: "Cost", fmt: unitFmt.usd, a: aiCost, c: convCost, note: `AI cost is ${unitFmt.usd(ai.genCost.c)} of generation at list price plus ${sig(ai.laborDays, 2)} days of human work.` },
     ];
     const box = $("metrics");
@@ -288,7 +298,7 @@
     if (breakEven > S.ratio) notes.push(`Generating would match the shoot at a shooting ratio of about ${fmtRatio(breakEven)}.  You're at ${fmtRatio(S.ratio)}.`);
     else notes.push(`Generating already passes the shoot at a shooting ratio of ${fmtRatio(breakEven)}, and you're at ${fmtRatio(S.ratio)}.`);
     const st = D.styles[f.style];
-    notes.push(`At the usual ${fmtRatio(st.genPerFinished.lo)} to ${fmtRatio(st.genPerFinished.hi)} for projects like this, the AI footprint lands between ${unitFmt.co2(ai.co2AtTakes.lo)} and ${unitFmt.co2(ai.co2AtTakes.hi)}.`);
+    notes.push(`At the usual ${fmtRatio(st.genPerFinished.lo)} to ${fmtRatio(st.genPerFinished.hi)} for projects like this, the AI footprint lands between ${co2Words(ai.co2AtTakes.lo)} and ${co2Words(ai.co2AtTakes.hi)} of CO2e.`);
     if (c.runtimeScale > 3 || c.runtimeScale < 0.34) notes.push(`The shoot figure is scaled from a typical project about ${sig(c.bench.minutes)} minutes long, so treat it as rough.`);
     if (S.model === "seedance25" && S.res === "1080p") notes.push("Drafting at 480p and rendering only the keepers at 1080p cuts the AI footprint by 65–80%.");
     $("notes").innerHTML = notes.map((n) => `<li>${esc(n)}</li>`).join("");
@@ -395,7 +405,7 @@
       { label: sc.vfxLabel, r: sc.vfx, cls: "alt", tip: `${esc(sc.vfxLabel)}: ${unitFmt.co2(sc.vfx.c)}<br>Likely ${rangeTxt(unitFmt.co2, sc.vfx)}` },
       { label: `${m.label}, ${S.res}`, r: ai, cls: "ai", tip: `${m.label} at ${S.res}: ${unitFmt.co2(ai.c)}<br>${sc.seconds} s at ${fmtRatio(sc.takes.c)}<br>Likely ${rangeTxt(unitFmt.co2, ai)}` },
     ], unitFmt.co2, { labelW: Math.min(210, Math.max(120, (el.querySelector("[data-chart]").clientWidth || 400) * 0.42)), rowH: 30, stack: true, aria: `${sc.title}: practical ${prac ? unitFmt.co2(prac.c) : "not possible"}, alternative ${unitFmt.co2(sc.vfx.c)}, AI ${unitFmt.co2(ai.c)}` });
-    el.querySelector("[data-line]").textContent = `AI: ${unitFmt.co2(ai.c)} at ${fmtRatio(sc.takes.c)}, likely ${rangeTxt(unitFmt.co2, ai)} once shooting ratios from ${fmtRatio(sc.takes.lo)} to ${fmtRatio(sc.takes.hi)} are allowed for.  Bars show likely ranges on a log scale.`;
+    el.querySelector("[data-line]").textContent = `AI: ${co2Words(ai.c)} of CO2e at ${fmtRatio(sc.takes.c)}.  Allowing for shooting ratios from ${fmtRatio(sc.takes.lo)} to ${fmtRatio(sc.takes.hi)}, it's likely ${co2Words(ai.lo)} to ${co2Words(ai.hi)}.  Each gridline is 10 times the one before.`;
   }
   function renderScenes() { D.scenes.forEach(renderScene); }
 
@@ -428,7 +438,7 @@
     const total = M.scale(perPersonYr, people);
     const rung = (k) => A.rungs.find((r) => r.key === k).kg;
     const tentpole = rung("tentpole"), feat = rung("indie"), netflix = rung("netflix"), world = rung("worldScreen").c;
-    let line = `${people.toLocaleString("en-US")} ${people === 1 ? "person" : "people"} generating ${secsR >= 60 ? sig(secsR / 60, 2) + (secsR / 60 === 1 ? " minute" : " minutes") : secsR + (secsR === 1 ? " second" : " seconds")} a day ${people === 1 ? "emits" : "emit"} about ${unitFmt.co2(total.c)} CO2e a year`;
+    let line = `${people.toLocaleString("en-US")} ${people === 1 ? "person" : "people"} generating ${secsR >= 60 ? sig(secsR / 60, 2) + (secsR / 60 === 1 ? " minute" : " minutes") : secsR + (secsR === 1 ? " second" : " seconds")} a day ${people === 1 ? "emits" : "emit"} about ${co2Words(total.c)} of CO2e a year`;
     const share = total.c / world, pct = `about ${sig(share * 100, 2)}% of all the film and TV production in the world`;
     if (share >= 0.9) line += share < 1.1 ? ", about as much as all the film and TV production in the world." : `, ${sig(share, 2)} times all the film and TV production in the world.`;
     else if (total.c >= netflix) line += `, more than Netflix's whole production slate and ${pct}.`;
@@ -440,7 +450,8 @@
 
     const rows = A.rungs.map((r) => {
       const kg = typeof r.kg === "number" ? M.fixed(r.kg) : r.kg;
-      const val = kg.hi > kg.lo ? `about ${unitFmt.co2(kg.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, kg)}` : `${unitFmt.co2(kg.c)} a year`;
+      const per = r.once ? "" : " a year";
+      const val = kg.hi > kg.lo ? `about ${unitFmt.co2(kg.c)}${per}<br>Likely ${rangeTxt(unitFmt.co2, kg)}` : `${unitFmt.co2(kg.c)}${per}`;
       return { label: r.label, r: kg, cls: r.cls || "conv", tip: `${esc(r.label)}: ${val}${r.src ? "<br>" + esc(r.src) : ""}` };
     });
     rows.push({ label: A.world.label, r: A.world.kg, cls: "ai", tip: `${esc(A.world.label)}: about ${unitFmt.co2(A.world.kg.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, A.world.kg)}<br>300–550 million generated seconds a day` });

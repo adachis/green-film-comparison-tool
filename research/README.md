@@ -28,6 +28,7 @@ The first pass ran eight research streams in parallel.  Follow-ups (the files en
 | `streams/J_mac_mini_measurements.md` | Our own energy measurements of SDXL, Z-Image Turbo, LTX-Video, Wan 2.1, and Real-ESRGAN in ComfyUI on a base M4 Mac mini (chip power from `powermetrics`), and how local generation compares with the cloud |
 | `streams/K_global_production_footprint.md` | An estimate of the annual footprint of all film and TV production worldwide, for comparison with all AI video |
 | `streams/L_avatar_energy_context.md` | Where Wētā's cloud rendering for *Avatar: The Way of Water* ran, New Zealand's and Australia's grids, and Lightstorm's solar-powered stages |
+| `streams/M_other_sectors.md` | Worldwide emissions from cars and motorcycles, commercial flights, livestock digestion, cement, and fashion, shown on the Access chart for scale |
 
 ## Central factors used in the brief
 

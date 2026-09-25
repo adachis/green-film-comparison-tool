@@ -25,7 +25,7 @@
   --nt-state-hover:color-mix(in oklab,var(--nt-seed-ink) 8%,transparent);
   --nt-input-bg:#fdfef9;
   --viz-ai:#008a7d; --viz-conv:#c98518; --viz-grid:color-mix(in oklab,var(--nt-seed-ink) 12%,var(--nt-seed-paper));
-  --viz-surface:var(--nt-surface-soft); --viz-alt:#6a5fb5;
+  --viz-surface:var(--nt-surface-soft); --viz-alt:#6a5fb5; --viz-ref:#7d837f;
   --nt-font-display:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --nt-font-text:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --nt-font-mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
@@ -46,7 +46,7 @@
     --nt-accent:#8fbd45; --nt-accent-strong:#a5cf5e; --nt-on-accent:#0f150f;
     --nt-border-inverse:color-mix(in oklab,#eef3e8 25%,transparent);
     --nt-input-bg:#172017;
-    --viz-ai:#24a090; --viz-conv:#bd8424; --viz-alt:#8f86d6;
+    --viz-ai:#24a090; --viz-conv:#bd8424; --viz-alt:#8f86d6; --viz-ref:#9aa19c;
   }
 }
 :root[data-theme="dark"]{
@@ -58,7 +58,7 @@
   --nt-accent:#8fbd45; --nt-accent-strong:#a5cf5e; --nt-on-accent:#0f150f;
   --nt-border-inverse:color-mix(in oklab,#eef3e8 25%,transparent);
   --nt-input-bg:#172017;
-  --viz-ai:#24a090; --viz-conv:#bd8424; --viz-alt:#8f86d6;
+  --viz-ai:#24a090; --viz-conv:#bd8424; --viz-alt:#8f86d6; --viz-ref:#9aa19c;
 }
 
 *,*::before,*::after{box-sizing:border-box}
@@ -295,12 +295,13 @@ details.more[open]>summary::before{content:"–"}
 .logchart .mk-ai .band,.logchart .mk-ai .dot{fill:var(--viz-ai)}
 .logchart .mk-conv .band,.logchart .mk-conv .dot{fill:var(--viz-conv)}
 .logchart .mk-alt .band,.logchart .mk-alt .dot{fill:var(--viz-alt)}
+.logchart .mk-ref .band,.logchart .mk-ref .dot{fill:var(--viz-ref)}
 .logchart .mk:hover .band{fill-opacity:.55}
 .check{display:flex;gap:10px;align-items:flex-start;font-size:var(--nt-fs-small);color:var(--nt-text-body);margin-top:12px;cursor:pointer}
 .check input{margin-top:3px;accent-color:var(--nt-accent)}
 .scene-chart{display:grid;gap:6px;align-content:start}
 .logchart .mk .bar{fill-opacity:.85}
-.logchart .mk-ai .bar{fill:var(--viz-ai)} .logchart .mk-conv .bar{fill:var(--viz-conv)} .logchart .mk-alt .bar{fill:var(--viz-alt)}
+.logchart .mk-ai .bar{fill:var(--viz-ai)} .logchart .mk-conv .bar{fill:var(--viz-conv)} .logchart .mk-alt .bar{fill:var(--viz-alt)} .logchart .mk-ref .bar{fill:var(--viz-ref)}
 .logchart .whisker{stroke:var(--nt-text-heading);stroke-width:1.5}
 .band-ink .logchart .whisker{stroke:var(--nt-text-inverse)}
 .logchart .val{fill:var(--nt-text-heading);font-size:11px;font-weight:600}

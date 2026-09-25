@@ -72,7 +72,7 @@ const Model = (() => {
     let scopeNote = "";
     if (fullScope && b.scope === "pear") {
       t = combine([t, D.pearToFull]);
-      scopeNote = "Raised by 1.3× (1.15–1.5×) to add the food, materials, post, and flight warming the US studio benchmark leaves out.";
+      scopeNote = "Raised by 1.3 times (1.15–1.5) to add what the US studio reports leave out: food, materials, post-production, and the extra warming from flights at high altitude.";
     } else if (!fullScope && b.scope === "full") {
       t = combine([t, { lo: 1 / D.pearToFull.hi, c: 1 / D.pearToFull.c, hi: 1 / D.pearToFull.lo }]);
       scopeNote = "Lowered by 1.3× to match the narrower US studio benchmark scope.";
