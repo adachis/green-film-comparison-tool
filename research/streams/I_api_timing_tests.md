@@ -33,7 +33,7 @@ MiniMax's v2 API reports `queued` and `running` separately, plus `created_at` an
 Findings:
 
 1. **Resolution.**  2K took 1.67× as long as 768p and billed 1.6× the tokens (52,078 against 32,549 per video second).  The site assumes 1.5× (1.2–2.5), which holds.  Time tracks tokens almost one to one, which fits sparse attention (compute close to linear in tokens).
-2. **Clip length.**  Per-second time falls from 24.7 s at 5 seconds to 19.9 s at 15 seconds, about 19% less.  A fixed overhead of roughly 50–60 seconds per job (text encoding, audio, VAE decode, upload) spreads across longer clips.  The site uses one per-second figure, so it slightly overstates long clips and understates short ones.
+2. **Clip length.**  Per-second time falls from 24.7 s at 5 seconds to 19.9 s at 15 seconds, about 19% less.  A fixed overhead of roughly 35–40 seconds per job (text encoding, audio, VAE decode, upload) spreads across longer clips.  The site uses one per-second figure, so it slightly overstates long clips and understates short ones.
 3. **H3 Max.**  The fast variant returned 5-second clips in 5–7 seconds.  Tripling the length took 5.6× as long, so its attention cost grows faster than linearly, unlike full H3.
 4. **Energy bracket.**  A 5-second 768p H3 clip took about 124 seconds, against MiniMax's open-weight benchmark of 74 seconds on 4 H200s.  The API doesn't reveal the GPU count.  At 1–4 GPUs drawing 0.63 kW each, that's about 4.3–17 Wh per generated second at the GPU.  The site's 7 Wh (2–20) sits inside that range.
 

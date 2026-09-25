@@ -551,7 +551,7 @@ details.more[open]>summary::before{content:"–"}
             <p>Energy per generated second starts from GPU time.  For Seedance 2.5, three methods agree at 17–24 Wh per second on the GPUs at 720p: OpenRouter's latency benchmark, a calibration against Jegham, Gamazaychikov, and Luccioni's 2026 estimate for Seedance 1.5, and ByteDance's reported 70% gross margin.  We use 18 Wh.  MiniMax H3 is anchored on MiniMax's own benchmark for the open-weight model.</p>
             <p>We then add servers, idle capacity, and data-center cooling (Google's 2025 serving study found the full stack uses about 1.7× the GPU energy), apply the grid where the model runs, and add hardware manufacturing and a 5% share for training.  Water counts cooling at the data center plus the water used to generate its electricity.</p>
             <p>Ranges combine each factor's own uncertainty.  The takes ratio isn't part of the range because you set it.</p>
-            <p>We timed MiniMax H3 through MiniMax's own API, which reports when each job starts running.  A 2K clip took 1.6× as long as 768p, close to the 1.5× we assume, and 15-second clips cost about 27% less per second than 5-second clips.  Timing Seedance 2.5 through resellers measured mostly queueing, so it can't pin down Seedance's compute.</p>
+            <p>We timed MiniMax H3 through MiniMax's own API, which reports when each job starts running.  A 2K clip took 1.6× as long as 768p, close to the 1.5× we assume, and 15-second clips cost about 19% less per second than 5-second clips.  Timing Seedance 2.5 through resellers measured mostly queueing, so it can't pin down Seedance's compute.</p>
           </div>
         </details>
         <details class="acc">
