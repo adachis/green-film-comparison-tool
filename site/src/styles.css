@@ -1,4 +1,4 @@
-/* Prompt or Camera — built on the Nature Design System (Grove theme).
+/* Prompt vs. Camera — built on the Nature Design System (Grove theme).
    Token names follow the system.  Two additions: a dark theme derived from the same seeds,
    and chart colors (teal for AI, amber for conventional) chosen to pass colorblind checks,
    because the system's own teal reads too gray as a chart mark. */
@@ -62,6 +62,8 @@
 }
 
 *,*::before,*::after{box-sizing:border-box}
+[hidden]{display:none!important}
+img{max-width:100%}
 body{margin:0;background:var(--nt-paper);color:var(--nt-text-body);font-family:var(--nt-font-text);font-size:var(--nt-fs-body);line-height:1.55;-webkit-font-smoothing:antialiased;text-wrap:pretty}
 h1,h2,h3,h4{margin:0;color:var(--nt-text-heading);font-family:var(--nt-font-display);font-weight:600;line-height:1.2;text-wrap:balance}
 p{margin:0}
