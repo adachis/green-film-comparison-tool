@@ -20,6 +20,7 @@ The first pass ran eight research streams in parallel.  Follow-ups (the files en
 | `streams/D_production_carbon.md` | Production carbon benchmarks from micro-shoots to tentpoles, emission factors, and a bottom-up model |
 | `streams/D2_vfx_vp_small_followup.md` | VFX render energy, LED-volume energy, national audit data, and water on set |
 | `streams/E_production_costs.md` | Production costs by tier, 2026 union rates, scenario costs, and what AI production really costs |
+| `streams/E2_cost_gaps_followup.md` | VFX per-shot pricing, stage and LED-volume rates, aerial units, stock and voice rates, and insurance for AI content |
 | `streams/F_local_and_guided.md` | Local generation on Apple Silicon and RTX desktops, draft modes, and Krea and other guided platforms |
 | `streams/G_scenarios.md` | Ten shot-level scenarios (explosions, chases, crowds, aerials, travel, sets, weather, night work, impossible shots, and dialogue) |
 
