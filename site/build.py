@@ -1,6 +1,6 @@
 """Inline the page's CSS and JS into self-contained HTML.
 
-dist/index.html       page body for a claude.ai Artifact (the Artifact adds its own document skeleton)
+dist/index.html       page body for embedding in a host page that supplies its own document skeleton
 dist/site/index.html  complete standalone document for any static web server
 """
 from pathlib import Path

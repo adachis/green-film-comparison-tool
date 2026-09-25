@@ -542,7 +542,7 @@ AI_total = compute (Σ generations × seconds × $/s)            # Stream C/F pr
 
 ## 4. Gaps and uncertainties
 
-1. **The WebSearch quota ran out** (200 of 200 used across the session) after about 30 searches in this stream. Everything after that came from direct fetches of known URLs, so some items could not be located. To close the gaps below, raise `CLAUDE_CODE_MAX_WEB_SEARCHES_PER_SESSION` and re-run.
+1. **The WebSearch quota ran out** (200 of 200 used across the session) after about 30 searches in this stream. Everything after that came from direct fetches of known URLs, so some items could not be located. A follow-up pass with a higher web-search limit could close the gaps below.
 2. **Not found:**
    - Per-shot VFX vendor bid tiers (cleanup, screen replacement, set extension, CG creature, destruction, fluids, digital crowds). Only budget shares, shot counts and implied averages are given.
    - LED volume and sound stage day rates.

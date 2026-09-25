@@ -10,7 +10,7 @@ A calculator that compares making video with generative AI (Seedance 2.5, MiniMa
 Build with `python3 build.py`.  It writes two self-contained files:
 
 - `dist/site/index.html` is the complete page to deploy on any static web server (live at https://pvc.logira.cc once deployed).  Its only external requests are Google Fonts.
-- `dist/index.html` is the same page without the document skeleton, for the claude.ai Artifact preview.
+- `dist/index.html` is the same page without the document skeleton, for embedding in a host page.
 
 Don't serve it behind a Content-Security-Policy that blocks inline scripts and styles.  If the server sets one, allow `'unsafe-inline'` for scripts and styles, plus `https://fonts.googleapis.com` and `https://fonts.gstatic.com`.
 

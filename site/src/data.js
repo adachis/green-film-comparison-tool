@@ -268,7 +268,8 @@ const DATA = {
     { t: "Kapwing, AI slop report", u: "https://www.kapwing.com/blog/ai-slop-report-the-global-rise-of-low-quality-ai-videos/" },
     { t: "IEA, Key Questions on Energy and AI (2026)", u: "https://iea.blob.core.windows.net/assets/3179f7f8-01f6-4dd6-bffa-c9f7b73f1dc9/KeyQuestionsonEnergyandAI.pdf" },
     { t: "Stephen Follows, feature films without a sales agent", u: "https://stephenfollows.com/p/how-many-feature-films-never-sign-with-a-sales-agent" },
-    { t: "Full research streams, calculations, and timing data", u: "https://github.com/adachis/green-film-comparison-tool/tree/claude/awesome-dirac-80u34i/research" },
+    { t: "Our energy measurements of five open models on a base M4 Mac mini", u: "https://github.com/adachis/green-film-comparison-tool/blob/prompt-vs-camera/research/streams/J_mac_mini_measurements.md" },
+    { t: "Full research streams, calculations, and timing data", u: "https://github.com/adachis/green-film-comparison-tool/tree/prompt-vs-camera/research" },
   ],
 
   /* ---------- Cost context ---------- */
