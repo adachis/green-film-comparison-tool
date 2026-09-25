@@ -54,7 +54,7 @@ Stream: K (global production footprint, all film and TV production worldwide)
 | 18 | Earlier global feature count | 7,610 films in 86 countries | 2013 | UNESCO survey; excluded Nigeria's video-format films | [19] | S (search excerpt) | M |
 | 19 | US scripted series | 516 (FX count) | 2023 | Down 14% from about 600 in 2022 | [20] | S (search excerpt) | M |
 | 20 | UK film and high-end TV (HETV) spend | £5.6bn: film £2.1bn (191 productions; inward investment £1.85bn), HETV £3.4bn (181; inward £2.82bn) | 2024 | Spend in the UK by productions starting principal photography in 2024 | [21] | P | H |
-| 21 | UK public service broadcaster (PSB) first-run originations | £3.5bn | 2024 | Ofcom; the site blocks automated retrieval, so the figure comes from a search excerpt | [22] | S (search excerpt) | M |
+| 21 | Total investment in PSB first-run UK originations | £3.5bn | 2024 | Ofcom: PSB direct spend of £2.8bn plus close to £700m of third-party funding.  Ofcom's site blocks automated retrieval; checked against Ofcom's wording in two separate searches on 2026-09-25 | [22] | P (via search) | M–H |
 | 22 | PSB share of UK original content investment | 71% | 2024 | Oliver & Ohlbaum for Everyone TV | [23] | S | M |
 | 23 | French film and TV production | 275,000 t | c. 2010 | Carbone 4 study for Ecoprod, as cited by The Shift Project (p. 172).  Uses the French Bilan Carbone method (partly spend-based) | [9] | S | L |
 | 24 | French feature, spend-based | 500–1,000 t per feature; 750 t judged realistic; about 180,000 t for all French features | 2021 | The Shift Project with Secoya's Seco2 tool, which is spend-based (p. 174).  CNC 2019 context: 240 French-initiative features, average budget €3.76M (p. 171) | [9] | P | L |
@@ -226,7 +226,7 @@ AdGreen's roughly 20,500 t a year covers only the productions its users measure,
 - albert does not publish its hours denominator or define its per-hour metric.  Its footprint counts are internally inconsistent.
 - Unscripted, news, and sport footprints outside the UK, and productions in low-cost markets (India, Nigeria, Southeast Asia) where diesel generators are heavily used, are almost unmeasured.
 - Ad production has no credible global spend figure.  AdGreen's sample is mostly UK and self-selected.
-- Some figures come from search-result excerpts because the sites blocked automated retrieval: Ofcom's £3.5bn, FX's 516, the UK and global ad-spend totals, and UNESCO's 7,610.  They feed the method tables but none is shown on the site.
+- Some figures come from search-result excerpts because the sites blocked automated retrieval: FX's 516, the UK and global ad-spend totals, and UNESCO's 7,610.  They feed the method tables but none is shown on the site.  Ofcom's £3.5bn was rechecked and holds (see row 21).
 
 ## Sources (all accessed 2026-09-25)
 
