@@ -23,6 +23,8 @@ The first pass ran eight research streams in parallel.  Follow-ups (the files en
 | `streams/E2_cost_gaps_followup.md` | VFX per-shot pricing, stage and LED-volume rates, aerial units, stock and voice rates, and insurance for AI content |
 | `streams/F_local_and_guided.md` | Local generation on Apple Silicon and RTX desktops, draft modes, and Krea and other guided platforms |
 | `streams/G_scenarios.md` | Ten shot-level scenarios (explosions, chases, crowds, aerials, travel, sets, weather, night work, impossible shots, and dialogue) |
+| `streams/H_access_volume.md` | How much AI video gets generated (Grok Imagine, Kling, Hailuo, Veo, Sora, Seedance), evidence on how little is watched, aggregate energy, and rebound |
+| `streams/I_api_timing_tests.md` | Our own timing runs: Seedance 2.5 through OpenRouter and fal (queue-dominated) and MiniMax H3 direct (resolution and clip-length scaling) |
 
 ## Central factors used in the brief
 

@@ -8,7 +8,7 @@ for line in open("results.jsonl"):
     if "transitions" not in d:
         continue
     tr = dict((k, v) for k, v in d.get("transitions", []))
-    done = next((v for k, v in d["transitions"] if k.lower() in ("succeeded", "completed")), None)
+    done = next((v for k, v in d["transitions"] if k and k.lower() in ("succeeded", "completed")), None)
     pt = d.get("provider_times") or {}
     prov_s = (pt["updated_at"] - pt["created_at"]) if pt.get("updated_at") and pt.get("created_at") else None
     usage = d.get("usage") or {}
