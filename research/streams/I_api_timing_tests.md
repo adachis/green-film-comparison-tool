@@ -5,7 +5,7 @@ We timed real generations to check how cost scales with resolution and clip leng
 ## Budget
 
 - OpenRouter and fal (shared keys, capped at $50): **$1.34 spent**, then stopped on purpose.
-- MiniMax (sunk credit, self-capped at $25): **$10.15 spent**.
+- MiniMax (sunk credit, self-capped at $25): **$10.95 spent**.
 
 ## Seedance 2.5 through resellers
 
@@ -23,7 +23,7 @@ Two early pollers missed their results, so those two runs use MiniMax's own `cre
 | Model | Clip | Runs | Median wall time | Seconds per video second | Billed tokens per video second |
 |---|---|---|---|---|---|
 | MiniMax H3 | 768p, 5 s | 4 | 117.2 s | 23.4 | 32,549 |
-| MiniMax H3 | 768p, 10 s | 1 | 202.7 s | 20.3 | 32,549 |
+| MiniMax H3 | 768p, 10 s | 2 | 196.3 s | 19.6 | 32,549 |
 | MiniMax H3 | 768p, 15 s | 2 | 297.9 s | 19.9 | 32,549 |
 | MiniMax H3 | 2K, 5 s | 2 | 206.6 s | 41.3 | 52,078 |
 | MiniMax H3 | 2K, 10 s | 1 | 334.1 s | 33.4 | 52,078 |
