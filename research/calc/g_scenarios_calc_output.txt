@@ -1,0 +1,171 @@
+== Factors derived ==
+diesel_blend: 3.19455
+diesel_min: 3.28564
+petrol_min: 2.96036
+kerosene: 3.07094
+jetA: 3.07086
+propane: 1.72528
+epa_gasoline: 2.31943
+epa_diesel: 2.69720
+epa_jet: 2.57568
+epa_kero: 2.68135
+epa_propane: 1.51106
+us_grid: 0.34995
+uk_grid: 0.14395
+car_avg_petrol: 0.20751
+car_large_petrol: 0.31205
+car_large_diesel: 0.25975
+van_diesel: 0.31844
+hgv_rigid: 1.04705
+coach_pkm: 0.04604
+lh_econ_rf: 0.14165
+lh_econ_norf: 0.09387
+lh_bus_rf: 0.41077
+intl_econ_rf: 0.12572
+intl_bus_rf: 0.36458
+air_freight_lh_rf: 0.89939
+water_m3: 0.36218
+MEAL_MIX: 2.427
+density kerosene kg/L 1246.0 L/t -> 0.8026
+implied density kerosene: 0.8026 kg/L
+implied density petrol_min: 0.7462 kg/L
+implied density diesel_min: 0.8307 kg/L
+implied density jetA: 0.8000 kg/L
+implied density propane: 0.5149 kg/L
+
+== S1 Vehicle explosion ==
+Spectre kerosene CO2e (DESNZ incl WTT): 25,851 kg ; EPA CO2 only: 22,572 kg
+Spectre kerosene mass: 6,756 kg
+  BC sensitivity soot_yield=0.01 GWP100=120: 8.1 tCO2e
+  BC sensitivity soot_yield=0.01 GWP100=900: 60.8 tCO2e
+  BC sensitivity soot_yield=0.01 GWP100=1800: 121.6 tCO2e
+  BC sensitivity soot_yield=0.04 GWP100=120: 32.4 tCO2e
+  BC sensitivity soot_yield=0.04 GWP100=900: 243.2 tCO2e
+  BC sensitivity soot_yield=0.04 GWP100=1800: 486.4 tCO2e
+black powder CO2 upper bound kg/kg: 0.550; PETN CO2 upper bound kg/kg: 0.696
+Spectre 33 kg explosives CO2 upper bound (as PETN): 23.0 kg
+diesel urban bus manufacturing (ICCT: 11.6 t x 3.2 tCO2e/t): 37.1 t
+ICE car lower-medium (ICCT): 7.2 t; US SUV 1.935 t x 5.2 = 10.1 t
+  pyro gasoline 80 L (A): 237 kg
+  propane 50 L (A): 86 kg
+  explosives <=5 kg BP + 50 m det cord (A): 3 kg
+  SFX/stunt vehicles 2,000 km van (A: 4 vans x 5 days x 100 km): 637 kg
+  fire engine standby 24 L diesel (A: 8 h x 3 L/h): 77 kg
+  generator 100 kW @1/2 load 10 h (S table): 496 kg
+  crew commute 40 ppl/1.3 x 60 km (A): 383 kg
+  catering 40 meals (mix): 97 kg
+  wreck haul HGV 100 km (A): 105 kg
+  fire water 10 m3 (A): 4 kg
+  TOTAL incremental practical (central, excl vehicle embodied): 2,124 kg
+  low 794 kg ; high 6,682 kg
+
+== VFX compute energy per core-hour ==
+SPECpower EPYC 9654P W/core @100%: 3.60
+Big Hero 6 Wh per render(core)-hour (1.5 MW, 1M h/day): 36.0
+CCF AWS vCPU max + 4 GB RAM x PUE 1.135: 5.75 Wh/vCPU-h
+central on-prem Wh/core-h (5.2 W x PUE 1.54): 8.0
+  VFX mid explosion central: 72 kWh -> 25 kgCO2e (US grid)
+  VFX mid low: 20 kWh -> 7 kgCO2e (US grid)
+  VFX mid high: 368 kWh -> 129 kgCO2e (US grid)
+  VFX hero central: 1,696 kWh -> 594 kgCO2e (US grid)
+  VFX hero low: 264 kWh -> 92 kgCO2e (US grid)
+  VFX hero high: 16,192 kWh -> 5,666 kgCO2e (US grid)
+  compute cost 5,000 core-h @ Fox implied $0.0306: $153; @GarageFarm low 2.2 GHz x $0.024: $264
+  compute cost 200,000 core-h @ $0.0306: $6,120; @ $0.0528: $10,560
+
+== Big-show VFX compute (order of magnitude) ==
+  Avatar TWoW AWS thread-hours @ 2.0 Wh/h: 6.60 GWh -> 2,310 t @0.35 ; 660 t @0.10
+  Avatar TWoW AWS thread-hours @ 5.75 Wh/h: 18.98 GWh -> 6,641 t @0.35 ; 1,898 t @0.10
+  Avatar TWoW longest shot @ 2.0 Wh/h: 0.03 GWh -> 10 t @0.35 ; 3 t @0.10
+  Avatar TWoW longest shot @ 5.75 Wh/h: 0.08 GWh -> 27 t @0.35 ; 8 t @0.10
+  Avatar F&A render hours @ 2.0 Wh/h: 2.50 GWh -> 874 t @0.35 ; 250 t @0.10
+  Avatar F&A render hours @ 5.75 Wh/h: 7.18 GWh -> 2,512 t @0.35 ; 718 t @0.10
+  Avatar F&A per shot render hours: 398,467
+  Aquaman render hours per shot: 11,959
+
+== S2 Car chase day ==
+  picture cars 640 km x1.5 aggressive (A): 300
+  camera cars 300 km x1.3 (A): 122
+  transport/tow HGV 400 km (A): 419
+  police/closure vehicles 300 km (A): 94
+  crew commute 80/1.3 x 60 km (A): 766
+  generator 100 kW 1/2 load 10 h: 496
+  catering 80 meals: 194
+  TOTAL per chase day excl embodied: 2,390 kg
+  Furious 7: 230 destroyed x 7.2 t = 1,656 t (new-equivalent); x20% remaining-life = 331 t
+  Fury Road: 150 built -62 not surviving: 62 x 7.2 = 446 t (proxy, custom-built vehicles differ)
+  VFX 40-shot CG chase @ 20000 core-h/shot: 8,320 kWh -> 2.9 t
+  VFX 40-shot CG chase @ 200000 core-h/shot: 65,920 kWh -> 23.1 t
+
+== S3 Crowd per extra-day ==
+  travel coach 40 km: 1.84; car 40 km/1.3: 6.38
+  meals 2 x mix: 4.85; (veg 2x0.85=1.7; beef 2x4.97=9.94)
+  holding generator 60 kW 3/4 load 12 h shared by 500: 1.10
+  per extra-day central 10.1 (low 4.1, high 24.9) kg
+  500 extras x 1 days: 5.0 t (range 2.0-12.5)
+  1000 extras x 3 days: 30.2 t (range 12.3-74.7)
+  3000 extras x 3 days: 90.6 t (range 36.8-224.2)
+  digital crowd shot 5000 core-h + 20 artist-days: 104 kWh -> 36 kg
+  digital crowd shot 100000 core-h + 20 artist-days: 864 kWh -> 302 kg
+
+== S4 Aerial ==
+  H125 190 L/h -> 583 kgCO2e/h (no RF); 166.6 L/h -> 511; with RF x1.7 on CO2 part: 922
+  aerial day 3 flight h: 1.75 t
+  aerial day 5 flight h: 2.92 t
+  aerial day 10 flight h: 5.83 t
+  drone 12 flights x 197.6 Wh /0.88 charge eff (A): 2.69 kWh -> 0.94 kg ; + van 100 km 32 kg
+
+== S5 Location abroad, 5 crew, 6 hotel nights ==
+  LHR-CPT econ RF: flights 13,713 hotels 1,542 local 468 meals 218 = 15,941 kg (+air freight 250 kg gear 4,353 -> 20,295)
+  LHR-CPT econ noRF: flights 9,088 hotels 1,542 local 468 meals 218 = 11,316 kg (+air freight 250 kg gear 4,353 -> 15,669)
+  LHR-CPT business RF: flights 39,767 hotels 1,542 local 468 meals 218 = 41,995 kg (+air freight 250 kg gear 4,353 -> 46,348)
+  LAX-NRT econ RF: flights 11,004 hotels 1,170 local 468 meals 218 = 12,860 kg (+air freight 250 kg gear 3,936 -> 16,796)
+  LAX-NRT business RF: flights 31,912 hotels 1,170 local 468 meals 218 = 33,768 kg (+air freight 250 kg gear 3,936 -> 37,704)
+  LAX-KEF econ RF (hotel proxy US 16.1): flights 8,707 hotels 483 local 468 meals 218 = 9,876 kg (+air freight 250 kg gear 3,115 -> 12,991)
+  local-crew variant (2 flown + 3 local): flights 5,485 hotels(5 rooms) 1,542 -> 7,713 kg approx
+
+== S6 Set build (illustrative 'large set' A quantities) ==
+  sawn softwood 30 t x0.31 (ICE): 9.3 t
+  plywood 20 t x0.68 (ICE): 13.6 t
+  steel 5 t x1.55 (ICE world avg): 7.8 t
+  plasterboard/plaster 10 t x0.39 (ICE): 3.9 t
+  paint 2 t x3.17 (DESNZ avg plastics PROXY): 6.3 t
+  polystyrene 1 t x4.374 (DESNZ PS): 4.4 t
+  materials total 45.3 t; build-crew commute 40 x 30 d x 60 km: 11.5 t; wood EoL landfill 50 t: 46.3 t vs recycle 0.23 t
+  DESNZ cross-check: wood 50 t x0.2695 = 13.5 t; metals 5 t x3.822 = 19.1 t
+  LED volume 1,000 BP2V2 panels avg 95 W + 20 kW (A): 115 kW x 12 h = 1,380 kWh/day -> US 483 kg, UK 199 kg
+  Max: 1,000 x 190 W = 190 kW
+  full-CG environment 30 shots @ 20000 core-h/shot + 20 artist-days/shot: 6,720 kWh -> 2.4 t
+  full-CG environment 30 shots @ 100000 core-h/shot + 20 artist-days/shot: 25,920 kWh -> 9.1 t
+
+== S7 Weather ==
+  rain 200 L/min x 4 h (A): 48 m3 -> water carbon 17 kg; trucks (15 m3 each, 30 km) 101 kg
+  rain 1000 L/min x 4 h (A): 240 m3 -> water carbon 87 kg; trucks (15 m3 each, 30 km) 503 kg
+  Titanic tank 17M gal = 64,352 m3 -> supply+treatment 23.3 t (fill only)
+  Baja filtration 9,000 gal/min = 34.1 m3/min
+
+== S8 Night exterior lighting ==
+  200 kW gen @ 1/4 load 12 h: 213 L -> 682 kg
+  200 kW gen @ 1/2 load 12 h: 350 L -> 1117 kg
+  connected load example: 2x18 kW + 10x1.5 kW + 2x4 kW(A) + 10 kW(A) = 69.0 kW
+  same energy from grid tie-in: 492 kWh -> US 172 kg; UK 71 kg
+
+== S10 Dialogue ==
+  crew 25/1.3 x 60 km: 239
+  generator 60 kW 1/2 load 10 h: 351
+  catering 25 x mix: 61
+  2 trucks 100 km: 209
+  standalone location day marginal total: 860 kg
+  standing-set stage: lighting 20-40 kW x 10 h grid: US 70-140 kg; UK 29-58 kg
+  SEA tentpole: implied days 66 -> 45.3 t/day
+  SEA large: implied days 56 -> 22.5 t/day
+  SEA medium: implied days 60 -> 10.4 t/day
+  SEA small: implied days 37 -> 11.7 t/day
+
+== Break-even AI energy (kWh) at 0.35 kg/kWh for practical marginal totals ==
+  explosion incremental central: 2,124 kg -> 6,069 kWh
+  chase day: 2,390 kg -> 6,828 kWh
+  aerial heli day 5h: 2,917 kg -> 8,335 kWh
+  location LHR-CPT econ: 15,899 kg -> 45,426 kWh
+  dialogue location day: 860 kg -> 2,458 kWh
+  dialogue stage day US: 105 kg -> 300 kWh

@@ -1,0 +1,37 @@
+model,channel,mode,resolution,output_s,audio,latency_s,latency_type,date,n,source_url,primary_or_secondary,notes
+Seedance 2.5,OpenRouter benchmark (Seed/BytePlus),T2V,1280x720,8.04,on (stereo AAC in file),136.5,"e2e, min of 11 (median 255.5, max 316.0)",2026-08-26/31,11,https://openrouter.ai/api/frontend/v1/arena/explore/models/bytedance/seedance-2.5-20260807?tab=video,P (platform measurement),run in parallel batches; spread = queueing
+Seedance 2.5,OpenRouter playground example,T2V,1280x720,5.04,default on,119.2,e2e,2026-08-09,1,https://openrouter.ai/api/frontend/v1/model-examples?modality=video&permaslug=bytedance%2Fseedance-2.5-20260807,P,
+Seedance 2.5,OpenRouter live traffic,mixed,mixed (~72% 720p by $),avg 10.5,mixed,"p50 180.05 (best provider, page); 213 median of daily p50 (Sep 17-24); weekly avg P75 290.6, P90 376.1, P99 633.9",e2e percentiles,2026-09-17..24,~22.7k req/7d,https://openrouter.ai/bytedance/seedance-2.5,P,
+Seedance 2.5,WaveSpeed (proxy),T2V,720p,5,on,"187.7 (timings.inference); FAQ ""around 279 s""",inference field = upstream wait,2026-09-18,1,https://wavespeed.ai/models/bytedance/seedance-2.5/text-to-video,P (reseller),
+Seedance 2.5,WaveSpeed (proxy),I2V,720p,5,on,143.3; FAQ 193 s,as above,2026-09-24,1,https://wavespeed.ai/models/bytedance/seedance-2.5/image-to-video,P (reseller),
+Seedance 2.5,"WaveSpeed ""Turbo"" tier",T2V,720p,5,on,223.9; FAQ 336 s,as above,2026-09-24,1,https://wavespeed.ai/models/bytedance/seedance-2.5/text-to-video-turbo,P (reseller),"WaveSpeed tier, not an official ByteDance tier"
+Seedance 2.5,WaveSpeed,video-extend,720p,5 (+input),on,467.6; FAQ 586 s,as above,2026-09-24,1,https://wavespeed.ai/models/bytedance/seedance-2.5/video-extend,P (reseller),
+Seedance 2.5,WaveSpeed,video-edit,720p,input length,on,703.2; FAQ 362 s,as above,2026-08-07,1,https://wavespeed.ai/models/bytedance/seedance-2.5/video-edit,P (reseller),
+Seedance 2.5,Replicate (proxy),T2V,720p,5.04,default on,220.3 (logs); predict_time 224.1,upstream wait incl. queue,2026-08-07 (launch day),1,https://replicate.com/bytedance/seedance-2.5/examples,P,
+Seedance 2.0,Replicate,T2V,720p 16:9,5,on,101.3 / 159.2 (logs; 3 near-simultaneous runs incl. 9:16 115.6),as above,2026-04-08,3,https://replicate.com/bytedance/seedance-2.0/examples,P,
+Seedance 2.0,Replicate,T2V,720p,7 / 8,on,111.7 / 112.9,as above,2026-04-08,2,https://replicate.com/bytedance/seedance-2.0/examples,P,
+Seedance 2.0,OpenRouter benchmark,T2V,1280x720,8.04,on,138.7 min; median 166.8,e2e,2026-08-26/31,11,https://openrouter.ai/api/frontend/v1/arena/explore/models/bytedance/seedance-2.0-20260414?tab=video,P,
+Seedance 2.0,OpenRouter example,T2V,1280x720,5,on,80.4,e2e,2026-08-01,1,model-examples API,P,
+Seedance 2.0,WaveSpeed,T2V / I2V,720p,5,on,139.1 / 210.2,upstream wait,2026-07-15 / 09-24,1+1,https://wavespeed.ai/models/bytedance/seedance-2.0/text-to-video,P (reseller),
+Seedance 2.0 Fast,Replicate,T2V,720p,5,on,65.9 / 103.3 / 97.2 (9:16),upstream wait,2026-04-08,3,https://replicate.com/bytedance/seedance-2.0-fast/examples,P,
+Seedance 2.0 Fast,Replicate,T2V,720p (16:9) / 21:9,7 / 8,on,86.2 / 95.9,as above,2026-04-08,2,same,P,
+Seedance 2.0 Fast,OpenRouter benchmark,T2V,1280x720,8.04,on,134.6 min; median 140.0,e2e,2026-08-26/31,11,arena API,P,
+Seedance 2.0 Fast,OpenRouter example / WaveSpeed,T2V,720p,5,on,170.1 / 174.2,e2e / upstream wait,2026-08-10 / 09-24,1+1,model-examples API; WaveSpeed page,P,
+Seedance 2.0 mini,OpenRouter benchmark,T2V,1280x720,8.04,on,105.6 min; median 135.9,e2e,2026-08-26/31,11,arena API,P,
+Seedance 2.0 mini,OpenRouter example / Replicate / WaveSpeed,T2V,720p,5,on,116.6 / 167.2 / 126.8,mixed,2026-08-12 / 06-24 / 07-15,3,various,P,
+Seedance 1.5 Pro,OpenRouter benchmark,T2V,1280x720,8.04,on,104.0 min; median 138.3,e2e,2026-08-26/31,12,arena API,P,calibration
+Seedance 1.5 Pro,Replicate,T2V,720p (default),5,on,55.0,upstream wait,2025-12-23,1,https://replicate.com/bytedance/seedance-1.5-pro,P,Jegham-implied 46.1 s
+Seedance 1.0 Pro,Replicate,T2V,1080p,5,n/a,50.5,upstream wait,2025-06-24,1,https://replicate.com/bytedance/seedance-1-pro,P,paper: 41.4 s on NVIDIA-L20
+Seedance 1.0 Pro Fast,Replicate,T2V,1080p,5,n/a,32.8,upstream wait,2025-10-24,1,https://replicate.com/bytedance/seedance-1-pro-fast,P,
+MiniMax H3 (official API),WaveSpeed (proxy),T2V / I2V,768p,5,on,141.6 / 156.5 (FAQ 161 / 353),upstream wait,2026-09-24 / 08-03,1+1,https://wavespeed.ai/models/minimax/h3/text-to-video,P (reseller),
+MiniMax H3 (official API),OpenRouter,T2V,2560x1440 (2K),5 / 8,on,"162.0 (example) / 264.2 min, median 295.1 (benchmark n=12)",e2e,2026-08-03 / 08-26..31,1 / 12,model-examples + arena API,P,
+MiniMax H3 (official API),OpenRouter live traffic,mixed,2K,avg 8.0,on,333 median of daily p50,e2e p50,2026-09-17..24,5.6k req/7d,latency-e2e-comparison API,P,
+MiniMax H3 (official API),Replicate,I2V,2K,5,on,189.3 (predict_time),upstream wait,2026-08-13,1,https://replicate.com/minimax/h3,P,
+MiniMax H3 open weights,WaveSpeed own GPUs,T2V / I2V / R2V / extend,480p,5,on,21.0 / 24.0 / 26.5 / 38.4 (timings.inference),GPU inference (hardware undisclosed),2026-09-05,1 each,https://wavespeed.ai/models/wavespeed-ai/minimax-h3/text-to-video,P (host),
+MiniMax H3 Max (fal post-train),"fal (fal-hosted, GB200 NVL72)",T2V / I2V,768p,5,on,2.53 / 2.77,"DiT denoise only (""timings.inference"")",2026-08/09,1 each,https://fal.ai/models/minimax/h3-max/text-to-video,P (host),"fal: ""5-second video in under 3 seconds"""
+MiniMax H3 Max,OpenRouter (provider: MiniMax),T2V,1344x768,5 / 8,on,"12.4 (example) / 42.1 min, median 62.7 (benchmark n=11, 2026-09-03)",e2e,2026-09-02/03,1 / 11,model-examples + arena API,P,
+MiniMax H3 Max,OpenRouter live traffic,mixed,480p/768p,avg 7.4,on,14-15 daily p50,e2e p50,2026-09-17..24,6.7k req/7d,latency API,P,
+MiniMax H3 (SGLang self-host),SGLang cookbook,FL2VA,1344x768,5.17,on,74.38 (4xH200); 19.04 (8xB300),"measured, 50 steps",2026-08/09,-,https://docs.sglang.io/cookbook/diffusion/MiniMax/MiniMax-H3,P,first pass
+Hailuo 2.3,Replicate,T2V,768p,6,n/a,93.9,upstream wait,2025-10-26,1,https://replicate.com/minimax/hailuo-2.3,P,legacy
+Hailuo 2.3 Fast,Replicate,I2V,768p,10,n/a,172.1,upstream wait,2025-10-27,1,https://replicate.com/minimax/hailuo-2.3-fast,P,legacy
+Hailuo 02,Replicate,T2V,1080p,6,n/a,214.7,upstream wait,2025-08-02,1,https://replicate.com/minimax/hailuo-02,P,legacy

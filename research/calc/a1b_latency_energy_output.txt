@@ -1,0 +1,44 @@
+case                                                      lat s lat/out-s  8xH800  8xB200   8xH20   8xL20
+Seedance 2.5  720p 8s  OR benchmark min (n=11)            136.5     16.98    23.8    34.0    13.6     9.3   min of 11; median 255.5 s
+Seedance 2.5  720p 5s  OR playground example              119.2     23.65    33.1    47.3    18.9    13.0   single run, 2026-08-09
+Seedance 2.5  720p 5s  WaveSpeed I2V example              143.2     28.42    39.8    56.8    22.7    15.6   single run, 2026-09-24
+Seedance 2.5  720p 5s  WaveSpeed T2V example              187.7     37.23    52.1    74.5    29.8    20.5   single run, 2026-09-18
+Seedance 2.5  720p 5s  Replicate example                  220.3     43.71    61.2    87.4    35.0    24.0   launch day 2026-08-07
+Seedance 2.0  720p 5s  OR example                          80.4     15.95    22.3    31.9    12.8     8.8   2026-08-01
+Seedance 2.0  720p 8s  Replicate                          112.9     14.04    19.7    28.1    11.2     7.7   2026-04-08
+Seedance 2.0  720p 8s  OR benchmark min (n=11)            138.7     17.25    24.2    34.5    13.8     9.5   median 166.8 s
+Seedance 2.0 Fast 720p 5s Replicate min (n=3)              65.9     13.08    18.3    26.2    10.5     7.2   2026-04-08
+Seedance 2.0 Fast ~720p 8s Replicate (21:9)                95.9     11.93    16.7    23.9     9.5     6.6   2026-04-08
+Seedance 2.0 Fast 720p 8s OR benchmark min                134.6     16.74    23.4    33.5    13.4     9.2   median 140.0 s
+Seedance 2.0 mini 720p 8s OR benchmark min                105.6     13.13    18.4    26.3    10.5     7.2   median 135.9 s
+Seedance 1.5 Pro 720p 8s OR benchmark min                 104.0     12.94    18.1    25.9    10.3     7.1   calibration vs Jegham
+Seedance 1.5 Pro 720p 8s Jegham (implied)                  72.9      9.07    12.7    18.1     7.3     5.0   102.1 Wh / 5.04 kW
+Seedance 1.5 Pro 720p 5s Replicate                         55.0     10.91    15.3    21.8     8.7     6.0   2025-12-23
+Seedance 1.5 Pro 720p 5s Jegham (implied)                  46.1      9.16    12.8    18.3     7.3     5.0   64.6 Wh / 5.04 kW
+Seedance 1.0 Pro 1080p 5s Replicate                        50.5     10.02    14.0    20.0     8.0     5.5   2025-06-24; paper: 41.4 s on L20
+MiniMax H3 official 768p 5s (via WaveSpeed)               141.6     28.31    39.6    56.6    22.6    15.6   2026-09-24
+MiniMax H3 official 2K 5s (OR example)                    162.0     32.40    45.4    64.8    25.9    17.8   2026-08-03
+MiniMax H3 official 2K 8s OR benchmark min                264.2     33.02    46.2    66.0    26.4    18.2   median 295.1 s
+MiniMax H3 open weights 480p 5s (WaveSpeed infra)          21.0      4.20     5.9     8.4     3.4     2.3   GPU type/count unknown
+MiniMax H3 Max 768p 5s OR example (e2e, via MiniMax)       12.4      2.48     3.5     5.0     2.0     1.4   2026-09-02
+
+H3 Max on fal (GB200 NVL72; DiT denoise only, timings.inference = 2.53 s for 5 s 768p):
+  N= 4 GB200 @1.2 kW x0.9: DiT  3.03 Wh/clip -> 0.61 Wh/s ; with +40% non-DiT -> 0.85 Wh/s
+  N= 8 GB200 @1.2 kW x0.9: DiT  6.07 Wh/clip -> 1.21 Wh/s ; with +40% non-DiT -> 1.70 Wh/s
+  N=16 GB200 @1.2 kW x0.9: DiT 12.14 Wh/clip -> 2.43 Wh/s ; with +40% non-DiT -> 3.40 Wh/s
+
+SGLang H3 physical anchors (first pass): 4xH200 74.38 s for 5.167 s -> 10.08 Wh/s; 8xB300 19.04 s -> 8.11 Wh/s
+H3 official 768p 5 s latency if served on 2xH200 (throughput-optimized): 9.91 Wh/s
+ratio method 2.5: 1.31 x Jegham 1.5 -> 16.7 Wh/s (H800 basis); L20 basis 6.5; H20 9.5; B200 23.8
+ratio method 2.0: 1.33 x Jegham 1.5 -> 16.9 Wh/s (H800 basis); L20 basis 6.7; H20 9.7; B200 24.2
+ratio method 2.0 Fast: 1.29 x Jegham 1.5 -> 16.4 Wh/s (H800 basis); L20 basis 6.5; H20 9.4; B200 23.5
+ratio method 2.0 mini: 1.02 x Jegham 1.5 -> 12.9 Wh/s (H800 basis); L20 basis 5.1; H20 7.4; B200 18.4
+
+Price/margin cross-check (GPU-only Wh per output second):
+  Seedance 2.5 720p ($0.2311/s): low 4.0 (90% GM, 70% GPU share, 250 Wh/$) | central 20.6 (70% GM, 85% GPU share, 350 Wh/$) | high 32.6 (70% GM, 100%, 470 Wh/$)
+  Seedance 2.0 720p ($0.152/s): low 2.7 (90% GM, 70% GPU share, 250 Wh/$) | central 13.6 (70% GM, 85% GPU share, 350 Wh/$) | high 21.4 (70% GM, 100%, 470 Wh/$)
+  MiniMax H3 768p ($0.08/s): low 1.4 (90% GM, 70% GPU share, 250 Wh/$) | central 7.1 (70% GM, 85% GPU share, 350 Wh/$) | high 11.3 (70% GM, 100%, 470 Wh/$)
+  H100/H800: 252-485 Wh per $ at $1.3-2.5/GPU-h (assumed)
+  B200: 257-450 Wh per $ at $2.0-3.5/GPU-h (assumed)
+  H20: 300-514 Wh per $ at $0.7-1.2/GPU-h (assumed)
+  L20: 354-619 Wh per $ at $0.4-0.7/GPU-h (assumed)
