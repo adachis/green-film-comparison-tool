@@ -195,16 +195,20 @@ const DATA = {
       { key: "ukScreen", label: "All UK film and TV production, 2024", kg: 174437000, src: "BAFTA albert ACCELERATE 2025: 2,540 footprints" },
       { key: "netflix", label: "Netflix's production footprint, 2024", kg: 425000000, src: "Netflix 2024 ESG report: 1,037,226 t total, 41% from production" },
     ],
+    // Disclosed volume, early 2026: 300–550 million generated seconds a day across platforms that
+    // publish counts.  lo: 300 M s/day at 2 Wh/s; c: about 1.5 TWh a year; hi: 550 M s/day at Seedance 720p.
+    world: { label: "All disclosed AI video, 2026", kg: { lo: 0.09e9, c: 0.6e9, hi: 4.4e9 } },
     prose: [
       "The calculator compares one production with one production.  That's the right question for a filmmaker, but it misses what makes generative video different: almost anyone can make it.  Shooting a scene takes a crew, a budget, and weeks of planning.  Generating one takes a text box and a subscription, so people generate far more video than anyone would ever shoot, and a lot of it is never watched by anyone.",
-      "One person generating a minute of Seedance 2.5 a day for a year emits about 480 kg CO2e, around a ninth of a UK resident's annual footprint.  That doesn't register on its own.  Scale changes the picture.  About 560 people at that pace match an indie feature every year, and about 6,600 match a studio tentpole.",
-      "The line that matters is where the total passes the production it could replace.  At a minute a day, about 360,000 people match all UK film and TV production.  That's a small fraction of the people already using these tools.",
-      "Watching changes the math too.  A studio tentpole spreads about 3,200 t across something like 100 million viewers, roughly 15 g per hour watched.  A ten-second clip generated five times over and watched by 20 people comes to about 20 kg per hour watched, more than 1,000× worse.  Video that nobody watches has no audience to spread its footprint across at all.",
+      "One person generating a minute of Seedance 2.5 a day for a year emits about 480 kg CO2e, around a ninth of a UK resident's annual footprint.  That doesn't register on its own.  Scale changes the picture.  About 560 people at that pace match an indie feature every year, about 6,600 match a studio tentpole, and about 360,000 match all UK film and TV production.",
+      "That line is already behind us.  The platforms that publish counts generated about 300–550 million seconds of video a day in early 2026, the same as 5–9 million people making a minute each, and xAI says Grok Imagine alone made 1.2 billion videos in 30 days.  Most of that runs on lighter models than Seedance.  At an average of 10 Wh per generated second, it comes to roughly 0.6 Mt CO2e a year, about 3.4 times all UK film and TV production and more than Netflix's whole production slate.  At Seedance's energy it would be 2.4–4.4 Mt.  Cheaper tiers push the volume up: MiniMax's monthly generations rose 653% after it launched a new model and a cheaper Fast tier.",
+      "Much of it is barely watched.  No platform publishes how much of what it generates gets posted, but professionals keep only one generated second in 57–107, and Volcano Engine says Seedance traffic peaked on weekends, when people play, until its 2.0 release.  In China, more than 95% of the 128,000 micro-dramas launched in early 2026 were AI-made, and only 0.117% of AI animated dramas reach 100 million plays.",
+      "Views change the math, too.  A studio tentpole spreads about 3,200 t across something like 100 million viewers, roughly 15 g per hour watched.  A ten-second clip generated five times over and watched by 20 people comes to about 20 kg per hour watched, more than 1,000× worse.  Video that nobody watches has no audience to spread its footprint across at all.",
     ],
     facts: [
-      { fig: "40 million", text: "videos made with Google's Veo 3 in its first seven weeks, by Google's own count." },
-      { fig: "600 million+", text: "videos generated on MiniMax's Hailuo platform by the end of 2025, per MiniMax's listing documents." },
-      { fig: "1,000×+", text: "more carbon per hour watched for a lightly viewed AI clip than for a studio tentpole seen by 100 million people." },
+      { fig: "1.2 billion", text: "videos generated with Grok Imagine in 30 days, by xAI's own count (February 2026)." },
+      { fig: "85,000+ hours", text: "of AI video generated each day on platforms that publish counts, more than the world's entire yearly output of fiction features (about 23,000 hours)." },
+      { fig: "59%", text: "of a new TikTok account's For You feed was AI-generated in Kapwing's test.  On YouTube Shorts it was 21%." },
     ],
   },
 
@@ -258,6 +262,12 @@ const DATA = {
     { t: "House of David season 2 AI shots, VP Land", u: "https://www.vp-land.com/stories/house-of-david-season-2-used-253-ai-generated-shots-here-s-how-they-did-it" },
     { t: "Svedka's AI Super Bowl ad, The Hollywood Reporter", u: "https://www.hollywoodreporter.com/business/digital/svedka-super-bowl-ad-ai-watch-1236493612/" },
     { t: "Airbus H125 operating costs, Aviacost", u: "https://aviacost.com/aircraft-operating-cost-calculator/airbus-h125" },
+    { t: "xAI, Grok Imagine 1.0 launch post (February 2026)", u: "https://x.com/grok/status/2018165333643997600" },
+    { t: "Google, Veo and Flow usage updates", u: "https://blog.google/technology/ai/veo-updates-flow/" },
+    { t: "MiniMax full-year 2025 results", u: "https://www.minimax.io/news/minimax-global-announces-full-year-2025-financial-results" },
+    { t: "Kapwing, AI slop report", u: "https://www.kapwing.com/blog/ai-slop-report-the-global-rise-of-low-quality-ai-videos/" },
+    { t: "IEA, Key Questions on Energy and AI (2026)", u: "https://iea.blob.core.windows.net/assets/3179f7f8-01f6-4dd6-bffa-c9f7b73f1dc9/KeyQuestionsonEnergyandAI.pdf" },
+    { t: "Stephen Follows, feature films without a sales agent", u: "https://stephenfollows.com/p/how-many-feature-films-never-sign-with-a-sales-agent" },
     { t: "Full research streams, calculations, and timing data", u: "https://github.com/adachis/green-film-comparison-tool/tree/claude/awesome-dirac-80u34i/research" },
   ],
 

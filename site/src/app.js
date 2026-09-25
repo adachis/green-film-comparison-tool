@@ -453,6 +453,7 @@
     $("accessLine").textContent = line;
 
     const rows = A.rungs.map((r) => ({ label: r.label, r: M.fixed(r.kg), cls: r.cls || "conv", tip: `${esc(r.label)}: ${unitFmt.co2(r.kg)} a year${r.src ? "<br>" + esc(r.src) : ""}` }));
+    rows.push({ label: A.world.label, r: A.world.kg, cls: "ai", tip: `${esc(A.world.label)}: about ${unitFmt.co2(A.world.kg.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, A.world.kg)}<br>300–550 million generated seconds a day` });
     rows.push({ label: "Your scenario", r: total, cls: "ai", tip: `Your scenario: ${unitFmt.co2(total.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, total)}` });
     rows.sort((a, b) => a.r.c - b.r.c);
     const svgHost = $("ladder");
