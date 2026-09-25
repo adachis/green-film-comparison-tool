@@ -1,0 +1,1498 @@
+<title>Prompt or Camera</title>
+<meta name="description" content="Compare the carbon, energy, water, and cost of making video with generative AI against shooting it for real.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Plus+Jakarta+Sans:wght@400..800&display=swap">
+<style>/* Prompt or Camera — built on the Nature Design System (Grove theme).
+   Token names follow the system.  Two additions: a dark theme derived from the same seeds,
+   and chart colors (teal for AI, amber for conventional) chosen to pass colorblind checks,
+   because the system's own teal reads too gray as a chart mark. */
+:root{
+  --nt-seed-ink:#374836; --nt-seed-paper:#f9fbf3; --nt-seed-accent:#77a32a;
+  --nt-paper:var(--nt-seed-paper);
+  --nt-surface-soft:#e1ece3;
+  --nt-surface-raised:#fdfef9;
+  --nt-surface-ink:#374836;
+  --nt-text-heading:#374836;
+  --nt-text-body:color-mix(in oklab,var(--nt-seed-ink) 62%,var(--nt-seed-paper));
+  --nt-text-muted:color-mix(in oklab,var(--nt-seed-ink) 45%,var(--nt-seed-paper));
+  --nt-text-faint:#a0a6a1;
+  --nt-text-inverse:#f9fbf3;
+  --nt-text-inverse-muted:color-mix(in oklab,#f9fbf3 72%,#374836);
+  --nt-accent:#77a32a;
+  --nt-accent-strong:color-mix(in oklab,#77a32a 80%,#374836);
+  --nt-on-accent:#f9fbf3;
+  --nt-border:color-mix(in oklab,var(--nt-seed-ink) 14%,var(--nt-seed-paper));
+  --nt-border-strong:color-mix(in oklab,var(--nt-seed-ink) 32%,var(--nt-seed-paper));
+  --nt-border-ink:var(--nt-seed-ink);
+  --nt-border-inverse:color-mix(in oklab,#f9fbf3 35%,transparent);
+  --nt-focus:color-mix(in oklab,var(--nt-seed-accent) 70%,var(--nt-seed-ink));
+  --nt-state-hover:color-mix(in oklab,var(--nt-seed-ink) 8%,transparent);
+  --nt-input-bg:#fdfef9;
+  --viz-ai:#008a7d; --viz-conv:#c98518; --viz-grid:color-mix(in oklab,var(--nt-seed-ink) 12%,var(--nt-seed-paper));
+  --viz-surface:var(--nt-surface-soft); --viz-alt:#6a5fb5;
+  --nt-font-display:'Plus Jakarta Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --nt-font-text:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --nt-font-mono:ui-monospace,'SF Mono',Menlo,Consolas,monospace;
+  --nt-fs-display-1:88px; --nt-fs-h2:42px; --nt-fs-h3:28px; --nt-fs-h4:22px; --nt-fs-h5:20px;
+  --nt-fs-body:16px; --nt-fs-small:14px; --nt-fs-micro:12px;
+  --nt-tracking-label:0.08em; --nt-tracking-wide:0.16em;
+  --nt-radius-sm:5px; --nt-radius-md:7px; --nt-radius-lg:10px; --nt-radius-2xl:20px; --nt-radius-pill:1.6em;
+  --nt-container:1296px; --nt-gutter:24px; --nt-section-y:100px;
+  --nt-dur-base:0.3s; --nt-dur-slow:0.4s; --nt-ease:ease; --nt-ease-back:cubic-bezier(0.7,-0.56,0.27,1.6);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    color-scheme:dark;
+    --nt-seed-ink:#e3ebdd; --nt-seed-paper:#121912; --nt-seed-accent:#8fbd45;
+    --nt-paper:#121912; --nt-surface-soft:#1b251b; --nt-surface-raised:#172017; --nt-surface-ink:#0b100b;
+    --nt-text-heading:#e3ebdd; --nt-text-faint:#6f7a70; --nt-text-inverse:#eef3e8;
+    --nt-text-inverse-muted:color-mix(in oklab,#eef3e8 70%,#0b100b);
+    --nt-accent:#8fbd45; --nt-accent-strong:#a5cf5e; --nt-on-accent:#0f150f;
+    --nt-border-inverse:color-mix(in oklab,#eef3e8 25%,transparent);
+    --nt-input-bg:#172017;
+    --viz-ai:#24a090; --viz-conv:#bd8424; --viz-alt:#8f86d6;
+  }
+}
+:root[data-theme="dark"]{
+  color-scheme:dark;
+  --nt-seed-ink:#e3ebdd; --nt-seed-paper:#121912; --nt-seed-accent:#8fbd45;
+  --nt-paper:#121912; --nt-surface-soft:#1b251b; --nt-surface-raised:#172017; --nt-surface-ink:#0b100b;
+  --nt-text-heading:#e3ebdd; --nt-text-faint:#6f7a70; --nt-text-inverse:#eef3e8;
+  --nt-text-inverse-muted:color-mix(in oklab,#eef3e8 70%,#0b100b);
+  --nt-accent:#8fbd45; --nt-accent-strong:#a5cf5e; --nt-on-accent:#0f150f;
+  --nt-border-inverse:color-mix(in oklab,#eef3e8 25%,transparent);
+  --nt-input-bg:#172017;
+  --viz-ai:#24a090; --viz-conv:#bd8424; --viz-alt:#8f86d6;
+}
+
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--nt-paper);color:var(--nt-text-body);font-family:var(--nt-font-text);font-size:var(--nt-fs-body);line-height:1.55;-webkit-font-smoothing:antialiased;text-wrap:pretty}
+h1,h2,h3,h4{margin:0;color:var(--nt-text-heading);font-family:var(--nt-font-display);font-weight:600;line-height:1.2;text-wrap:balance}
+p{margin:0}
+a{color:inherit;text-decoration:none;background:linear-gradient(currentColor,currentColor) no-repeat right bottom/100% 1px;transition:background-size .6s var(--nt-ease-back)}
+a:hover{background-size:50% 1px}
+a:focus-visible,button:focus-visible,input:focus-visible,select:focus-visible,summary:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--nt-focus);outline-offset:2px}
+button{font:inherit;color:inherit;cursor:pointer}
+table{border-collapse:collapse;width:100%}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+.wrap{width:100%;max-width:var(--nt-container);margin-inline:auto;padding-inline:max(16px,var(--nt-gutter))}
+.band{padding-block:var(--nt-section-y)}
+.band-ink{background:var(--nt-surface-ink);color:var(--nt-text-inverse)}
+.band-ink h1,.band-ink h2,.band-ink h3,.band-ink h4{color:var(--nt-text-inverse)}
+.band-soft{background:var(--nt-surface-soft)}
+.kicker{display:inline-flex;gap:0 14px;align-items:center;font-family:var(--nt-font-display);font-size:var(--nt-fs-body);letter-spacing:var(--nt-tracking-label);text-transform:uppercase;color:var(--nt-text-heading)}
+.band-ink .kicker{color:var(--nt-text-inverse)}
+.label{font-size:var(--nt-fs-micro);font-weight:600;letter-spacing:var(--nt-tracking-label);text-transform:uppercase;color:var(--nt-text-muted)}
+.band-ink .label{color:var(--nt-text-inverse-muted)}
+.upper{text-transform:uppercase}
+.mono{font-family:var(--nt-font-mono);font-variant-numeric:tabular-nums}
+.muted{color:var(--nt-text-muted)}
+.band-ink .muted{color:var(--nt-text-inverse-muted)}
+.measure{max-width:68ch}
+
+/* Header and hero */
+.site-head{display:flex;justify-content:space-between;align-items:center;gap:24px;padding-block:28px}
+.wordmark{font-family:var(--nt-font-display);font-weight:700;letter-spacing:var(--nt-tracking-wide);text-transform:uppercase;font-size:16px}
+.site-nav{display:flex;flex-wrap:wrap;gap:8px 28px}
+.site-nav a{font-size:var(--nt-fs-small);font-weight:500;letter-spacing:var(--nt-tracking-label);text-transform:uppercase;opacity:.8}
+.hero{padding-block:40px 90px;display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:48px;align-items:end}
+.hero h1{font-size:var(--nt-fs-display-1);line-height:1.02;font-weight:400;text-transform:uppercase;letter-spacing:-0.01em;margin-block:18px 26px}
+.hero h1 .fade{background:linear-gradient(90deg,var(--nt-text-inverse),color-mix(in oklab,var(--nt-text-inverse) 45%,var(--nt-surface-ink)));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero-sub{font-size:20px;line-height:1.5;max-width:34ch;color:var(--nt-text-inverse-muted)}
+.hero-stat{border-top:1px solid var(--nt-border-inverse);padding-top:22px;display:grid;gap:18px}
+.hero-fig{font-family:var(--nt-font-display);font-weight:700;font-size:56px;line-height:1;color:var(--nt-text-inverse)}
+.hero-fig small{font-size:22px;font-weight:600;margin-left:6px}
+.hero-row{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;border-top:1px solid var(--nt-border-inverse);padding-top:16px}
+.hero-row b{display:block;font-family:var(--nt-font-display);font-size:22px;color:var(--nt-text-inverse)}
+
+/* Section headings */
+.sec-head{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-end;gap:20px 40px;margin-bottom:56px}
+.sec-head h2{font-size:var(--nt-fs-h2);text-transform:uppercase;margin-top:14px;max-width:18ch}
+.sec-head p{max-width:46ch}
+
+/* Calculator */
+.calc{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);gap:56px;align-items:start}
+.steps{display:grid;gap:44px}
+.step{display:grid;gap:18px;padding-top:22px;border-top:1px solid var(--nt-border-ink)}
+.step-head{display:flex;align-items:baseline;gap:16px}
+.step-num{font-family:var(--nt-font-mono);font-size:var(--nt-fs-small);color:var(--nt-text-muted)}
+.step-head h3{font-size:var(--nt-fs-h4);text-transform:uppercase}
+.field{display:grid;gap:8px}
+.field-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.field-row.three{grid-template-columns:repeat(3,minmax(0,1fr))}
+.field label,.field .label{display:block}
+select,input[type="number"]{width:100%;padding:11px 12px;border:1px solid var(--nt-border-strong);border-radius:var(--nt-radius-md);background:var(--nt-input-bg);color:var(--nt-text-heading);font:inherit;font-size:var(--nt-fs-body)}
+input[type="number"]{font-family:var(--nt-font-mono)}
+.pills{display:flex;flex-wrap:wrap;gap:8px}
+.pill{display:inline-flex;align-items:center;padding:8px 16px;border:1px solid var(--nt-border-strong);border-radius:var(--nt-radius-pill);background:transparent;font-size:var(--nt-fs-small);font-weight:600;color:var(--nt-text-heading);transition:background var(--nt-dur-base) var(--nt-ease),border-color var(--nt-dur-base) var(--nt-ease)}
+.pill:hover{background:var(--nt-state-hover)}
+.pill[aria-pressed="true"]{background:var(--nt-surface-ink);border-color:var(--nt-surface-ink);color:var(--nt-text-inverse)}
+.hint{font-size:var(--nt-fs-small);color:var(--nt-text-muted)}
+.range{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:14px;align-items:center}
+input[type="range"]{width:100%;accent-color:var(--nt-accent)}
+.range output{font-family:var(--nt-font-mono);font-size:var(--nt-fs-small);min-width:7ch;text-align:right;color:var(--nt-text-heading)}
+.toggle{display:inline-grid;grid-auto-flow:column;border:1px solid var(--nt-border-strong);border-radius:var(--nt-radius-pill);padding:3px;gap:2px;width:max-content;max-width:100%}
+.toggle button{border:0;background:transparent;padding:7px 14px;border-radius:var(--nt-radius-pill);font-size:var(--nt-fs-small);font-weight:600;color:var(--nt-text-muted)}
+.toggle button[aria-pressed="true"]{background:var(--nt-surface-ink);color:var(--nt-text-inverse)}
+.custom{display:grid;gap:16px;padding:20px;border:1px solid var(--nt-border);border-radius:var(--nt-radius-2xl)}
+details.more>summary{cursor:pointer;font-weight:600;color:var(--nt-text-heading);list-style:none;display:flex;gap:10px;align-items:center}
+details.more>summary::-webkit-details-marker{display:none}
+details.more>summary::before{content:"+";font-family:var(--nt-font-mono);width:1ch}
+details.more[open]>summary::before{content:"–"}
+
+/* Results */
+.results{position:sticky;top:calc(env(safe-area-inset-top,0px) + 20px);background:var(--nt-surface-soft);border-radius:var(--nt-radius-2xl);padding:28px;display:grid;gap:22px}
+.verdict{font-family:var(--nt-font-display);font-size:30px;line-height:1.2;font-weight:600;color:var(--nt-text-heading);text-wrap:balance}
+.verdict-sub{color:var(--nt-text-body)}
+.legend{display:flex;flex-wrap:wrap;gap:8px 20px;font-size:var(--nt-fs-small);color:var(--nt-text-body)}
+.key{display:inline-flex;align-items:center;gap:8px}
+.key i{width:14px;height:14px;border-radius:50%;display:inline-block}
+.key .ai{background:var(--viz-ai)} .key .conv{background:var(--viz-conv)}
+.metric{display:grid;gap:10px;padding-top:18px;border-top:1px solid var(--nt-border)}
+.metric-top{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.metric-name{font-size:var(--nt-fs-micro);font-weight:700;letter-spacing:var(--nt-tracking-label);text-transform:uppercase;color:var(--nt-text-heading)}
+.metric-ratio{font-size:var(--nt-fs-small);color:var(--nt-text-muted)}
+.metric-vals{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
+.mval{display:grid;gap:2px}
+.mval .who{display:flex;align-items:center;gap:8px;font-size:var(--nt-fs-small);color:var(--nt-text-body)}
+.mval .who i{width:10px;height:10px;border-radius:50%;display:inline-block}
+.mval b{font-family:var(--nt-font-display);font-size:24px;font-weight:700;color:var(--nt-text-heading);line-height:1.15}
+.mval span.rng{font-size:var(--nt-fs-micro);color:var(--nt-text-muted)}
+.logchart{width:100%;height:auto;display:block;overflow:visible}
+.logchart text{fill:var(--nt-text-muted);font-family:var(--nt-font-text);font-size:11px}
+.logchart .grid{stroke:var(--viz-grid);stroke-width:1}
+.note-list{display:grid;gap:8px;font-size:var(--nt-fs-small);color:var(--nt-text-body);padding:0;margin:0;list-style:none}
+.note-list li{padding-left:16px;position:relative}
+.note-list li::before{content:"";position:absolute;left:0;top:.6em;width:6px;height:1px;background:var(--nt-text-muted)}
+.linkbtn{border:0;background:none;padding:0;font-size:var(--nt-fs-small);font-weight:700;color:var(--nt-text-heading);text-decoration:underline;text-underline-offset:3px}
+.tbl-wrap{overflow-x:auto}
+.data-tbl{font-size:var(--nt-fs-small)}
+.data-tbl th,.data-tbl td{text-align:left;padding:9px 8px;border-top:1px solid var(--nt-border);vertical-align:top}
+.data-tbl th{font-size:var(--nt-fs-micro);letter-spacing:var(--nt-tracking-label);text-transform:uppercase;color:var(--nt-text-heading);font-weight:700}
+.data-tbl td.num{font-family:var(--nt-font-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.band-ink .data-tbl th{color:var(--nt-text-inverse)}
+.band-ink .data-tbl th,.band-ink .data-tbl td{border-color:var(--nt-border-inverse)}
+.tooltip{position:fixed;z-index:1000;pointer-events:none;background:var(--nt-surface-ink);color:var(--nt-text-inverse);padding:8px 10px;border-radius:var(--nt-radius-sm);font-size:var(--nt-fs-small);max-width:260px;box-shadow:0 12px 32px -12px rgba(0,0,0,.35)}
+
+/* Scenes */
+.scenes{border-bottom:1px solid var(--nt-border-ink)}
+.scene{border-top:1px solid var(--nt-border-ink)}
+.scene>summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:minmax(0,1fr) auto auto;gap:18px;align-items:center;padding-block:22px}
+.scene>summary::-webkit-details-marker{display:none}
+.scene h3{font-size:var(--nt-fs-h4);text-transform:uppercase}
+.scene .chev{font-family:var(--nt-font-mono);font-size:20px;color:var(--nt-text-heading);transition:transform var(--nt-dur-slow) var(--nt-ease)}
+.scene[open] .chev{transform:rotate(45deg)}
+.badge{display:inline-flex;align-items:center;gap:6px;padding:5px 12px;border-radius:var(--nt-radius-pill);border:1px solid var(--nt-border-strong);font-size:var(--nt-fs-micro);font-weight:700;letter-spacing:var(--nt-tracking-label);text-transform:uppercase;color:var(--nt-text-heading);white-space:nowrap}
+.badge.win{border-color:var(--nt-accent);color:var(--nt-accent-strong)}
+.badge.lose{border-color:#e63946;color:#c1121f}
+:root[data-theme="dark"] .badge.lose{color:#ff8a93}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .badge.lose{color:#ff8a93}}
+.scene-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;padding-bottom:32px}
+.scene-body p+p{margin-top:12px}
+
+/* Access */
+.access-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:56px;align-items:start}
+.access-grid .prose p+p{margin-top:16px}
+.ladder-controls{display:grid;gap:18px;padding:24px;border:1px solid var(--nt-border-inverse);border-radius:var(--nt-radius-2xl)}
+.band-ink input[type="range"]{accent-color:var(--nt-accent)}
+.band-ink .range output{color:var(--nt-text-inverse)}
+.big-line{font-family:var(--nt-font-display);font-size:26px;line-height:1.25;font-weight:600;color:var(--nt-text-inverse);text-wrap:balance}
+.band-ink .logchart text{fill:var(--nt-text-inverse-muted)}
+.band-ink .logchart .grid{stroke:var(--nt-border-inverse)}
+.facts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px;margin-top:56px;border-top:1px solid var(--nt-border-inverse);padding-top:28px}
+.facts b{display:block;font-family:var(--nt-font-display);font-size:30px;font-weight:700;color:var(--nt-text-inverse);margin-bottom:6px}
+
+/* How it works */
+.cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.card{background:var(--nt-surface-soft);border-radius:var(--nt-radius-2xl);padding:24px;display:grid;gap:12px;align-content:start}
+.card h3{font-size:var(--nt-fs-h5);text-transform:uppercase}
+.card .fig{font-family:var(--nt-font-display);font-size:34px;font-weight:700;color:var(--nt-text-heading);line-height:1}
+.two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;margin-top:56px}
+.two-col p+p{margin-top:14px}
+
+/* Method */
+.acc{border-top:1px solid var(--nt-border-ink)}
+.acc>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:16px;padding-block:18px;font-family:var(--nt-font-display);font-size:var(--nt-fs-h5);font-weight:600;color:var(--nt-text-heading);text-transform:uppercase}
+.acc>summary::-webkit-details-marker{display:none}
+.acc>summary::after{content:"+";font-family:var(--nt-font-mono)}
+.acc[open]>summary::after{content:"–"}
+.acc-body{padding-bottom:26px;display:grid;gap:12px}
+.acc-last{border-bottom:1px solid var(--nt-border-ink)}
+.sources{columns:2;column-gap:40px;font-size:var(--nt-fs-small);padding:0;margin:0;list-style:none}
+.sources li{break-inside:avoid;margin-bottom:10px}
+.site-foot{padding-block:48px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;font-size:var(--nt-fs-small)}
+
+@media (max-width:1100px){
+  :root{--nt-fs-display-1:64px;--nt-fs-h2:34px;--nt-section-y:72px}
+  .hero,.calc,.access-grid,.scene-body,.two-col{grid-template-columns:minmax(0,1fr)}
+  .results{position:static}
+  .cards{grid-template-columns:minmax(0,1fr)}
+}
+@media (max-width:640px){
+  :root{--nt-fs-display-1:44px;--nt-fs-h2:28px;--nt-section-y:56px}
+  .hero-fig{font-size:44px}
+  .field-row,.field-row.three,.hero-row,.facts{grid-template-columns:minmax(0,1fr)}
+  .mval b{font-size:21px}
+  .big-line{font-size:21px}
+  .results{padding:20px}
+  .verdict{font-size:24px}
+  .scene>summary{grid-template-columns:minmax(0,1fr) auto}
+  .scene>summary .badge{display:none}
+  .sources{columns:1}
+}
+
+/* Charts */
+.chart{width:100%;min-width:0;--viz-ring:var(--nt-surface-soft)}
+.band-ink .chart{--viz-ring:var(--nt-surface-ink)}
+.logchart .rowlab{fill:var(--nt-text-body);font-size:12px}
+.band-ink .logchart .rowlab{fill:var(--nt-text-inverse)}
+.logchart .rowlab.you{font-weight:700;fill:var(--nt-text-heading)}
+.band-ink .logchart .rowlab.you{fill:var(--nt-text-inverse)}
+.logchart .mk{cursor:default;outline:none}
+.logchart .mk .hit{fill:transparent}
+.logchart .mk:focus-visible .hit{stroke:var(--nt-focus);stroke-width:2}
+.logchart .mk .band{fill-opacity:.38}
+.logchart .mk .dot{stroke:var(--viz-ring);stroke-width:2}
+.logchart .mk-ai .band,.logchart .mk-ai .dot{fill:var(--viz-ai)}
+.logchart .mk-conv .band,.logchart .mk-conv .dot{fill:var(--viz-conv)}
+.logchart .mk-alt .band,.logchart .mk-alt .dot{fill:var(--viz-alt)}
+.logchart .mk:hover .band{fill-opacity:.55}
+.check{display:flex;gap:10px;align-items:flex-start;font-size:var(--nt-fs-small);color:var(--nt-text-body);margin-top:12px;cursor:pointer}
+.check input{margin-top:3px;accent-color:var(--nt-accent)}
+.scene-chart{display:grid;gap:6px;align-content:start}
+.logchart .mk .bar{fill-opacity:.85}
+.logchart .mk-ai .bar{fill:var(--viz-ai)} .logchart .mk-conv .bar{fill:var(--viz-conv)} .logchart .mk-alt .bar{fill:var(--viz-alt)}
+.logchart .whisker{stroke:var(--nt-text-heading);stroke-width:1.5}
+.band-ink .logchart .whisker{stroke:var(--nt-text-inverse)}
+.logchart .val{fill:var(--nt-text-heading);font-size:11px;font-weight:600}
+.band-ink .logchart .val{fill:var(--nt-text-inverse)}
+</style>
+
+<header class="band-ink">
+  <div class="wrap">
+    <div class="site-head">
+      <span class="wordmark">Prompt or Camera</span>
+      <nav class="site-nav" aria-label="Sections">
+        <a href="#calculator">Calculator</a>
+        <a href="#scenes">Scenes</a>
+        <a href="#access">Access</a>
+        <a href="#practice">In practice</a>
+        <a href="#method">Method</a>
+      </nav>
+    </div>
+    <div class="hero">
+      <div>
+        <span class="kicker"><span aria-hidden="true">[</span>Carbon, water, and cost<span aria-hidden="true">]</span></span>
+        <h1>Prompt or <span class="fade">camera</span></h1>
+        <p class="hero-sub">Compare making a scene with Seedance 2.5 or MiniMax H3 against shooting it for real, using published production data and the best estimates available for AI video.</p>
+      </div>
+      <div class="hero-stat">
+        <span class="label">One generated second of Seedance 2.5 at 720p</span>
+        <div class="hero-fig" id="heroWh">33<small>Wh</small></div>
+        <div class="hero-row">
+          <div><b id="heroCo2">22 g</b><span class="muted">CO2e</span></div>
+          <div><b id="heroWater">70 mL</b><span class="muted">water</span></div>
+          <div><b id="heroCost">$0.23</b><span class="muted">list price</span></div>
+        </div>
+        <p class="muted" style="font-size:14px">That's about two full phone charges.  The catch is that nobody generates a second only once.</p>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main>
+  <section id="calculator" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="kicker"><span aria-hidden="true">[</span>Calculator<span aria-hidden="true">]</span></span>
+          <h2>Make it both ways</h2>
+        </div>
+        <p>Pick what you're making, how you'd generate it, and how you'd shoot it.  The comparison updates as you go, and every number shows its likely range.</p>
+      </div>
+
+      <div class="calc">
+        <div class="steps">
+          <div class="step">
+            <div class="step-head"><span class="step-num">01</span><h3>What you're making</h3></div>
+            <div class="pills" id="formatPills" role="group" aria-label="Format"></div>
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="runtimeMin">Finished runtime (minutes)</label>
+                <input id="runtimeMin" type="number" min="0.05" max="240" step="0.05" value="0.5">
+              </div>
+              <div class="field">
+                <span class="label">Runtime in seconds</span>
+                <p class="mono" id="runtimeSec" style="padding-top:10px;color:var(--nt-text-heading)">30 s</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-head"><span class="step-num">02</span><h3>The AI version</h3></div>
+            <div class="field-row">
+              <div class="field">
+                <label class="label" for="model">Model</label>
+                <select id="model"></select>
+              </div>
+              <div class="field">
+                <label class="label" for="res">Resolution</label>
+                <select id="res"></select>
+              </div>
+            </div>
+            <div class="field">
+              <span class="label" id="styleLabel">How you work</span>
+              <div class="pills" id="stylePills" role="group" aria-labelledby="styleLabel"></div>
+              <p class="hint" id="styleExample"></p>
+            </div>
+            <div class="field">
+              <label class="label" for="takes">Generated seconds per finished second</label>
+              <div class="range">
+                <input id="takes" type="range" min="0" max="1000" step="1" value="500">
+                <output id="takesOut" for="takes">80×</output>
+              </div>
+              <p class="hint">Every take you throw away still used a GPU.  This ratio drives the AI footprint more than any other setting.</p>
+            </div>
+            <div class="field">
+              <label class="label" for="region">Data center region</label>
+              <select id="region"></select>
+              <p class="hint" id="regionWhy"></p>
+            </div>
+          </div>
+
+          <div class="step">
+            <div class="step-head"><span class="step-num">03</span><h3>The conventional version</h3></div>
+            <div class="toggle" role="group" aria-label="Conventional input">
+              <button type="button" id="modeBench" aria-pressed="true">Use a benchmark</button>
+              <button type="button" id="modeCustom" aria-pressed="false">Build your own shoot</button>
+            </div>
+            <div id="benchBox" class="field">
+              <label class="label" for="bench">Closest production type</label>
+              <select id="bench"></select>
+              <p class="hint" id="benchSource"></p>
+            </div>
+            <div id="customBox" class="custom" hidden>
+              <div class="field-row three">
+                <div class="field"><label class="label" for="cCrew">Crew and cast</label><input id="cCrew" type="number" min="1" value="25"></div>
+                <div class="field"><label class="label" for="cDays">Shoot days</label><input id="cDays" type="number" min="1" value="3"></div>
+                <div class="field"><label class="label" for="cCommute">Round trip per person (km)</label><input id="cCommute" type="number" min="0" value="40"></div>
+              </div>
+              <div class="field-row three">
+                <div class="field"><label class="label" for="cFlyers">People flying</label><input id="cFlyers" type="number" min="0" value="0"></div>
+                <div class="field"><label class="label" for="cFlightKm">One-way distance (km)</label><input id="cFlightKm" type="number" min="0" value="8750"></div>
+                <div class="field"><label class="label" for="cClass">Seat class</label><select id="cClass"><option value="economy">Economy</option><option value="business">Business</option></select></div>
+              </div>
+              <div class="field-row three">
+                <div class="field"><label class="label" for="cHotel">Hotel room nights</label><input id="cHotel" type="number" min="0" value="0"></div>
+                <div class="field"><label class="label" for="cHotelCountry">Hotel country</label><select id="cHotelCountry"><option value="us">United States</option><option value="uk">United Kingdom</option><option value="canada">Canada</option><option value="france">France</option><option value="japan">Japan</option><option value="southAfrica">South Africa</option></select></div>
+                <div class="field"><label class="label" for="cMenu">Catering</label><select id="cMenu"><option value="mixed">Mixed menu</option><option value="vegetarian">Vegetarian</option><option value="beef">Beef-heavy</option></select></div>
+              </div>
+              <div class="field-row three">
+                <div class="field"><label class="label" for="cGenDays">Generator days</label><input id="cGenDays" type="number" min="0" value="2"></div>
+                <div class="field"><label class="label" for="cGenSize">Generator size</label><select id="cGenSize"><option value="small">Small (about 88 L a day)</option><option value="large">500 A (about 230 L a day)</option></select></div>
+                <div class="field"><label class="label" for="cTrucks">Trucks and vans</label><input id="cTrucks" type="number" min="0" value="2"></div>
+              </div>
+              <div class="field-row three">
+                <div class="field"><label class="label" for="cTimber">Timber for sets (t)</label><input id="cTimber" type="number" min="0" step="0.1" value="0.5"></div>
+                <div class="field"><label class="label" for="cSteel">New steel (t)</label><input id="cSteel" type="number" min="0" step="0.1" value="0"></div>
+                <div class="field"><label class="label" for="cLandfill">Timber sent to landfill (%)</label><input id="cLandfill" type="number" min="0" max="100" value="50"></div>
+              </div>
+              <div class="field-row">
+                <div class="field"><label class="label" for="cVfx">VFX shots</label><input id="cVfx" type="number" min="0" value="0"></div>
+                <div class="field"><label class="label" for="cVfxTier">VFX shot type</label><select id="cVfxTier"><option value="simple">Simple cleanup or comp</option><option value="typical" selected>Typical CG shot</option><option value="hero">Full-CG hero shot</option></select></div>
+              </div>
+              <p class="hint">Factors come from the UK government's 2025 conversion factors, BAFTA albert, and AdGreen.  Costs here are rough: crew at $700 a day plus 30%, flights, hotels, and VFX by shot type.</p>
+            </div>
+            <div class="field">
+              <span class="label" id="scopeLabel">What counts</span>
+              <div class="toggle" role="group" aria-labelledby="scopeLabel">
+                <button type="button" id="scopeFull" aria-pressed="true">Full footprint</button>
+                <button type="button" id="scopePear" aria-pressed="false">US studio benchmark scope</button>
+              </div>
+              <p class="hint" id="scopeHint">Counts flights with their high-altitude warming effect, food, materials, waste, and post.  This is the fair match for AI's all-in compute number.</p>
+            </div>
+          </div>
+        </div>
+
+        <aside class="results" aria-live="polite" aria-labelledby="verdict">
+          <span class="kicker"><span aria-hidden="true">[</span>Result<span aria-hidden="true">]</span></span>
+          <p class="verdict" id="verdict"></p>
+          <p class="verdict-sub" id="verdictSub"></p>
+          <div class="legend" aria-hidden="true">
+            <span class="key"><i class="ai"></i>AI version</span>
+            <span class="key"><i class="conv"></i>Conventional version</span>
+            <span class="key muted">Bars show the likely range on a log scale.  Each gridline is 10×.</span>
+          </div>
+          <div id="metrics"></div>
+          <ul class="note-list" id="notes"></ul>
+          <div>
+            <button type="button" class="linkbtn" id="tableToggle" aria-expanded="false" aria-controls="resultTable">Show the numbers as a table</button>
+            <div class="tbl-wrap" id="resultTable" hidden></div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+
+  <section id="scenes" class="band band-soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="kicker"><span aria-hidden="true">[</span>Scenes<span aria-hidden="true">]</span></span>
+          <h2>Scene by scene</h2>
+        </div>
+        <p>Some scenes are expensive to shoot, and some cost almost nothing extra.  Each comparison counts only what the scene adds to a shoot that's already happening, and uses the AI model you picked above.  Badges compare AI with the lower of the two other options.</p>
+      </div>
+      <div class="scenes" id="sceneList"></div>
+    </div>
+  </section>
+
+  <section id="access" class="band band-ink">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="kicker"><span aria-hidden="true">[</span>Access<span aria-hidden="true">]</span></span>
+          <h2>Anyone can generate.  Few people can shoot.</h2>
+        </div>
+      </div>
+      <div class="access-grid">
+        <div class="prose measure" id="accessProse"></div>
+        <div class="ladder-controls">
+          <p class="big-line" id="accessLine"></p>
+          <div class="field">
+            <label class="label" for="aPeople">People generating</label>
+            <div class="range"><input id="aPeople" type="range" min="0" max="8" step="0.25" value="6"><output id="aPeopleOut" for="aPeople">1,000,000</output></div>
+          </div>
+          <div class="field">
+            <label class="label" for="aSecs">Generated seconds per person per day</label>
+            <div class="range"><input id="aSecs" type="range" min="0" max="3.41" step="0.01" value="1.78"><output id="aSecsOut" for="aSecs">60 s</output></div>
+          </div>
+          <div class="chart" id="ladder"></div>
+          <p class="label" id="ladderTitle">Annual CO2e on a log scale.  Each gridline is 10×.  Teal is your scenario, amber is production, and violet is one person's whole year.</p>
+        </div>
+      </div>
+      <div class="facts" id="accessFacts"></div>
+    </div>
+  </section>
+
+  <section id="practice" class="band">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="kicker"><span aria-hidden="true">[</span>In practice<span aria-hidden="true">]</span></span>
+          <h2>How AI filmmaking actually works</h2>
+        </div>
+        <p>Nobody generates a shot once.  How many takes a production throws away changes the answer more than which model it uses.</p>
+      </div>
+      <div class="tbl-wrap">
+        <table class="data-tbl" id="styleTable">
+          <thead><tr><th>How people work</th><th>Takes per kept shot</th><th>Generated seconds per finished second</th><th>Example</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+      <div class="two-col">
+        <div>
+          <p>Professionals mostly start from prepared images and animate them, a workflow called image-to-video.  In long-form studio work, AI shows up mainly in previz, crowds, environments, and individual VFX shots.  <i>House of David</i> generated about 20 takes for every AI shot it used.</p>
+          <p>Seedance's own benchmark rates image-to-video clips lower, clip for clip, than text-to-video.  Prepared images help with continuity across shots, which benchmarks don't measure, so the calculator leaves the take ratio up to you.</p>
+        </div>
+        <div>
+          <p>"Unlimited" plans deserve suspicion.  Artlist, Runway, Higgsfield, and Krea have all run unlimited Seedance windows, which make one more take free to you while its energy stays exactly the same.  This site counts generated seconds, never spend.</p>
+          <p>Money is its own question.  Generation is cheap, and people are the expensive part.  Svedka's AI Super Bowl ad is the cautionary tale: the brand's CMO said it "didn't save much money and certainly not a ton of time."</p>
+        </div>
+      </div>
+      <div class="cards" style="margin-top:56px">
+        <div class="card">
+          <span class="label">Biggest lever</span>
+          <h3>Draft first</h3>
+          <p class="fig">65–80%</p>
+          <p>less energy per kept shot when you explore at 480p and render only the keepers at full resolution.  A Seedance 2.5 draft costs 18% of a 1080p render.  Cheap drafts can invite more drafts, though.</p>
+        </div>
+        <div class="card">
+          <span class="label">Use carefully</span>
+          <h3>Generate lower, upscale locally</h3>
+          <p class="fig">&lt;1 Wh</p>
+          <p>to upscale a 5-second clip with a lightweight model on a laptop.  A diffusion upscaler such as SeedVR2 can use about 125 Wh for the same clip, which wipes out the saving.</p>
+        </div>
+        <div class="card">
+          <span class="label">Counterintuitive</span>
+          <h3>Local isn't greener by itself</h3>
+          <p class="fig" id="localFig">3 Wh</p>
+          <p id="localText">per FLUX image on a MacBook Pro M4 Max, against about 1.3 Wh on an RTX 4090 and under 1 Wh on a data-center GPU.  Local tools help only when they replace cloud video generations.</p>
+        </div>
+      </div>
+      <div class="two-col">
+        <div>
+          <h3 class="upper" style="font-size:20px;margin-bottom:14px">Guided platforms like Krea</h3>
+          <p>Krea hosts every Seedance and MiniMax tier alongside cheap exploration tools: a realtime image costs about 1/2,000 of a Seedance clip in Krea's own units, and its node editor shows the cost of each step and skips work that hasn't changed.  If you use that layer to settle on a shot before paying for premium video, it plausibly saves energy.  Nobody has measured it, though, and realtime video and agents keep GPUs busy for the whole session.</p>
+        </div>
+        <div>
+          <h3 class="upper" style="font-size:20px;margin-bottom:14px">Voices and music</h3>
+          <p>Local text-to-speech and music models use under 2 Wh per minute of audio.  Turning off a video model's own audio saves only what the model spends on it, which is about 21–34% of compute for LTX-2.  Seedance 2.5 and MiniMax H3 generate audio in the same pass and don't discount silent clips.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="method" class="band band-soft">
+    <div class="wrap">
+      <div class="sec-head">
+        <div>
+          <span class="kicker"><span aria-hidden="true">[</span>Method<span aria-hidden="true">]</span></span>
+          <h2>How the numbers work</h2>
+        </div>
+        <p>No video company publishes energy per clip, so the AI side is always an estimate.  Here's what each estimate rests on.</p>
+      </div>
+      <div>
+        <details class="acc" open>
+          <summary>AI energy, carbon, and water</summary>
+          <div class="acc-body measure">
+            <p>Energy per generated second starts from GPU time.  For Seedance 2.5, three methods agree at 17–24 Wh per second on the GPUs at 720p: OpenRouter's latency benchmark, a calibration against Jegham, Gamazaychikov, and Luccioni's 2026 estimate for Seedance 1.5, and ByteDance's reported 70% gross margin.  We use 18 Wh.  MiniMax H3 is anchored on MiniMax's own benchmark for the open-weight model.</p>
+            <p>We then add servers, idle capacity, and data-center cooling (Google's 2025 serving study found the full stack uses about 1.7× the GPU energy), apply the grid where the model runs, and add hardware manufacturing and a 5% share for training.  Water counts cooling at the data center plus the water used to generate its electricity.</p>
+            <p>Ranges combine each factor's own uncertainty.  The takes ratio isn't part of the range because you set it.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Conventional production</summary>
+          <div class="acc-body measure">
+            <p>Benchmarks come from the Sustainable Entertainment Alliance (US studios, 2023–24), BAFTA albert (UK), AdGreen (advertising), and Ecoprod's Carbon'Clap (France).  They measure different things: the US studio benchmark counts fuel, utilities, flights without their high-altitude warming effect, and hotels, while the others also count food, materials, waste, and post.  The scope switch adjusts for that gap.</p>
+            <p>Industry benchmarks leave out VFX rendering, and it isn't small.  Weta's AWS rendering for <i>Avatar: The Way of Water</i> alone comes to roughly 8–28 GWh.  The custom shoot builder lets you add VFX shots at 0.15–5 MWh each.</p>
+          </div>
+        </details>
+        <details class="acc">
+          <summary>Factors</summary>
+          <div class="acc-body"><div class="tbl-wrap"><table class="data-tbl" id="factorTable"><thead><tr><th>Factor</th><th>Central</th><th>Range</th><th>Source</th></tr></thead><tbody></tbody></table></div></div>
+        </details>
+        <details class="acc">
+          <summary>Numbers to stop quoting</summary>
+          <div class="acc-body measure">
+            <ul class="note-list">
+              <li>MIT Technology Review's 3.4 MJ for one five-second video is about 5× higher than ML.ENERGY's measurement of what appears to be the same model on the same GPU.</li>
+              <li>"Native 4K" for Seedance 2.5 appears in press coverage, but BytePlus's API tops out at 1080p.</li>
+              <li>Weta's 3.3 billion thread-hours for <i>Avatar: The Way of Water</i> covers only the rendering done on AWS, not the whole film.</li>
+              <li>Several "AI statistics" sites publish invented production-carbon figures.  None of them appear here.</li>
+            </ul>
+          </div>
+        </details>
+        <details class="acc acc-last">
+          <summary>Sources</summary>
+          <div class="acc-body">
+            <ul class="sources" id="sources"></ul>
+          </div>
+        </details>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="band-ink">
+  <div class="wrap site-foot">
+    <span class="wordmark">Prompt or Camera</span>
+    <span class="muted">Research as of September 25, 2026.  Estimates, not disclosures.</span>
+  </div>
+</footer>
+<div class="tooltip" id="tip" hidden></div>
+<script>/* Every factor the calculator uses, with its range and where it comes from.
+   Research date: 2026-09-25.  The research folder in the repo holds the full sourcing. */
+const DATA = {
+  asOf: "2026-09-25",
+
+  /* ---------- AI video models ----------
+     gpuWh: GPU-only watt-hours per generated second at the model's reference resolution.
+     resFactor: multiplier on gpuWh for each resolution (reference = 1).
+     price: USD per generated second at list price, with the cheapest heavy-use subscription
+     and the priciest mainstream reseller as the range. */
+  models: {
+    seedance25: {
+      label: "Seedance 2.5",
+      maker: "ByteDance",
+      region: "johor",
+      audio: "Native audio included",
+      maxClip: 30,
+      gpuWh: { lo: 5, c: 18, hi: 40 },
+      resolutions: {
+        "480p": { resFactor: { lo: 0.35, c: 0.57, hi: 0.69 }, price: { lo: 0.06, c: 0.103, hi: 0.22 } },
+        "720p": { resFactor: { lo: 1, c: 1, hi: 1 }, price: { lo: 0.13, c: 0.231, hi: 0.47 } },
+        "1080p": { resFactor: { lo: 1.44, c: 1.76, hi: 2.87 }, price: { lo: 0.32, c: 0.569, hi: 1.16 } },
+      },
+      defaultRes: "720p",
+      note: "Energy is estimated from OpenRouter's Seedance 2.5 latency benchmark, a calibration against Seedance 1.5, and ByteDance's reported 70% gross margin.  ByteDance publishes no energy data.",
+    },
+    minimaxH3: {
+      label: "MiniMax H3",
+      maker: "MiniMax",
+      region: "china",
+      audio: "Native stereo audio included",
+      maxClip: 15,
+      gpuWh: { lo: 2, c: 7, hi: 20 },
+      resolutions: {
+        "768p": { resFactor: { lo: 1, c: 1, hi: 1 }, price: { lo: 0.047, c: 0.08, hi: 0.10 } },
+        "2K": { resFactor: { lo: 1.2, c: 1.5, hi: 2.5 }, price: { lo: 0.077, c: 0.13, hi: 0.15 } },
+      },
+      defaultRes: "768p",
+      note: "Anchored on MiniMax's own benchmark for its open-weight H3 model (74 s on 4 H200 GPUs for 5 s at 768p), less the sparse attention MiniMax uses in production.",
+    },
+    minimaxH3Max: {
+      label: "MiniMax H3 Max",
+      maker: "MiniMax and fal",
+      region: "china",
+      audio: "Native audio included",
+      maxClip: 15,
+      gpuWh: { lo: 0.6, c: 1.5, hi: 3.5 },
+      resolutions: {
+        "480p": { resFactor: { lo: 0.3, c: 0.4, hi: 0.5 }, price: { lo: 0.027, c: 0.05, hi: 0.05 } },
+        "768p": { resFactor: { lo: 1, c: 1, hi: 1 }, price: { lo: 0.047, c: 0.08, hi: 0.08 } },
+      },
+      defaultRes: "768p",
+      note: "A distilled fast variant.  fal reports about 2.5 s of GPU time for a 5 s clip on its own hardware.",
+    },
+  },
+
+  /* ---------- Data-center factors ---------- */
+  hostMultiplier: { lo: 1.15, c: 1.43, hi: 2.1 },   // CPU, memory, and idle capacity on top of GPU energy (before PUE)
+  gpuKw: 0.63,                                        // average draw of one H100/H200-class GPU during diffusion (0.9 × 700 W)
+  embodiedKgPerGpuHour: { lo: 0.006, c: 0.03, hi: 0.055 },
+  training: { lo: 0.01, c: 0.05, hi: 0.3 },           // share added for training the model, spread over its lifetime use
+
+  regions: {
+    johor: { label: "Johor, Malaysia", why: "BytePlus serves Seedance to international users only from Johor.", grid: { lo: 0.497, c: 0.602, hi: 0.7 }, pue: { lo: 1.15, c: 1.3, hi: 1.5 }, wueOn: { lo: 0.12, c: 0.5, hi: 1.9 }, wueOff: { lo: 1.2, c: 1.7, hi: 3.9 } },
+    china: { label: "Mainland China", why: "MiniMax rents compute from Chinese clouds, mainly Alibaba Cloud.", grid: { lo: 0.404, c: 0.53, hi: 0.65 }, pue: { lo: 1.15, c: 1.3, hi: 1.5 }, wueOn: { lo: 0.14, c: 0.57, hi: 1.63 }, wueOff: { lo: 1.5, c: 3.0, hi: 6.0 } },
+    us: { label: "United States (hyperscale)", why: "Typical for US resellers such as fal.", grid: { lo: 0.35, c: 0.384, hi: 0.416 }, pue: { lo: 1.08, c: 1.12, hi: 1.2 }, wueOn: { lo: 0.12, c: 0.55, hi: 1.15 }, wueOff: { lo: 2.4, c: 3.1, hi: 5.0 } },
+    nordics: { label: "Nordics", why: "A low-carbon grid, for comparison.", grid: { lo: 0.028, c: 0.045, hi: 0.114 }, pue: { lo: 1.08, c: 1.12, hi: 1.2 }, wueOn: { lo: 0.02, c: 0.09, hi: 0.3 }, wueOff: { lo: 1.5, c: 4.5, hi: 6.7 } },
+  },
+
+  /* ---------- How people actually use AI video ----------
+     genPerFinished: generated seconds per finished second (low / typical / high).
+     laborDaysPerMin: person-days of human work per finished minute. */
+  styles: {
+    microdrama: { label: "Industrial micro-drama", takes: "1–3 takes per kept shot", genPerFinished: { lo: 3, c: 5, hi: 8 }, laborDaysPerMin: 0.3, example: "Chinese AI short-drama studios, 2026" },
+    solo: { label: "Prepared solo creator", takes: "2–4 takes per kept shot", genPerFinished: { lo: 4, c: 8, hi: 30 }, laborDaysPerMin: 0.45, example: "Lost Garden: 21 minutes in 75 hours" },
+    pro: { label: "Professional ad or music video", takes: "13–27 takes per kept shot", genPerFinished: { lo: 30, c: 80, hi: 110 }, laborDaysPerMin: 5, example: "Kalshi NBA Finals ad: 300–400 generations for 15 clips" },
+    feature: { label: "AI feature film", takes: "About 64 takes per kept shot", genPerFinished: { lo: 60, c: 160, hi: 250 }, laborDaysPerMin: 2.2, example: "Hell Grind: 61,000 generations for 960 shots in 95 minutes" },
+    flagship: { label: "Flagship brand campaign", takes: "Hundreds to thousands of takes per kept shot", genPerFinished: { lo: 500, c: 2000, hi: 6000 }, laborDaysPerMin: 1000, example: "Coca-Cola 2025: 70,000 clips for about 20 shots" },
+  },
+
+  /* ---------- Conventional productions (benchmarks) ----------
+     t: tCO2e per project.  scope: "full" (albert, AdGreen, Carbon'Clap style) or "pear"
+     (US studio benchmark: fuel, utilities, flights without radiative forcing, hotels only). */
+  productions: {
+    micro: { label: "Micro shoot", detail: "1–2 days, a small local crew", minutes: 2, t: { lo: 0.1, c: 0.29, hi: 1 }, scope: "full", cost: { lo: 1500, c: 5000, hi: 12000 }, days: 1.8, crew: 8, source: "AdGreen 2022, projects under 1 t (mean 0.29 t, median 0.19 t)" },
+    musicVideo: { label: "Local music video", detail: "2 days, about 20 people", minutes: 3.5, t: { lo: 0.6, c: 0.9, hi: 2 }, scope: "full", cost: { lo: 5000, c: 15000, hi: 30000 }, days: 2, crew: 20, source: "Bottom-up estimate with UK DESNZ 2025 factors; Carbon'Clap music and corporate video average 2 t" },
+    commercial: { label: "Commercial, typical", detail: "1–3 days, AdGreen median", minutes: 0.5, t: { lo: 0.3, c: 0.75, hi: 4.5 }, scope: "full", cost: { lo: 25000, c: 75000, hi: 150000 }, days: 2, crew: 30, source: "AdGreen 2022–24 median project 0.75 t" },
+    commercialHigh: { label: "Commercial, high budget", detail: "£250k or more per shoot day", minutes: 0.5, t: { lo: 14, c: 24.6, hi: 75 }, scope: "full", cost: { lo: 350000, c: 750000, hi: 2000000 }, days: 3, crew: 60, source: "AdGreen 2025 budget brackets (£250–500k per day: 24.6 t; £500k+: 75 t)" },
+    shortFilm: { label: "Short film", detail: "About 10 minutes", minutes: 10, t: { lo: 2, c: 8, hi: 20 }, scope: "full", cost: { lo: 6000, c: 25000, hi: 60000 }, days: 5, crew: 20, source: "Ecoprod Carbon'Clap 2024, short fiction average 8 t" },
+    tvEpisode: { label: "One-hour TV drama episode", detail: "About 50 minutes", minutes: 50, t: { lo: 77, c: 128.6, hi: 398 }, scope: "pear", cost: { lo: 3800000, c: 6000000, hi: 15000000 }, days: 8, crew: 150, source: "Sustainable Entertainment Alliance 2023–24: 128.6 t per episode" },
+    indieFeature: { label: "Indie feature", detail: "About 100 minutes", minutes: 100, t: { lo: 77, c: 271, hi: 631 }, scope: "full", cost: { lo: 1000000, c: 3000000, hi: 6000000 }, days: 25, crew: 60, source: "Carbon'Clap French feature average 271 t; Screen Ireland average 77 t; US medium feature 631 t" },
+    tentpole: { label: "Studio tentpole", detail: "About 130 minutes", minutes: 130, t: { lo: 1732, c: 2444, hi: 2996 }, scope: "pear", cost: { lo: 150000000, c: 250000000, hi: 430000000 }, days: 70, crew: 500, source: "Sustainable Entertainment Alliance 2023–24 tentpole bands; excludes VFX rendering" },
+  },
+  pearToFull: { lo: 1.15, c: 1.3, hi: 1.5 },   // assumption: the US benchmark leaves out food, materials, waste, post, and flight RF
+
+  /* ---------- Bottom-up factors for a custom shoot (UK DESNZ 2025 unless noted) ---------- */
+  factors: {
+    flightLongEconomy: 0.117 + 0.0246,   // kg per passenger-km with radiative forcing, plus upstream fuel
+    flightLongBusiness: 0.3394 + 0.0714,
+    flightShortEconomy: 0.126 + 0.025,
+    carKm: 0.167 + 0.04,                  // average car per km, plus upstream fuel
+    vanKm: 0.279,
+    truckKm: 0.495,
+    dieselKgPerL: 2.66 + 0.62,
+    dieselKwhPerL: 9.93,
+    genLPerDay: { small: 88, large: 230 },
+    gridKgPerKwh: { uk: 0.177, us: 0.35, ladwp: 0.229, eu: 0.21 },
+    hotelNight: { uk: 10.4, us: 16.1, canada: 7.4, france: 6.7, southAfrica: 51.4, japan: 39 },
+    mealKg: { mixed: 2.7, vegetarian: 0.8, beef: 9.9 },
+    timberKgPerT: 269.5,
+    steelKgPerT: 3824,
+    landfillWoodKgPerT: 925,
+    waterLPerPersonDay: 94,               // Raised by Wolves S2, the only published production water figure
+    vfxShotKwh: { simple: 150, typical: 1500, hero: 5000 },
+    vfxGrid: 0.35,
+  },
+
+
+  /* ---------- Scenes: what one scene adds to a shoot that's already happening ----------
+     practical and vfx are kg CO2e {lo, c, hi}.  seconds is the finished screen time the scene
+     produces.  takes is generated seconds per finished second for this kind of shot. */
+  scenes: [
+    { key: "explosion", title: "Bus explosion", seconds: 5, takes: { lo: 10, c: 30, hi: 100 },
+      practical: { lo: 794, c: 2124, hi: 6682 }, practicalLabel: "Practical explosion day",
+      vfx: { lo: 280, c: 525, hi: 1225 }, vfxLabel: "CG explosion shot",
+      body: ["The fireball is the small part.  The biggest film explosion on record, in <i>Spectre</i>, burned 8,418 L of kerosene, about 26 t CO2e, which is under 1% of a tentpole.  A typical bus gag adds crew and effects vehicles, a generator, and trucks for an extra day.",
+             "The destroyed vehicle is the swing factor.  A new 12 m bus embodies about 37 t CO2e, while a bus already headed for scrap arguably counts as zero, which is how we count it here."],
+      cost: "Practical: $10k–$11k for the stunt team, safety officer, and permits, plus an extra unit day ($15k–$120k on an indie, $315k–$1.6M on a studio film).  CG: $5k–$50k per destruction shot." },
+    { key: "chase", title: "Car chase day", seconds: 30, takes: { lo: 15, c: 40, hi: 120 },
+      practical: { lo: 1000, c: 2390, hi: 6000 }, practicalLabel: "One practical chase day",
+      vfx: { lo: 700, c: 1500, hi: 5800 }, vfxLabel: "CG chase, same screen time",
+      body: ["A chase day means picture cars in multiples, precision drivers, camera cars, road closures, and police.  <i>Furious 7</i> wrecked more than 230 cars, about 1,650 t CO2e if you count them as new.",
+             "Continuity from shot to shot is AI's weak spot, so expect more takes here than for a single wide shot."],
+      cost: "Practical: road closures from $312 per location plus police at $67–$78 an hour, before picture cars and crew.  CG: $3k–$50k per shot." },
+    { key: "crowd", title: "Crowd of 500 extras", seconds: 15, takes: { lo: 5, c: 10, hi: 30 },
+      practical: { lo: 2000, c: 5000, hi: 12500 }, practicalLabel: "500 extras for a day",
+      vfx: { lo: 108, c: 300, hi: 906 }, vfxLabel: "Digital crowd, 3 shots",
+      body: ["Crowds cost carbon through travel, meals, and holding areas, at about 10 kg per extra per day.  Beef versus vegetarian catering alone is a 6× difference per meal.",
+             "Foreground interaction still favors real people, so the usual answer is a small real crowd extended digitally."],
+      cost: "Practical: about $140k–$150k a day in SAG-AFTRA wages and benefits for 500 background actors, before meals, wardrobe, and holding.  CG: $1k–$25k per crowd shot." },
+    { key: "aerial", title: "Helicopter aerial day", seconds: 25, takes: { lo: 2, c: 5, hi: 20 },
+      practical: { lo: 1750, c: 2917, hi: 5830 }, practicalLabel: "Helicopter day",
+      vfx: { lo: 20, c: 33, hi: 60 }, vfxLabel: "Drone day instead",
+      body: ["An H125 helicopter burns about 190 L of jet fuel an hour, about 580 kg CO2e per flight hour.  A drone removes about 99% of that, so AI's extra saving over a drone is small.",
+             "Helicopters still win for altitude, speed, restricted airspace, and heavy camera payloads."],
+      cost: "Helicopter: $8k–$30k a day all-in.  Drone with crew: $2.5k–$8.5k.  Stock clip: $55–$499." },
+    { key: "abroad", title: "Establishing shots abroad", seconds: 15, takes: { lo: 5, c: 10, hi: 50 },
+      practical: { lo: 9900, c: 15941, hi: 46300 }, practicalLabel: "5 crew, London to Cape Town, a week",
+      vfx: { lo: 240, c: 500, hi: 900 }, vfxLabel: "3 matte paintings",
+      body: ["Five crew flying London to Cape Town for a week comes to about 16 t CO2e in economy and about 42 t in business class.  Flights are 65% of all emissions on ad shoots that fly.",
+             "This is AI's strongest case, and stock footage's, as long as the generated shot replaces the trip instead of adding to it."],
+      cost: "Practical: tens of thousands of dollars in travel.  Matte painting: $5k–$25k per shot.  Stock: $55–$499 per clip." },
+    { key: "set", title: "Large period set", seconds: 120, takes: { lo: 10, c: 30, hi: 100 },
+      practical: { lo: 30000, c: 57000, hi: 103000 }, practicalLabel: "Physical build",
+      vfx: { lo: 3000, c: 9450, hi: 28000 }, vfxLabel: "LED volume, 10 days",
+      body: ["End of life matters as much as materials.  Sending 50 t of set timber to landfill nearly doubles an illustrative build's footprint, while recycling it adds almost nothing.",
+             "LED volumes cut most of the build but draw real power: Sony measured one six-day shoot at about 16,000 kWh, 209% above its own spec-sheet estimate."],
+      cost: "Practical: a studio tentpole's set construction line ran $19M.  LED volume: $3.5k–$15k+ a day, or $35k–$50k a week for a standing stage." },
+    { key: "night", title: "Night exterior", seconds: 120, takes: { lo: 10, c: 30, hi: 100 },
+      practical: { lo: 680, c: 900, hi: 1120 }, practicalLabel: "Diesel-powered night",
+      vfx: { lo: 70, c: 120, hi: 170 }, vfxLabel: "Same night on grid power",
+      body: ["Big night exteriors run 18 kW lamps on condors from tow-plant generators, which are usually oversized: 83% of measured production generators never passed half load.",
+             "Swapping diesel for a grid tie-in or batteries already removes 60–90% of the lighting footprint."],
+      cost: "Mostly crew time at night rates.  A studio tentpole's lighting line ran $7.1M." },
+    { key: "rain", title: "Rain scene", seconds: 60, takes: { lo: 5, c: 10, hi: 30 },
+      practical: { lo: 118, c: 300, hi: 590 }, practicalLabel: "Practical rain, 4 hours",
+      vfx: { lo: 1, c: 3, hi: 6 }, vfxLabel: "Library rain elements",
+      body: ["Practical rain is modest on carbon but heavy on water.  A car-set rain rig runs 500–800 L a minute, so 4 hours uses 48,000–240,000 L.",
+             "Real rain on actors still reads best, which pushes productions toward a mix of both."],
+      cost: "Practical: part of the effects budget.  Composited rain: $2k–$20k per shot." },
+    { key: "impossible", title: "Creature or disaster shot", seconds: 5, takes: { lo: 15, c: 50, hi: 150 },
+      practical: null, practicalLabel: "",
+      vfx: { lo: 700, c: 1750, hi: 3150 }, vfxLabel: "Hero CG shot (2–9 MWh)",
+      body: ["When practical isn't possible, the comparison is AI against VFX, and heavy VFX is energy-hungry.  Weta's single longest shot on <i>Avatar: The Way of Water</i> took 13.6 million thread-hours.",
+             "Netflix's <i>El Eternauta</i> finished its AI building collapse about 10× faster than traditional VFX.  Hero creature performance is still hard to control with AI."],
+      cost: "CG creature: $15k–$50k per shot, and $200k–$600k per scene for a hero creature.  Digi-doubles start around $300k per shot." },
+    { key: "dialogue", title: "Two people talking", seconds: 120, takes: { lo: 10, c: 30, hi: 300 },
+      practical: { lo: 29, c: 105, hi: 140 }, practicalLabel: "On a standing set",
+      vfx: { lo: 600, c: 860, hi: 1300 }, vfxLabel: "A whole location day",
+      body: ["This is where AI's advantage disappears.  On a set that already exists, the scene adds only a few hours of lighting.",
+             "Performance and lip-sync push rerolls up, and at 30 or more takes per kept clip, AI can exceed the practical footprint."],
+      cost: "Practical: cheap at the margin on an existing set.  AI still needs heavy human work on performance and lip-sync." },
+  ],
+
+
+  /* ---------- Access: what happens when anyone can generate ----------
+     Rungs are annual kg CO2e.  The scenario uses Seedance 2.5 at 720p. */
+  access: {
+    model: "seedance25", res: "720p",
+    rungs: [
+      { key: "ukPerson", label: "One UK resident's year", kg: 4400, cls: "alt", src: "UK territorial emissions per person" },
+      { key: "usPerson", label: "One American's year", kg: 14300, cls: "alt", src: "US territorial emissions per person" },
+      { key: "indie", label: "One indie feature", kg: 271000, src: "Ecoprod Carbon'Clap 2024, French feature average" },
+      { key: "tentpole", label: "One studio tentpole", kg: 3177200, src: "Sustainable Entertainment Alliance 2023–24, raised 1.3× to full footprint" },
+      { key: "ukScreen", label: "All UK film and TV production, 2024", kg: 174437000, src: "BAFTA albert ACCELERATE 2025: 2,540 footprints" },
+      { key: "netflix", label: "Netflix's production footprint, 2024", kg: 425000000, src: "Netflix 2024 ESG report: 1,037,226 t total, 41% from production" },
+    ],
+    prose: [
+      "The calculator compares one production with one production.  That's the right question for a filmmaker, but it misses what makes generative video different: almost anyone can make it.  Shooting a scene takes a crew, a budget, and weeks of planning.  Generating one takes a text box and a subscription, so people generate far more video than anyone would ever shoot, and a lot of it is never watched by anyone.",
+      "One person generating a minute of Seedance 2.5 a day for a year emits about 480 kg CO2e, around a ninth of a UK resident's annual footprint.  That doesn't register on its own.  Scale changes the picture.  About 560 people at that pace match an indie feature every year, and about 6,600 match a studio tentpole.",
+      "The line that matters is where the total passes the production it could replace.  At a minute a day, about 360,000 people match all UK film and TV production.  That's a small fraction of the people already using these tools.",
+      "Watching changes the math too.  A studio tentpole spreads about 3,200 t across something like 100 million viewers, roughly 15 g per hour watched.  A ten-second clip generated five times over and watched by 20 people comes to about 20 kg per hour watched, more than 1,000× worse.  Video that nobody watches has no audience to spread its footprint across at all.",
+    ],
+    facts: [
+      { fig: "40 million", text: "videos made with Google's Veo 3 in its first seven weeks, by Google's own count." },
+      { fig: "600 million+", text: "videos generated on MiniMax's Hailuo platform by the end of 2025, per MiniMax's listing documents." },
+      { fig: "1,000×+", text: "more carbon per hour watched for a lightly viewed AI clip than for a studio tentpole seen by 100 million people." },
+    ],
+  },
+
+  /* ---------- Factor table for the method section ---------- */
+  factorTable: [
+    ["Seedance 2.5 GPU energy, 720p", "18 Wh/s", "5–40", "OpenRouter latency benchmark, Jegham et al. 2026, and ByteDance's gross margin"],
+    ["Seedance 2.5 resolution scaling", "480p 0.57×, 1080p 1.76×", "0.35–2.87×", "Pixels to the 0.7 power, bracketed by measured video models"],
+    ["MiniMax H3 GPU energy, 768p", "7 Wh/s", "2–20", "MiniMax's H3 benchmark, less sparse attention"],
+    ["Host and idle overhead", "1.43×", "1.15–2.1×", "Google's August 2025 serving study"],
+    ["Data-center PUE, Johor and China", "1.3", "1.15–1.5", "Operator reports and regional surveys"],
+    ["Grid, Johor (Seedance international API)", "602 g/kWh", "497–700", "Ember 2026"],
+    ["Grid, China (MiniMax)", "530 g/kWh", "404–650", "China MEE 2023 national factor"],
+    ["Water on site, Johor", "0.5 L per IT kWh", "0.12–1.9", "EcoLogits, Li et al., AWS, and Microsoft"],
+    ["Water behind electricity, Johor", "1.7 L/kWh", "1.2–3.9", "EcoLogits and WRI"],
+    ["Embodied hardware", "0.03 kg per GPU-hour", "0.006–0.055", "NVIDIA HGX carbon reports and Boavizta"],
+    ["Training amortization", "+5%", "1–30%", "Seaweed-7B's 665,000 GPU-hours spread over use"],
+    ["Seedance 2.5 price, 720p", "$0.231/s", "$0.13–$0.47", "BytePlus list, subscriptions, and resellers"],
+    ["MiniMax H3 price, 768p", "$0.08/s", "$0.047–$0.10", "MiniMax list, subscriptions, and Runway"],
+    ["US studio benchmark to full footprint", "1.3×", "1.15–1.5×", "Our assumption from albert and AdGreen category shares"],
+    ["Diesel", "3.28 kg/L", "", "UK DESNZ 2025, with upstream fuel"],
+    ["Long-haul flight, economy", "0.142 kg per passenger-km", "", "UK DESNZ 2025, with high-altitude warming and upstream fuel"],
+    ["Long-haul flight, business", "0.411 kg per passenger-km", "", "UK DESNZ 2025"],
+    ["Hotel night, US", "16.1 kg", "6.7–51.4 by country", "UK DESNZ 2025"],
+    ["Meal", "2.7 kg mixed", "0.8 vegetarian, 9.9 beef", "WRAP and DEFRA"],
+    ["Production water", "94 L per person per day", "", "<i>Raised by Wolves</i> season 2, the only published figure"],
+    ["VFX shot rendering", "1,500 kWh typical", "150–5,000", "Weta, DreamWorks, and render-farm disclosures"],
+    ["AI artist day rate", "$450", "$250–$1,000", "Freelance rate surveys, 2026"],
+  ],
+
+  /* ---------- Sources ---------- */
+  sources: [
+    { t: "Jegham, Gamazaychikov, and Luccioni, \"Lights, Camera, Carbon\" (arXiv 2607.04553, 2026)", u: "https://arxiv.org/abs/2607.04553" },
+    { t: "Google, \"Measuring the environmental impact of delivering AI at Google scale\" (arXiv 2508.15734, 2025)", u: "https://arxiv.org/abs/2508.15734" },
+    { t: "OpenRouter, Seedance 2.5 model page and latency data", u: "https://openrouter.ai/bytedance/seedance-2.5" },
+    { t: "ML.ENERGY leaderboard, text-to-video tasks", u: "https://ml.energy/leaderboard/data/tasks/text-to-video.json" },
+    { t: "MiniMax H3 open-weight release and benchmark", u: "https://github.com/MiniMax-AI/MiniMax-H3" },
+    { t: "BytePlus ModelArk pricing and region documentation", u: "https://ai.byteplus.com/ark/region:ap-southeast-1/docs/ModelArk/1569618" },
+    { t: "EcoLogits video generation methodology", u: "https://ecologits.ai/latest/methodology/video_generation/" },
+    { t: "Li et al., \"Making AI Less Thirsty\" (arXiv 2304.03271)", u: "https://arxiv.org/abs/2304.03271" },
+    { t: "Ember, Global Electricity Review 2026", u: "https://ember-energy.org/app/uploads/2026/04/Global-Electricity-Review-2026.pdf" },
+    { t: "BAFTA albert, ACCELERATE 2025 report", u: "https://baftaalbert.org/wp-content/uploads/2026/04/ACCELERATE-2025-BAFTA-albert-report.pdf" },
+    { t: "Sustainable Entertainment Alliance and Green Production Guide research", u: "https://greenproductionguide.com/industry-resources/research" },
+    { t: "AdGreen 2025 update review", u: "https://cdn.prod.website-files.com/66797978774108bfe3dddcde/686bda7bf91f06a9fbc55ebc_AdGreen%202025%20Update%20Review%20lo-res.pdf" },
+    { t: "AdGreen methodology", u: "https://www.weareadgreen.org/methodology" },
+    { t: "Ecoprod, Carbon'Clap and Ecoprod label report 2024", u: "https://ecoprod.com/wp-content/uploads/2025/04/english_RAPPORT-CARBONCLAP-ET-LABEL-ECOPROD-2024.pdf" },
+    { t: "UK DESNZ greenhouse gas conversion factors", u: "https://www.gov.uk/government/publications/greenhouse-gas-reporting-conversion-factors-2025" },
+    { t: "Netflix 2024 Environmental, Social, and Governance report", u: "https://s22.q4cdn.com/959853165/files/doc_downloads/2025/6/2024-Netflix-Environmental-Social-Governance-Report.pdf" },
+    { t: "Sony Pictures, virtual production greenhouse gas analysis", u: "https://sonypicturesgreenerworld.com/sites/sonypicturesgreenerworld.com/files/2022-09/Sony%20Pictures_Virtual%20Production%20GHG%20Analysis_2022_2.pdf" },
+    { t: "Hell Grind production coverage, CineD", u: "https://www.cined.com/hell-grind-the-95-minute-ai-feature-cannes-2026-says-it-never-screened/" },
+    { t: "Coca-Cola's 2025 AI holiday ad, VP Land", u: "https://www.vp-land.com/p/coca-cola-s-ai-holiday-ad-how-70-000-generated-clips-built-a-familiar-yet-new-commercial" },
+    { t: "House of David season 2 AI shots, VP Land", u: "https://www.vp-land.com/stories/house-of-david-season-2-used-253-ai-generated-shots-here-s-how-they-did-it" },
+    { t: "Svedka's AI Super Bowl ad, The Hollywood Reporter", u: "https://www.hollywoodreporter.com/business/digital/svedka-super-bowl-ad-ai-watch-1236493612/" },
+    { t: "Airbus H125 operating costs, Aviacost", u: "https://aviacost.com/aircraft-operating-cost-calculator/airbus-h125" },
+    { t: "Full research streams, calculations, and timing data", u: "https://github.com/adachis/green-film-comparison-tool/tree/claude/awesome-dirac-80u34i/research" },
+  ],
+
+  /* ---------- Cost context ---------- */
+  laborDayRate: { lo: 250, c: 450, hi: 1000 },    // AI artist day rate, USD
+
+  /* ---------- Everyday equivalents ---------- */
+  equiv: {
+    carKmKg: 0.167,         // average car, kg CO2e per km
+    phoneChargeWh: 15,      // one full smartphone charge, approximately
+    showerL: 65,            // an 8-minute shower
+    ukPersonYearT: 4.4,     // UK territorial CO2e per person per year
+    usPersonYearT: 14.3,
+  },
+};
+if (typeof module !== "undefined") module.exports = DATA;
+
+/* Calculation engine.  Pure functions, no DOM.  Every result carries a central value and a
+   likely range.  Ranges combine each factor's own uncertainty in log space (a root-sum-square
+   of the log ratios), so the band reflects the combined uncertainty instead of stacking every
+   worst case at once. */
+const Model = (() => {
+  const D = typeof DATA !== "undefined" ? DATA : require("./data.js");
+
+  // Combine independent multiplicative factors given as {lo, c, hi}.
+  function combine(factors) {
+    let c = 1, down = 0, up = 0;
+    for (const f of factors) {
+      c *= f.c;
+      down += Math.log(f.c / f.lo) ** 2;
+      up += Math.log(f.hi / f.c) ** 2;
+    }
+    return { lo: c * Math.exp(-Math.sqrt(down)), c, hi: c * Math.exp(Math.sqrt(up)) };
+  }
+  const fixed = (v) => ({ lo: v, c: v, hi: v });
+  const scale = (r, k) => ({ lo: r.lo * k, c: r.c * k, hi: r.hi * k });
+  const add = (a, b) => ({ lo: a.lo + b.lo, c: a.c + b.c, hi: a.hi + b.hi });
+
+  /* One generated second of AI video, at facility level. */
+  function perGeneratedSecond(modelKey, res, regionKey) {
+    const m = D.models[modelKey];
+    const r = m.resolutions[res] || m.resolutions[m.defaultRes];
+    const reg = D.regions[regionKey || m.region];
+    const gpuWh = combine([m.gpuWh, r.resFactor]);                        // GPU-only Wh per second
+    const facWh = combine([m.gpuWh, r.resFactor, D.hostMultiplier, reg.pue]);
+    const itWh = combine([m.gpuWh, r.resFactor, D.hostMultiplier]);
+    const opKg = combine([m.gpuWh, r.resFactor, D.hostMultiplier, reg.pue, reg.grid]);
+    const embKg = combine([m.gpuWh, r.resFactor, D.embodiedKgPerGpuHour]);
+    const train = { lo: 1 + D.training.lo, c: 1 + D.training.c, hi: 1 + D.training.hi };
+    // kg CO2e per second: (operational + embodied) × training uplift
+    const co2 = combine([
+      { lo: (opKg.lo + embKg.lo / D.gpuKw) / 1000, c: (opKg.c + embKg.c / D.gpuKw) / 1000, hi: (opKg.hi + embKg.hi / D.gpuKw) / 1000 },
+      train,
+    ]);
+    // water: IT energy × (on-site WUE) + facility energy × (off-site water per kWh)
+    const wOn = combine([itWh, reg.wueOn]);
+    const wOff = combine([facWh, reg.wueOff]);
+    const water = { lo: (wOn.lo + wOff.lo) / 1000, c: (wOn.c + wOff.c) / 1000, hi: (wOn.hi + wOff.hi) / 1000 };
+    return { gpuWh, facWh, kWh: scale(facWh, 1 / 1000), co2Kg: co2, waterL: water, price: r.price, region: reg };
+  }
+
+  /* A whole AI production. */
+  function aiProduction({ modelKey, res, regionKey, finishedSec, genPerFinished, styleKey }) {
+    const s = D.styles[styleKey];
+    const ratio = genPerFinished != null ? genPerFinished : s.genPerFinished.c;
+    const genSec = finishedSec * ratio;
+    const p = perGeneratedSecond(modelKey, res, regionKey);
+    const minutes = finishedSec / 60;
+    const laborDays = minutes * s.laborDaysPerMin;
+    return {
+      genSec, ratio,
+      kWh: scale(p.kWh, genSec),
+      co2Kg: scale(p.co2Kg, genSec),
+      waterL: scale(p.waterL, genSec),
+      genCost: scale(p.price, genSec),
+      laborCost: scale(D.laborDayRate, laborDays),
+      laborDays,
+      takesRange: s.genPerFinished,
+      co2AtTakes: { lo: p.co2Kg.c * finishedSec * s.genPerFinished.lo, hi: p.co2Kg.c * finishedSec * s.genPerFinished.hi },
+      perSecond: p,
+    };
+  }
+
+  /* A conventional production from a benchmark, scaled by runtime and scope. */
+  function benchmarkProduction({ prodKey, finishedSec, fullScope }) {
+    const b = D.productions[prodKey];
+    const runtimeScale = finishedSec / 60 / b.minutes;
+    let t = scale(b.t, runtimeScale);
+    let scopeNote = "";
+    if (fullScope && b.scope === "pear") {
+      t = combine([t, D.pearToFull]);
+      scopeNote = "Raised by 1.3× (1.15–1.5×) to add the food, materials, post, and flight warming the US studio benchmark leaves out.";
+    } else if (!fullScope && b.scope === "full") {
+      t = combine([t, { lo: 1 / D.pearToFull.hi, c: 1 / D.pearToFull.c, hi: 1 / D.pearToFull.lo }]);
+      scopeNote = "Lowered by 1.3× to match the narrower US studio benchmark scope.";
+    }
+    return { co2Kg: scale(t, 1000), cost: scale(b.cost, runtimeScale), runtimeScale, scopeNote, bench: b };
+  }
+
+  /* A conventional production built from activity data. */
+  function customProduction(x, fullScope) {
+    const F = D.factors;
+    const lines = [];
+    const personDays = x.crew * x.days;
+    const commute = personDays * x.commuteKm / 1.3 * F.carKm;
+    lines.push(["Crew travel to set", commute]);
+    const flightF = x.flightClass === "business" ? F.flightLongBusiness : x.flightKm < 3700 ? F.flightShortEconomy : F.flightLongEconomy;
+    const flights = x.flyers * x.flightKm * 2 * (fullScope ? flightF : flightF / 1.7);
+    lines.push(["Flights", flights]);
+    const hotels = x.hotelNights * (F.hotelNight[x.hotelCountry] || F.hotelNight.us);
+    lines.push(["Hotels", hotels]);
+    const genL = x.genDays * F.genLPerDay[x.genSize];
+    const generators = genL * F.dieselKgPerL;
+    lines.push(["Generators", generators]);
+    const trucks = x.days * x.trucks * 80 * F.truckKm;
+    lines.push(["Trucks and vans", trucks]);
+    const meals = fullScope ? personDays * 1.5 * F.mealKg[x.menu] : 0;
+    lines.push(["Catering", meals]);
+    const materials = fullScope ? x.timberT * F.timberKgPerT + x.steelT * F.steelKgPerT + x.timberT * x.landfill * F.landfillWoodKgPerT : 0;
+    lines.push(["Set materials and waste", materials]);
+    const vfxKwh = x.vfxShots * F.vfxShotKwh[x.vfxTier];
+    const vfx = fullScope ? vfxKwh * F.vfxGrid : 0;
+    lines.push(["VFX rendering", vfx]);
+    const total = lines.reduce((a, l) => a + l[1], 0);
+    const kWh = genL * F.dieselKwhPerL + vfxKwh;
+    const water = personDays * F.waterLPerPersonDay;
+    const vfxCost = { simple: 4000, typical: 20000, hero: 50000 }[x.vfxTier] * x.vfxShots;
+    const cost = personDays * 700 * 1.3 + x.flyers * (x.flightClass === "business" ? 5000 : 1200) + x.hotelNights * 180 + vfxCost;
+    return {
+      co2Kg: { lo: total * 0.75, c: total, hi: total * 1.4 },
+      kWh: { lo: kWh * 0.8, c: kWh, hi: kWh * 1.25 },
+      waterL: { lo: water * 0.5, c: water, hi: water * 2 },
+      cost: { lo: cost * 0.7, c: cost, hi: cost * 1.5 },
+      lines,
+    };
+  }
+
+  /* The access problem: annual footprint for a pattern of casual use. */
+  function usageYear(secondsPerDay, modelKey = "seedance25", res = "720p") {
+    const p = perGeneratedSecond(modelKey, res);
+    return scale(p.co2Kg, secondsPerDay * 365);
+  }
+
+  return { combine, fixed, scale, add, perGeneratedSecond, aiProduction, benchmarkProduction, customProduction, usageYear };
+})();
+if (typeof module !== "undefined") module.exports = Model;
+
+/* Page wiring.  Reads DATA, computes with Model, and draws everything.  No framework. */
+(() => {
+  const D = DATA, M = Model;
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+
+  /* ---------- Number formatting ---------- */
+  function sig(n, d = 2) {
+    if (!isFinite(n)) return "–";
+    if (n === 0) return "0";
+    const p = Math.pow(10, d - Math.ceil(Math.log10(Math.abs(n))));
+    const v = Math.round(n * p) / p;
+    return v.toLocaleString("en-US", { maximumFractionDigits: Math.max(0, d - Math.ceil(Math.log10(Math.abs(v)))) });
+  }
+  const unitFmt = {
+    co2(kg, d = 2) {
+      if (kg < 1) return sig(kg * 1000, d) + " g";
+      if (kg < 1000) return sig(kg, d) + " kg";
+      if (kg < 1e9) return sig(kg / 1000, d) + " t";
+      return sig(kg / 1e9, d) + " Mt";
+    },
+    kwh(k, d = 2) {
+      if (k < 1) return sig(k * 1000, d) + " Wh";
+      if (k < 1000) return sig(k, d) + " kWh";
+      if (k < 1e6) return sig(k / 1000, d) + " MWh";
+      return sig(k / 1e6, d) + " GWh";
+    },
+    water(l, d = 2) {
+      if (l < 1) return sig(l * 1000, d) + " mL";
+      if (l < 1e6) return sig(l, d) + " L";
+      return sig(l / 1e6, d) + " million L";
+    },
+    usd(x, d = 2) {
+      if (x < 1) return "$" + x.toFixed(2);
+      if (x < 1e6) return "$" + sig(x, x < 100 ? d : Math.max(d, 2));
+      return "$" + sig(x / 1e6, d) + "M";
+    },
+  };
+  const rangeTxt = (f, r) => f(r.lo) + "–" + f(r.hi);
+  const times = (x) => sig(x, 2) + "×";
+  const fmtRatio = (r) => (r < 10 ? (Math.round(r * 10) / 10).toString() : sig(r, 2)) + "×";
+  const fmtRuntime = (sec) => {
+    if (sec < 90) return sig(sec, 3) + " s";
+    const m = Math.floor(sec / 60), s = Math.round(sec % 60);
+    return s ? `${m} min ${s} s` : `${m} min`;
+  };
+
+  /* ---------- State ---------- */
+  const FORMATS = [
+    { key: "social", label: "Social video", minutes: 1, style: "solo", bench: "micro" },
+    { key: "microdrama", label: "Micro-drama episode", minutes: 2, style: "microdrama", bench: "micro" },
+    { key: "music", label: "Music video", minutes: 3.5, style: "pro", bench: "musicVideo" },
+    { key: "ad", label: "30-second ad", minutes: 0.5, style: "pro", bench: "commercial" },
+    { key: "adHigh", label: "Big-budget ad", minutes: 0.5, style: "flagship", bench: "commercialHigh" },
+    { key: "short", label: "Short film", minutes: 10, style: "solo", bench: "shortFilm" },
+    { key: "tv", label: "TV episode", minutes: 50, style: "feature", bench: "tvEpisode" },
+    { key: "feature", label: "Indie feature", minutes: 100, style: "feature", bench: "indieFeature" },
+    { key: "tentpole", label: "Studio tentpole", minutes: 130, style: "feature", bench: "tentpole" },
+  ];
+  const S = {
+    format: "ad", minutes: 0.5, model: "seedance25", res: "720p", style: "pro",
+    ratio: D.styles.pro.genPerFinished.c, region: null, mode: "bench", bench: "commercial", full: true,
+  };
+  const regionFor = () => S.region || D.models[S.model].region;
+  const BENCH_NOUN = {
+    micro: "small local shoot", musicVideo: "local music video shoot", commercial: "typical commercial shoot",
+    commercialHigh: "high-budget commercial shoot", shortFilm: "short film shoot", tvEpisode: "one-hour TV drama episode",
+    indieFeature: "indie feature shoot", tentpole: "studio tentpole",
+  };
+
+  /* ---------- Tooltip ---------- */
+  const tip = $("tip");
+  function showTip(e, html) {
+    tip.innerHTML = html;
+    tip.hidden = false;
+    const r = tip.getBoundingClientRect();
+    let x = e.clientX + 14, y = e.clientY + 14;
+    if (x + r.width > innerWidth - 8) x = e.clientX - r.width - 14;
+    if (y + r.height > innerHeight - 8) y = e.clientY - r.height - 14;
+    tip.style.left = Math.max(8, x) + "px";
+    tip.style.top = Math.max(8, y) + "px";
+  }
+  function showTipAt(el, html) {
+    const b = el.getBoundingClientRect();
+    showTip({ clientX: b.left + b.width / 2, clientY: b.bottom }, html);
+  }
+  document.addEventListener("pointerover", (e) => {
+    const t = e.target.closest("[data-tip]");
+    if (t) showTip(e, t.getAttribute("data-tip"));
+  });
+  document.addEventListener("pointermove", (e) => {
+    const t = e.target.closest("[data-tip]");
+    if (t) showTip(e, t.getAttribute("data-tip"));
+    else tip.hidden = true;
+  });
+  document.addEventListener("focusin", (e) => {
+    const t = e.target.closest("[data-tip]");
+    if (t) showTipAt(t, t.getAttribute("data-tip"));
+  });
+  document.addEventListener("focusout", () => (tip.hidden = true));
+  addEventListener("scroll", () => (tip.hidden = true), { passive: true });
+
+  /* ---------- Log-scale range chart ----------
+     rows: [{label, r:{lo,c,hi}, cls:"ai"|"conv"|"alt", tip}] drawn on one shared log axis. */
+  function rangeChart(el, rows, fmt, opts = {}) {
+    const W = Math.max(240, el.clientWidth || 320);
+    // On narrow screens long row labels sit above their bars instead of beside them.
+    const stacked = !!opts.stack && W < 560;
+    const labelW = stacked ? 0 : opts.labelW != null ? opts.labelW : 64;
+    const rowH = (opts.rowH || 24) + (stacked ? 12 : 0), top = 6, axisH = 20;
+    const vals = rows.filter((r) => r.r).flatMap((r) => [r.r.lo, r.r.hi]).filter((v) => v > 0);
+    let lo = Math.floor(Math.log10(Math.min(...vals)));
+    let hi = Math.ceil(Math.log10(Math.max(...vals)));
+    if (hi - lo < 2) { lo -= 1; hi += hi - lo < 2 ? 1 : 0; }
+    const x0 = stacked ? 4 : labelW + 8, x1 = W - (opts.bars ? 64 : 12);
+    const x = (v) => x0 + ((Math.log10(v) - lo) / (hi - lo)) * (x1 - x0);
+    const H = top + rows.length * rowH + axisH;
+    let s = `<svg class="logchart" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}" role="img" aria-label="${esc(opts.aria || "Range chart")}">`;
+    const maxLabels = Math.max(2, Math.floor((x1 - x0) / 62) + 1);
+    const step = Math.max(1, Math.ceil((hi - lo) / (maxLabels - 1)));
+    for (let p = lo; p <= hi; p += 1) {
+      const gx = x(Math.pow(10, p));
+      s += `<line class="grid" x1="${gx}" x2="${gx}" y1="${top - 4}" y2="${top + rows.length * rowH}"/>`;
+      if ((p - lo) % step) continue;
+      const anchor = p === lo ? "start" : p === hi ? "end" : "middle";
+      s += `<text x="${gx}" y="${H - 4}" text-anchor="${anchor}">${esc(fmt(Math.pow(10, p), 1))}</text>`;
+    }
+    rows.forEach((row, i) => {
+      const cy = top + i * rowH + rowH / 2 + (stacked ? 7 : 0);
+      if (stacked) s += `<text class="rowlab" x="0" y="${cy - 11}">${esc(row.label)}</text>`;
+      else if (labelW) s += `<text class="rowlab" x="0" y="${cy + 4}">${esc(row.label)}</text>`;
+      if (!row.r) {
+        s += `<text x="${x0}" y="${cy + 4}">${esc(row.empty || "Not possible")}</text>`;
+        return;
+      }
+      const a = x(Math.max(row.r.lo, Math.pow(10, lo))), b = x(Math.min(row.r.hi, Math.pow(10, hi)));
+      const t = row.tip || `${row.label}: ${fmt(row.r.c)} (${rangeTxt(fmt, row.r)})`;
+      s += `<g class="mk mk-${row.cls}" tabindex="0" data-tip="${esc(t)}">`;
+      s += `<rect class="hit" x="${x0 - 4}" y="${cy - rowH / 2}" width="${x1 - x0 + 8}" height="${rowH}"/>`;
+      if (opts.bars) {
+        const xc = x(row.r.c);
+        s += `<rect class="bar" x="${x0}" y="${cy - 5}" width="${Math.max(6, xc - x0)}" height="10" rx="4"/>`;
+        if (row.r.hi > row.r.lo * 1.01) s += `<line class="whisker" x1="${a}" x2="${b}" y1="${cy}" y2="${cy}"/><line class="whisker" x1="${a}" x2="${a}" y1="${cy - 5}" y2="${cy + 5}"/><line class="whisker" x1="${b}" x2="${b}" y1="${cy - 5}" y2="${cy + 5}"/>`;
+        s += `<text class="val" x="${Math.max(xc, b) + 6}" y="${cy + 4}">${esc(fmt(row.r.c))}</text>`;
+      } else {
+        s += `<rect class="band" x="${a}" y="${cy - 4}" width="${Math.max(8, b - a)}" height="8" rx="4"/>`;
+        s += `<circle class="dot" cx="${x(row.r.c)}" cy="${cy}" r="6"/>`;
+      }
+      s += `</g>`;
+    });
+    s += "</svg>";
+    el.innerHTML = s;
+  }
+
+  /* ---------- Controls ---------- */
+  function pills(el, items, current, onPick) {
+    el.innerHTML = items.map((it) => `<button type="button" class="pill" data-k="${it.key}" aria-pressed="${it.key === current}">${esc(it.label)}</button>`).join("");
+    el.onclick = (e) => {
+      const b = e.target.closest("button[data-k]");
+      if (b) onPick(b.dataset.k);
+    };
+  }
+  function setPressed(el, key) {
+    el.querySelectorAll("button[data-k]").forEach((b) => b.setAttribute("aria-pressed", b.dataset.k === key));
+  }
+  function options(sel, items, current) {
+    sel.innerHTML = items.map(([v, t]) => `<option value="${v}"${v === current ? " selected" : ""}>${esc(t)}</option>`).join("");
+  }
+
+  const takes = $("takes");
+  const ratioToSlider = (r) => Math.round(250 * Math.log10(Math.max(1, r)));
+  const sliderToRatio = (v) => {
+    const r = Math.pow(10, v / 250);
+    return r < 10 ? Math.round(r * 10) / 10 : Number(sig(r, 2).replace(/,/g, ""));
+  };
+
+  function initControls() {
+    pills($("formatPills"), FORMATS, S.format, (k) => {
+      const f = FORMATS.find((x) => x.key === k);
+      Object.assign(S, { format: k, minutes: f.minutes, style: f.style, ratio: D.styles[f.style].genPerFinished.c, bench: f.bench });
+      $("runtimeMin").value = f.minutes;
+      $("bench").value = f.bench;
+      setPressed($("formatPills"), k);
+      setPressed($("stylePills"), f.style);
+      syncTakes();
+      update();
+    });
+    $("runtimeMin").addEventListener("input", (e) => {
+      const v = parseFloat(e.target.value);
+      if (v > 0) { S.minutes = v; S.format = null; setPressed($("formatPills"), ""); update(); }
+    });
+
+    options($("model"), Object.entries(D.models).map(([k, m]) => [k, m.label]), S.model);
+    $("model").addEventListener("change", (e) => {
+      S.model = e.target.value;
+      S.res = D.models[S.model].defaultRes;
+      fillRes();
+      if (!S.regionTouched) S.region = null;
+      $("region").value = regionFor();
+      update();
+    });
+    fillRes();
+    $("res").addEventListener("change", (e) => { S.res = e.target.value; update(); });
+
+    pills($("stylePills"), Object.entries(D.styles).map(([k, s]) => ({ key: k, label: s.label })), S.style, (k) => {
+      S.style = k;
+      S.ratio = D.styles[k].genPerFinished.c;
+      setPressed($("stylePills"), k);
+      syncTakes();
+      update();
+    });
+    takes.addEventListener("input", () => { S.ratio = sliderToRatio(+takes.value); $("takesOut").textContent = fmtRatio(S.ratio); update(); });
+    syncTakes();
+
+    options($("region"), Object.entries(D.regions).map(([k, r]) => [k, r.label]), regionFor());
+    $("region").addEventListener("change", (e) => {
+      S.region = e.target.value;
+      S.regionTouched = e.target.value !== D.models[S.model].region;
+      update();
+    });
+
+    options($("bench"), Object.entries(D.productions).map(([k, p]) => [k, `${p.label} (${p.detail})`]), S.bench);
+    $("bench").addEventListener("change", (e) => { S.bench = e.target.value; update(); });
+
+    const modeBtns = { bench: $("modeBench"), custom: $("modeCustom") };
+    Object.entries(modeBtns).forEach(([k, b]) => b.addEventListener("click", () => {
+      S.mode = k;
+      modeBtns.bench.setAttribute("aria-pressed", k === "bench");
+      modeBtns.custom.setAttribute("aria-pressed", k === "custom");
+      $("benchBox").hidden = k !== "bench";
+      $("customBox").hidden = k !== "custom";
+      update();
+    }));
+    $("customBox").addEventListener("input", update);
+    $("customBox").addEventListener("change", update);
+
+    const scopeBtns = { full: $("scopeFull"), pear: $("scopePear") };
+    Object.entries(scopeBtns).forEach(([k, b]) => b.addEventListener("click", () => {
+      S.full = k === "full";
+      scopeBtns.full.setAttribute("aria-pressed", S.full);
+      scopeBtns.pear.setAttribute("aria-pressed", !S.full);
+      $("scopeHint").textContent = S.full
+        ? "Counts flights with their high-altitude warming effect, food, materials, waste, and post.  This is the fair match for AI's all-in compute number."
+        : "Counts only fuel, utilities, hotels, and flights without their high-altitude warming effect, the way the US studio benchmark does.  It flatters the shoot.";
+      update();
+    }));
+
+    $("tableToggle").addEventListener("click", (e) => {
+      const t = $("resultTable");
+      t.hidden = !t.hidden;
+      e.target.setAttribute("aria-expanded", !t.hidden);
+      e.target.textContent = t.hidden ? "Show the numbers as a table" : "Hide the table";
+    });
+  }
+  function fillRes() {
+    const m = D.models[S.model];
+    options($("res"), Object.keys(m.resolutions).map((r) => [r, r]), S.res);
+  }
+  function syncTakes() {
+    takes.value = ratioToSlider(S.ratio);
+    $("takesOut").textContent = fmtRatio(S.ratio);
+    const st = D.styles[S.style];
+    $("styleExample").textContent = `${st.takes}, usually ${st.genPerFinished.lo}–${sig(st.genPerFinished.hi)}× overall.  ${st.example}.`;
+  }
+
+  function readCustom() {
+    const n = (id) => Math.max(0, parseFloat($(id).value) || 0);
+    return {
+      crew: Math.max(1, n("cCrew")), days: Math.max(1, n("cDays")), commuteKm: n("cCommute"),
+      flyers: n("cFlyers"), flightKm: n("cFlightKm"), flightClass: $("cClass").value,
+      hotelNights: n("cHotel"), hotelCountry: $("cHotelCountry").value, menu: $("cMenu").value,
+      genDays: n("cGenDays"), genSize: $("cGenSize").value, trucks: n("cTrucks"),
+      timberT: n("cTimber"), steelT: n("cSteel"), landfill: Math.min(100, n("cLandfill")) / 100,
+      vfxShots: n("cVfx"), vfxTier: $("cVfxTier").value,
+    };
+  }
+
+  /* ---------- Conventional energy and water for benchmarks ----------
+     Benchmarks report carbon only.  Energy is estimated as the fuel and power share of the
+     footprint (about 70%) at about 0.3 kg CO2e per kWh of diesel, petrol, or jet fuel.
+     Water uses the one published production figure: 94 L per person per shoot day. */
+  function benchExtras(b, conv) {
+    const kWh = M.combine([conv.co2Kg, { lo: 0.5, c: 0.7, hi: 0.85 }, { lo: 1 / 0.35, c: 1 / 0.3, hi: 1 / 0.25 }]);
+    const pd = b.crew * b.days * conv.runtimeScale;
+    const water = { lo: pd * D.factors.waterLPerPersonDay * 0.5, c: pd * D.factors.waterLPerPersonDay, hi: pd * D.factors.waterLPerPersonDay * 2 };
+    return { kWh, water };
+  }
+
+  /* ---------- Main update ---------- */
+  let last = null;
+  function update() {
+    const finishedSec = S.minutes * 60;
+    $("runtimeSec").textContent = fmtRuntime(finishedSec);
+    const region = regionFor();
+    $("regionWhy").textContent = D.regions[region].why + (region !== D.models[S.model].region ? `  ${D.models[S.model].label} normally runs in ${D.regions[D.models[S.model].region].label}, so this is a what-if.` : "");
+
+    const ai = M.aiProduction({ modelKey: S.model, res: S.res, regionKey: region, finishedSec, genPerFinished: S.ratio, styleKey: S.style });
+    const aiCost = M.add(ai.genCost, ai.laborCost);
+
+    let conv, convKWh, convWater, convCost, convLabel, convNotes = [];
+    if (S.mode === "bench") {
+      const c = M.benchmarkProduction({ prodKey: S.bench, finishedSec, fullScope: S.full });
+      const ex = benchExtras(c.bench, c);
+      conv = c.co2Kg; convKWh = ex.kWh; convWater = ex.water; convCost = c.cost;
+      convLabel = BENCH_NOUN[S.bench] || c.bench.label.toLowerCase();
+      $("benchSource").textContent = `Source: ${c.bench.source}.`;
+      if (c.scopeNote) convNotes.push(c.scopeNote);
+      if (c.runtimeScale > 3 || c.runtimeScale < 0.34) convNotes.push(`The benchmark is for about ${sig(c.bench.minutes)} minutes of finished video, so we scaled it by ${sig(c.runtimeScale, 2)}×.  Shoots don't scale that neatly, so treat this as rough.`);
+    } else {
+      const c = M.customProduction(readCustom(), S.full);
+      conv = c.co2Kg; convKWh = c.kWh; convWater = c.waterL; convCost = c.cost;
+      convLabel = "your shoot";
+      last = { lines: c.lines };
+    }
+
+    const ratio = conv.c / ai.co2Kg.c;
+    const verdict = $("verdict");
+    if (ratio >= 1.25) verdict.textContent = `The AI version emits about ${times(ratio)} less CO2e.`;
+    else if (ratio > 0.8) verdict.textContent = "On carbon, it's roughly a tie.";
+    else verdict.textContent = `The AI version emits about ${times(1 / ratio)} more CO2e.`;
+    const overlap = ai.co2Kg.hi >= conv.lo && conv.hi >= ai.co2Kg.lo;
+    const costRatio = convCost.c / aiCost.c;
+    const costLine = costRatio >= 1.25 ? `It costs about ${times(costRatio)} less, mostly because of people, not generation.` : costRatio > 0.8 ? "Costs come out about even." : `It costs about ${times(1 / costRatio)} more.`;
+    $("verdictSub").textContent = `${sig(ai.genSec, 3)} generated seconds for ${fmtRuntime(finishedSec)} of finished video (${fmtRatio(S.ratio)}), against ${/^[aeiou]/.test(convLabel) ? "an" : "a"} ${convLabel}.  ${overlap ? "The likely ranges overlap, so the direction is less certain than the headline.  " : ""}${costLine}`;
+
+    const metrics = [
+      { name: "CO2e", fmt: unitFmt.co2, a: ai.co2Kg, c: conv },
+      { name: "Energy", fmt: unitFmt.kwh, a: ai.kWh, c: convKWh, note: S.mode === "bench" ? "Shoot energy is estimated from its footprint: fuel and power, about 70% of it." : "Shoot energy counts generator fuel and VFX rendering." },
+      { name: "Water", fmt: unitFmt.water, a: ai.waterL, c: convWater, note: "AI water includes cooling and the water behind the electricity.  Shoot water counts on-set use only." },
+      { name: "Cost", fmt: unitFmt.usd, a: aiCost, c: convCost, note: `AI cost is ${unitFmt.usd(ai.genCost.c)} of generation at list price plus ${sig(ai.laborDays, 2)} days of human work.` },
+    ];
+    const box = $("metrics");
+    box.innerHTML = metrics.map((m, i) => {
+      const r = m.c.c / m.a.c;
+      const rt = r >= 1 ? `AI is ${times(r)} lower` : `AI is ${times(1 / r)} higher`;
+      return `<div class="metric">
+        <div class="metric-top"><span class="metric-name">${m.name}</span><span class="metric-ratio">${rt}</span></div>
+        <div class="metric-vals">
+          <div class="mval"><span class="who"><i style="background:var(--viz-ai)"></i>AI version</span><b>${m.fmt(m.a.c)}</b><span class="rng">${rangeTxt(m.fmt, m.a)}</span></div>
+          <div class="mval"><span class="who"><i style="background:var(--viz-conv)"></i>Conventional</span><b>${m.fmt(m.c.c)}</b><span class="rng">${rangeTxt(m.fmt, m.c)}</span></div>
+        </div>
+        <div class="chart" id="mchart${i}"></div>
+        ${m.note ? `<p class="hint">${esc(m.note)}</p>` : ""}
+      </div>`;
+    }).join("");
+    metrics.forEach((m, i) => rangeChart($("mchart" + i), [
+      { label: "AI", r: m.a, cls: "ai", tip: `AI version: ${m.fmt(m.a.c)}<br>Likely ${rangeTxt(m.fmt, m.a)}` },
+      { label: "Shoot", r: m.c, cls: "conv", tip: `Conventional: ${m.fmt(m.c.c)}<br>Likely ${rangeTxt(m.fmt, m.c)}` },
+    ], m.fmt, { labelW: 44, aria: `${m.name}: AI ${m.fmt(m.a.c)}, conventional ${m.fmt(m.c.c)}` }));
+
+    // Notes
+    const notes = [];
+    const perFinishedSec = ai.perSecond.co2Kg.c * finishedSec;
+    const breakEven = conv.c / perFinishedSec;
+    if (breakEven > S.ratio) notes.push(`AI would match the shoot's footprint at about ${fmtRatio(breakEven)} generated seconds per finished second.  You're at ${fmtRatio(S.ratio)}.`);
+    else notes.push(`AI already passes the shoot's footprint at ${fmtRatio(breakEven)} generated seconds per finished second, and you're at ${fmtRatio(S.ratio)}.`);
+    const st = D.styles[S.style];
+    notes.push(`${st.label} usually runs ${st.genPerFinished.lo}–${sig(st.genPerFinished.hi)}×, which puts the AI footprint between ${unitFmt.co2(ai.co2AtTakes.lo)} and ${unitFmt.co2(ai.co2AtTakes.hi)}.`);
+    convNotes.forEach((n) => notes.push(n));
+    if (S.model === "seedance25" && S.res === "1080p") notes.push("Drafting at 480p and rendering only the keepers at 1080p cuts the AI footprint by 65–80%.");
+    $("notes").innerHTML = notes.map((n) => `<li>${esc(n)}</li>`).join("");
+
+    // Table
+    let t = `<table class="data-tbl"><thead><tr><th>Measure</th><th>AI</th><th>AI range</th><th>Shoot</th><th>Shoot range</th></tr></thead><tbody>`;
+    metrics.forEach((m) => {
+      t += `<tr><td>${m.name}</td><td class="num">${m.fmt(m.a.c)}</td><td class="num">${rangeTxt(m.fmt, m.a)}</td><td class="num">${m.fmt(m.c.c)}</td><td class="num">${rangeTxt(m.fmt, m.c)}</td></tr>`;
+    });
+    t += `<tr><td>Generated seconds</td><td class="num">${sig(ai.genSec, 3)}</td><td></td><td></td><td></td></tr>`;
+    t += `<tr><td>Generation cost</td><td class="num">${unitFmt.usd(ai.genCost.c)}</td><td class="num">${rangeTxt(unitFmt.usd, ai.genCost)}</td><td></td><td></td></tr>`;
+    t += `<tr><td>Human work</td><td class="num">${unitFmt.usd(ai.laborCost.c)}</td><td class="num">${rangeTxt(unitFmt.usd, ai.laborCost)}</td><td></td><td></td></tr>`;
+    if (S.mode === "custom" && last) last.lines.forEach(([k, v]) => { t += `<tr><td>${esc(k)}</td><td></td><td></td><td class="num">${unitFmt.co2(v)}</td><td></td></tr>`; });
+    t += "</tbody></table>";
+    $("resultTable").innerHTML = t;
+
+    renderScenes();
+    renderAccess();
+  }
+
+  /* ---------- Scenes ---------- */
+  const sceneVehicles = { explosion: { add: 37100, text: "Count the bus as a new vehicle (+37 t)" }, chase: { add: 21600, text: "Count 3 wrecked picture cars as new (+22 t, the <i>Furious 7</i> average of 7.2 t each)" } };
+  const sceneState = {};
+  function sceneAI(sc) {
+    const p = M.perGeneratedSecond(S.model, S.res, regionFor());
+    return M.scale(M.combine([p.co2Kg, sc.takes]), sc.seconds);
+  }
+  function buildScenes() {
+    $("sceneList").innerHTML = D.scenes.map((sc) => `
+      <details class="scene" id="scene-${sc.key}">
+        <summary>
+          <div><h3>${esc(sc.title)}</h3><span class="hint">${sc.seconds} s of screen time, ${sc.takes.c}× generated seconds per finished second for AI</span></div>
+          <span class="badge" data-badge></span>
+          <span class="chev" aria-hidden="true">+</span>
+        </summary>
+        <div class="scene-body">
+          <div class="measure">${sc.body.map((p) => `<p>${p}</p>`).join("")}<p class="hint" style="margin-top:14px">${esc(sc.cost)}</p></div>
+          <div class="scene-chart">
+            <div class="chart" data-chart></div>
+            ${sceneVehicles[sc.key] ? `<label class="check"><input type="checkbox" data-veh> <span>${sceneVehicles[sc.key].text}</span></label>` : ""}
+            <p class="hint" data-line></p>
+          </div>
+        </div>
+      </details>`).join("");
+    D.scenes.forEach((sc) => {
+      const el = $("scene-" + sc.key);
+      const cb = el.querySelector("[data-veh]");
+      if (cb) cb.addEventListener("change", () => { sceneState[sc.key] = cb.checked; renderScene(sc); });
+      el.addEventListener("toggle", () => el.open && renderScene(sc));
+    });
+    $("scene-explosion").open = true;
+  }
+  function renderScene(sc) {
+    const el = $("scene-" + sc.key);
+    const ai = sceneAI(sc);
+    let prac = sc.practical;
+    if (prac && sceneState[sc.key]) prac = M.add(prac, M.fixed(sceneVehicles[sc.key].add));
+    const alts = [prac, sc.vfx].filter(Boolean);
+    const best = alts.reduce((a, b) => (b.c < a.c ? b : a));
+    const r = best.c / ai.c;
+    const badge = el.querySelector("[data-badge]");
+    badge.className = "badge " + (r >= 1.25 ? "win" : r <= 0.8 ? "lose" : "");
+    badge.textContent = r >= 1.25 ? `AI ${times(r)} lower` : r <= 0.8 ? `AI ${times(1 / r)} higher` : "About even";
+    if (!el.open) return;
+    const m = D.models[S.model];
+    rangeChart(el.querySelector("[data-chart]"), [
+      { label: sc.practicalLabel || "Practical", r: prac, cls: "conv", empty: "Can't be shot for real", tip: prac ? `${esc(sc.practicalLabel)}: ${unitFmt.co2(prac.c)}<br>Likely ${rangeTxt(unitFmt.co2, prac)}` : "" },
+      { label: sc.vfxLabel, r: sc.vfx, cls: "alt", tip: `${esc(sc.vfxLabel)}: ${unitFmt.co2(sc.vfx.c)}<br>Likely ${rangeTxt(unitFmt.co2, sc.vfx)}` },
+      { label: `${m.label}, ${S.res}`, r: ai, cls: "ai", tip: `${m.label} at ${S.res}: ${unitFmt.co2(ai.c)}<br>${sc.seconds} s × ${sc.takes.c}× takes<br>Likely ${rangeTxt(unitFmt.co2, ai)}` },
+    ], unitFmt.co2, { labelW: Math.min(210, Math.max(120, (el.querySelector("[data-chart]").clientWidth || 400) * 0.42)), rowH: 30, stack: true, aria: `${sc.title}: practical ${prac ? unitFmt.co2(prac.c) : "not possible"}, alternative ${unitFmt.co2(sc.vfx.c)}, AI ${unitFmt.co2(ai.c)}` });
+    el.querySelector("[data-line]").textContent = `AI at ${sc.takes.lo}–${sc.takes.hi}× takes: ${rangeTxt(unitFmt.co2, ai)}.  Bars show likely ranges on a log scale.`;
+  }
+  function renderScenes() { D.scenes.forEach(renderScene); }
+
+  /* ---------- Access ---------- */
+  function renderAccess() {
+    const A = D.access;
+    const peopleExp = +$("aPeople").value, secsExp = +$("aSecs").value;
+    const people = Math.round(Math.pow(10, peopleExp));
+    const secs = Math.pow(10, secsExp);
+    const secsR = secs < 10 ? Math.round(secs * 10) / 10 : Math.round(secs);
+    $("aPeopleOut").textContent = people.toLocaleString("en-US");
+    $("aSecsOut").textContent = secsR >= 60 ? `${sig(secsR / 60, 2)} min` : `${secsR} s`;
+    const perSec = M.perGeneratedSecond(A.model, A.res).co2Kg;
+    const perPersonYr = M.scale(perSec, secsR * 365);
+    const total = M.scale(perPersonYr, people);
+    const tentpole = A.rungs.find((r) => r.key === "tentpole").kg;
+    const uk = A.rungs.find((r) => r.key === "ukScreen").kg;
+    const feat = A.rungs.find((r) => r.key === "indie").kg;
+    let line = `${people.toLocaleString("en-US")} ${people === 1 ? "person" : "people"} generating ${secsR >= 60 ? sig(secsR / 60, 2) + (secsR / 60 === 1 ? " minute" : " minutes") : secsR + (secsR === 1 ? " second" : " seconds")} a day emit about ${unitFmt.co2(total.c)} CO2e a year`;
+    if (total.c >= uk) line += total.c / uk < 1.1 ? ", as much as all UK film and TV production." : `, ${sig(total.c / uk, 2)} times as much as all UK film and TV production.`;
+    else if (total.c >= tentpole) line += `, as much as ${sig(total.c / tentpole, 2)} studio tentpoles.`;
+    else if (total.c >= feat) line += `, as much as ${sig(total.c / feat, 2)} indie features.`;
+    else line += ".";
+    $("accessLine").textContent = line;
+
+    const rows = A.rungs.map((r) => ({ label: r.label, r: M.fixed(r.kg), cls: r.cls || "conv", tip: `${esc(r.label)}: ${unitFmt.co2(r.kg)} a year${r.src ? "<br>" + esc(r.src) : ""}` }));
+    rows.push({ label: "Your scenario", r: total, cls: "ai", tip: `Your scenario: ${unitFmt.co2(total.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, total)}` });
+    rows.sort((a, b) => a.r.c - b.r.c);
+    const svgHost = $("ladder");
+    rangeChart(svgHost, rows, unitFmt.co2, { labelW: Math.min(230, Math.max(130, (svgHost.clientWidth || 400) * 0.45)), rowH: 28, bars: true, stack: true, aria: "Annual CO2e of your scenario against production benchmarks" });
+    svgHost.querySelectorAll(".rowlab").forEach((t) => { if (t.textContent === "Your scenario") t.classList.add("you"); });
+  }
+  function initAccess() {
+    const A = D.access;
+    $("accessProse").innerHTML = A.prose.map((p) => `<p>${p}</p>`).join("");
+    $("accessFacts").innerHTML = A.facts.map((f) => `<div><b>${f.fig}</b><p>${f.text}</p></div>`).join("");
+    $("aPeople").addEventListener("input", renderAccess);
+    $("aSecs").addEventListener("input", renderAccess);
+  }
+
+  /* ---------- Static tables ---------- */
+  function initStatic() {
+    const p = M.perGeneratedSecond("seedance25", "720p");
+    $("heroWh").innerHTML = `${sig(p.facWh.c, 2)}<small>Wh</small>`;
+    $("heroCo2").textContent = unitFmt.co2(p.co2Kg.c);
+    $("heroWater").textContent = unitFmt.water(p.waterL.c);
+    $("heroCost").textContent = "$" + p.price.c.toFixed(2);
+
+    $("styleTable").querySelector("tbody").innerHTML = Object.values(D.styles).map((s) =>
+      `<tr><td>${esc(s.label)}</td><td>${esc(s.takes)}</td><td class="num">${s.genPerFinished.lo}–${sig(s.genPerFinished.hi)}× (typical ${sig(s.genPerFinished.c)}×)</td><td>${esc(s.example)}</td></tr>`).join("");
+
+    $("factorTable").querySelector("tbody").innerHTML = D.factorTable.map((r) =>
+      `<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td><td class="num">${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join("");
+
+    $("sources").innerHTML = D.sources.map((s) => `<li>${s.u ? `<a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a>` : esc(s.t)}</li>`).join("");
+  }
+
+  /* ---------- Boot ---------- */
+  initStatic();
+  initControls();
+  buildScenes();
+  initAccess();
+  update();
+  let rz;
+  addEventListener("resize", () => { clearTimeout(rz); rz = setTimeout(update, 120); });
+})();
+</script>
