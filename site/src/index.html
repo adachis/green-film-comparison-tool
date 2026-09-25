@@ -51,113 +51,60 @@
       <div class="calc">
         <div class="steps">
           <div class="step">
-            <div class="step-head"><span class="step-num">01</span><h3>What you're making</h3></div>
-            <div class="pills" id="formatPills" role="group" aria-label="Format"></div>
-            <div class="field-row">
-              <div class="field">
-                <label class="label" for="runtimeMin">Finished runtime (minutes)</label>
-                <input id="runtimeMin" type="number" min="0.05" max="240" step="0.05" value="0.5">
-              </div>
-              <div class="field">
-                <span class="label">Runtime in seconds</span>
-                <p class="mono" id="runtimeSec" style="padding-top:10px;color:var(--nt-text-heading)">30 s</p>
-              </div>
-            </div>
+            <h3 class="step-q">What are you making?</h3>
+            <div class="pills" id="formatPills" role="group" aria-label="What you're making"></div>
           </div>
 
-          <div class="step">
-            <div class="step-head"><span class="step-num">02</span><h3>The AI version</h3></div>
-            <div class="field-row">
-              <div class="field">
-                <label class="label" for="model">Model</label>
-                <select id="model"></select>
+          <details class="adjust" id="adjust">
+            <summary><span class="adjust-title">Adjust the details</span><span class="adjust-now mono" id="adjustNow"></span></summary>
+            <div class="adjust-body">
+              <div class="field-row">
+                <div class="field">
+                  <label class="label" for="runtimeMin">Finished length (minutes)</label>
+                  <input id="runtimeMin" type="number" min="0.05" max="240" step="0.05" value="0.5">
+                </div>
+                <div class="field">
+                  <span class="label">In seconds</span>
+                  <p class="mono" id="runtimeSec" style="padding-top:10px;color:var(--nt-text-heading)">30 s</p>
+                </div>
               </div>
               <div class="field">
-                <label class="label" for="res">Resolution</label>
-                <select id="res"></select>
-              </div>
-            </div>
-            <div class="field">
-              <span class="label" id="styleLabel">How you work</span>
-              <div class="pills" id="stylePills" role="group" aria-labelledby="styleLabel"></div>
-              <p class="hint" id="styleExample"></p>
-            </div>
-            <div class="field">
-              <label class="label" for="takes">Generated seconds per finished second</label>
-              <div class="range">
-                <input id="takes" type="range" min="0" max="1000" step="1" value="500">
-                <output id="takesOut" for="takes">80×</output>
-              </div>
-              <p class="hint">Every take you throw away still used a GPU.  This ratio drives the AI footprint more than any other setting.</p>
-            </div>
-            <div class="field">
-              <label class="label" for="region">Data center region</label>
-              <select id="region"></select>
-              <p class="hint" id="regionWhy"></p>
-            </div>
-          </div>
-
-          <div class="step">
-            <div class="step-head"><span class="step-num">03</span><h3>The conventional version</h3></div>
-            <div class="toggle" role="group" aria-label="Conventional input">
-              <button type="button" id="modeBench" aria-pressed="true">Use a benchmark</button>
-              <button type="button" id="modeCustom" aria-pressed="false">Build your own shoot</button>
-            </div>
-            <div id="benchBox" class="field">
-              <label class="label" for="bench">Closest production type</label>
-              <select id="bench"></select>
-              <p class="hint" id="benchSource"></p>
-            </div>
-            <div id="customBox" class="custom" hidden>
-              <div class="field-row three">
-                <div class="field"><label class="label" for="cCrew">Crew and cast</label><input id="cCrew" type="number" min="1" value="25"></div>
-                <div class="field"><label class="label" for="cDays">Shoot days</label><input id="cDays" type="number" min="1" value="3"></div>
-                <div class="field"><label class="label" for="cCommute">Round trip per person (km)</label><input id="cCommute" type="number" min="0" value="40"></div>
-              </div>
-              <div class="field-row three">
-                <div class="field"><label class="label" for="cFlyers">People flying</label><input id="cFlyers" type="number" min="0" value="0"></div>
-                <div class="field"><label class="label" for="cFlightKm">One-way distance (km)</label><input id="cFlightKm" type="number" min="0" value="8750"></div>
-                <div class="field"><label class="label" for="cClass">Seat class</label><select id="cClass"><option value="economy">Economy</option><option value="business">Business</option></select></div>
-              </div>
-              <div class="field-row three">
-                <div class="field"><label class="label" for="cHotel">Hotel room nights</label><input id="cHotel" type="number" min="0" value="0"></div>
-                <div class="field"><label class="label" for="cHotelCountry">Hotel country</label><select id="cHotelCountry"><option value="us">United States</option><option value="uk">United Kingdom</option><option value="canada">Canada</option><option value="france">France</option><option value="japan">Japan</option><option value="southAfrica">South Africa</option></select></div>
-                <div class="field"><label class="label" for="cMenu">Catering</label><select id="cMenu"><option value="mixed">Mixed menu</option><option value="vegetarian">Vegetarian</option><option value="beef">Beef-heavy</option></select></div>
-              </div>
-              <div class="field-row three">
-                <div class="field"><label class="label" for="cGenDays">Generator days</label><input id="cGenDays" type="number" min="0" value="2"></div>
-                <div class="field"><label class="label" for="cGenSize">Generator size</label><select id="cGenSize"><option value="small">Small (about 88 L a day)</option><option value="large">500 A (about 230 L a day)</option></select></div>
-                <div class="field"><label class="label" for="cTrucks">Trucks and vans</label><input id="cTrucks" type="number" min="0" value="2"></div>
-              </div>
-              <div class="field-row three">
-                <div class="field"><label class="label" for="cTimber">Timber for sets (t)</label><input id="cTimber" type="number" min="0" step="0.1" value="0.5"></div>
-                <div class="field"><label class="label" for="cSteel">New steel (t)</label><input id="cSteel" type="number" min="0" step="0.1" value="0"></div>
-                <div class="field"><label class="label" for="cLandfill">Timber sent to landfill (%)</label><input id="cLandfill" type="number" min="0" max="100" value="50"></div>
+                <label class="label" for="takes">AI shooting ratio</label>
+                <div class="range">
+                  <input id="takes" type="range" min="0" max="1000" step="1" value="476">
+                  <output id="takesOut" for="takes">80:1</output>
+                </div>
+                <p class="hint">Seconds of AI video generated for every second that makes the final cut.  Every discarded take still used a GPU, so this setting moves the AI footprint more than any other.</p>
+                <p class="hint" id="takesTypical"></p>
               </div>
               <div class="field-row">
-                <div class="field"><label class="label" for="cVfx">VFX shots</label><input id="cVfx" type="number" min="0" value="0"></div>
-                <div class="field"><label class="label" for="cVfxTier">VFX shot type</label><select id="cVfxTier"><option value="simple">Simple cleanup or comp</option><option value="typical" selected>Typical CG shot</option><option value="hero">Full-CG hero shot</option></select></div>
+                <div class="field">
+                  <label class="label" for="model">AI video model</label>
+                  <select id="model"></select>
+                </div>
+                <div class="field">
+                  <label class="label" for="res">Resolution</label>
+                  <select id="res"></select>
+                </div>
               </div>
-              <p class="hint">Factors come from the UK government's 2025 conversion factors, BAFTA albert, and AdGreen.  Costs here are rough: crew at $700 a day plus 30%, flights, hotels, and VFX by shot type.</p>
             </div>
-            <div class="field">
-              <span class="label" id="scopeLabel">What counts</span>
-              <div class="toggle" role="group" aria-labelledby="scopeLabel">
-                <button type="button" id="scopeFull" aria-pressed="true">Full footprint</button>
-                <button type="button" id="scopePear" aria-pressed="false">US studio benchmark scope</button>
-              </div>
-              <p class="hint" id="scopeHint">Counts flights with their high-altitude warming effect, food, materials, waste, and post.  This is the fair match for AI's all-in compute number.</p>
-            </div>
+          </details>
+
+          <div class="counts">
+            <span class="label">What each side counts</span>
+            <p><b>Shot for real:</b> the fuel, power, travel, hotels, food, sets, and waste of a typical shoot like this one, from industry carbon reports, scaled to your length.</p>
+            <p><b>Made with AI:</b> every clip generated along the way, not just the ones that make the cut, including data-center power, cooling, and hardware.  Its cost also includes the people who prompt and edit.</p>
           </div>
         </div>
 
         <aside class="results" aria-live="polite" aria-labelledby="verdict">
           <span class="kicker"><span aria-hidden="true">[</span>Result<span aria-hidden="true">]</span></span>
+          <p class="compare-line" id="compareLine"></p>
           <p class="verdict" id="verdict"></p>
           <p class="verdict-sub" id="verdictSub"></p>
           <div class="legend" aria-hidden="true">
-            <span class="key"><i class="ai"></i>AI version</span>
-            <span class="key"><i class="conv"></i>Conventional version</span>
+            <span class="key"><i class="ai"></i>Made with AI</span>
+            <span class="key"><i class="conv"></i>Shot for real</span>
             <span class="key muted">Bars show the likely range on a log scale.  Each gridline is 10×.</span>
           </div>
           <div id="metrics"></div>
@@ -166,6 +113,8 @@
             <button type="button" class="linkbtn" id="tableToggle" aria-expanded="false" aria-controls="resultTable">Show the numbers as a table</button>
             <div class="tbl-wrap" id="resultTable" hidden></div>
           </div>
+          <p class="hint" id="shootSource"></p>
+          <a class="bigger" href="#access">One project is the small picture.  The bigger effect of AI video is how much more of it gets made.</a>
         </aside>
       </div>
     </div>
@@ -223,14 +172,14 @@
       </div>
       <div class="tbl-wrap">
         <table class="data-tbl" id="styleTable">
-          <thead><tr><th>How people work</th><th>Takes per kept shot</th><th>Generated seconds per finished second</th><th>Example</th></tr></thead>
+          <thead><tr><th>How people work</th><th>Takes per kept shot</th><th>AI shooting ratio</th><th>Example</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
       <div class="two-col">
         <div>
           <p>Professionals mostly start from prepared images and animate them, a workflow called image-to-video.  In long-form studio work, AI shows up mainly in previz, crowds, environments, and individual VFX shots.  <i>House of David</i> generated about 20 takes for every AI shot it used.</p>
-          <p>Seedance's own benchmark rates image-to-video clips lower, clip for clip, than text-to-video.  Prepared images help with continuity across shots, which benchmarks don't measure, so the calculator leaves the take ratio up to you.</p>
+          <p>Seedance's own benchmark rates image-to-video clips lower, clip for clip, than text-to-video.  Prepared images help with continuity across shots, which benchmarks don't measure, so the calculator leaves the shooting ratio up to you.</p>
         </div>
         <div>
           <p>"Unlimited" plans deserve suspicion.  Artlist, Runway, Higgsfield, and Krea have all run unlimited Seedance windows, which make one more take free to you while its energy stays exactly the same.  This site counts generated seconds, never spend.</p>
@@ -285,7 +234,7 @@
           <div class="acc-body measure">
             <p>Energy per generated second starts from GPU time.  For Seedance 2.5, three methods agree at 17–24 Wh per second on the GPUs at 720p: OpenRouter's latency benchmark, a calibration against Jegham, Gamazaychikov, and Luccioni's 2026 estimate for Seedance 1.5, and ByteDance's reported 70% gross margin.  We use 18 Wh.  MiniMax H3 is anchored on MiniMax's own benchmark for the open-weight model.</p>
             <p>We then add servers, idle capacity, and data-center cooling (Google's 2025 serving study found the full stack uses about 1.7× the GPU energy), apply the grid where the model runs, and add hardware manufacturing and a 5% share for training.  Water counts cooling at the data center plus the water used to generate its electricity.</p>
-            <p>Ranges combine each factor's own uncertainty.  The takes ratio isn't part of the range because you set it.</p>
+            <p>Ranges combine each factor's own uncertainty.  The AI shooting ratio isn't part of the range because you set it.</p>
             <p>We timed MiniMax H3 through MiniMax's own API, which reports when each job starts running.  A 2K clip took about 1.7× as long as 768p, close to the 1.5× we assume, and 15-second clips cost about 15% less per second than 5-second clips.  Timing Seedance 2.5 through resellers measured mostly queueing, so it can't pin down Seedance's compute.</p>
           </div>
         </details>
@@ -306,8 +255,8 @@
         <details class="acc">
           <summary>Conventional production</summary>
           <div class="acc-body measure">
-            <p>Benchmarks come from the Sustainable Entertainment Alliance (US studios, 2023–24), BAFTA albert (UK), AdGreen (advertising), and Ecoprod's Carbon'Clap (France).  They measure different things: the US studio benchmark counts fuel, utilities, flights without their high-altitude warming effect, and hotels, while the others also count food, materials, waste, and post.  The scope switch adjusts for that gap.</p>
-            <p>Industry benchmarks leave out VFX rendering, and it isn't small.  Weta's AWS rendering for <i>Avatar: The Way of Water</i> alone comes to roughly 8–28 GWh.  The custom shoot builder lets you add VFX shots at 0.15–5 MWh each.</p>
+            <p>Benchmarks come from the Sustainable Entertainment Alliance (US studios, 2023–24), BAFTA albert (UK), AdGreen (advertising), and Ecoprod's Carbon'Clap (France).  They measure different things: the US studio benchmark counts fuel, utilities, flights without their high-altitude warming effect, and hotels, while the others also count food, materials, waste, and post.  We raise the US studio figures by 1.3× to close that gap.</p>
+            <p>Industry benchmarks leave out VFX rendering, and it isn't small.  Weta's AWS rendering for <i>Avatar: The Way of Water</i> alone comes to roughly 8–28 GWh.  Rendering a single VFX shot takes about 0.15–5 MWh.</p>
           </div>
         </details>
         <details class="acc">

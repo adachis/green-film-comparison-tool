@@ -80,50 +80,12 @@ const Model = (() => {
     return { co2Kg: scale(t, 1000), cost: scale(b.cost, runtimeScale), runtimeScale, scopeNote, bench: b };
   }
 
-  /* A conventional production built from activity data. */
-  function customProduction(x, fullScope) {
-    const F = D.factors;
-    const lines = [];
-    const personDays = x.crew * x.days;
-    const commute = personDays * x.commuteKm / 1.3 * F.carKm;
-    lines.push(["Crew travel to set", commute]);
-    const flightF = x.flightClass === "business" ? F.flightLongBusiness : x.flightKm < 3700 ? F.flightShortEconomy : F.flightLongEconomy;
-    const flights = x.flyers * x.flightKm * 2 * (fullScope ? flightF : flightF / 1.7);
-    lines.push(["Flights", flights]);
-    const hotels = x.hotelNights * (F.hotelNight[x.hotelCountry] || F.hotelNight.us);
-    lines.push(["Hotels", hotels]);
-    const genL = x.genDays * F.genLPerDay[x.genSize];
-    const generators = genL * F.dieselKgPerL;
-    lines.push(["Generators", generators]);
-    const trucks = x.days * x.trucks * 80 * F.truckKm;
-    lines.push(["Trucks and vans", trucks]);
-    const meals = fullScope ? personDays * 1.5 * F.mealKg[x.menu] : 0;
-    lines.push(["Catering", meals]);
-    const materials = fullScope ? x.timberT * F.timberKgPerT + x.steelT * F.steelKgPerT + x.timberT * x.landfill * F.landfillWoodKgPerT : 0;
-    lines.push(["Set materials and waste", materials]);
-    const vfxKwh = x.vfxShots * F.vfxShotKwh[x.vfxTier];
-    const vfx = fullScope ? vfxKwh * F.vfxGrid : 0;
-    lines.push(["VFX rendering", vfx]);
-    const total = lines.reduce((a, l) => a + l[1], 0);
-    const kWh = genL * F.dieselKwhPerL + vfxKwh;
-    const water = personDays * F.waterLPerPersonDay;
-    const vfxCost = { simple: 4000, typical: 20000, hero: 50000 }[x.vfxTier] * x.vfxShots;
-    const cost = personDays * 700 * 1.3 + x.flyers * (x.flightClass === "business" ? 5000 : 1200) + x.hotelNights * 180 + vfxCost;
-    return {
-      co2Kg: { lo: total * 0.75, c: total, hi: total * 1.4 },
-      kWh: { lo: kWh * 0.8, c: kWh, hi: kWh * 1.25 },
-      waterL: { lo: water * 0.5, c: water, hi: water * 2 },
-      cost: { lo: cost * 0.7, c: cost, hi: cost * 1.5 },
-      lines,
-    };
-  }
-
   /* The access problem: annual footprint for a pattern of casual use. */
   function usageYear(secondsPerDay, modelKey = "seedance25", res = "720p") {
     const p = perGeneratedSecond(modelKey, res);
     return scale(p.co2Kg, secondsPerDay * 365);
   }
 
-  return { combine, fixed, scale, add, perGeneratedSecond, aiProduction, benchmarkProduction, customProduction, usageYear };
+  return { combine, fixed, scale, add, perGeneratedSecond, aiProduction, benchmarkProduction, usageYear };
 })();
 if (typeof module !== "undefined") module.exports = Model;
