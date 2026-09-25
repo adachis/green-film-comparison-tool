@@ -3,6 +3,8 @@
   const D = DATA, M = Model;
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // Escape, then let italic tags through (titles of films and shows in data strings).
+  const rich = (s) => esc(s).replace(/&lt;(\/?)i&gt;/g, "<$1i>");
 
   /* ---------- Number formatting ---------- */
   function sig(n, d = 2) {
@@ -247,14 +249,12 @@
 
     $("compareLine").textContent = `${cap(f.noun)}, ${fmtRuntime(finishedSec)} long, made two ways.`;
     const ratio = conv.c / ai.co2Kg.c;
-    const verdict = $("verdict");
-    if (ratio >= 1.25) verdict.textContent = `Generating it emits about ${times(ratio)} less CO2e.`;
-    else if (ratio > 0.8) verdict.textContent = "On carbon, it's roughly a tie.";
-    else verdict.textContent = `Generating it emits about ${times(1 / ratio)} more CO2e.`;
-    const overlap = ai.co2Kg.hi >= conv.lo && conv.hi >= ai.co2Kg.lo;
+    const co2Call = callLower(ai.co2Kg, conv);
+    $("verdict").textContent = co2Call === "less" ? `Generating it emits about ${times(ratio)} less CO2e.` : co2Call === "more" ? `Generating it emits about ${times(1 / ratio)} more CO2e.` : "On carbon, it's too close to call.";
     const costRatio = convCost.c / aiCost.c;
-    const costLine = costRatio >= 1.25 ? `It also costs about ${times(costRatio)} less, mostly because of people, not generation.` : costRatio > 0.8 ? "Costs come out about even." : `It costs about ${times(1 / costRatio)} more.`;
-    $("verdictSub").textContent = `That's ${sig(ai.genSec, 3)} seconds of AI video (${fmtRatio(S.ratio)}) against ${BENCH_NOUN[f.bench]}.  ${overlap ? "The likely ranges overlap, so the direction is less certain than the headline.  " : ""}${costLine}`;
+    const costCall = callLower(aiCost, convCost);
+    const costLine = costCall === "less" ? `It ${co2Call === "less" ? "also " : ""}costs about ${times(costRatio)} less, mostly because of people, not generation.` : costCall === "more" ? `It costs about ${times(1 / costRatio)} more.` : "On cost, it's too close to call.";
+    $("verdictSub").textContent = `That's ${sig(ai.genSec, 3)} seconds of AI video (${fmtRatio(S.ratio)}) against ${BENCH_NOUN[f.bench]}.  ${co2Call === "close" ? "The likely ranges overlap too much to say which is lower.  " : ""}${costLine}`;
 
     const metrics = [
       { name: "CO2e", fmt: unitFmt.co2, a: ai.co2Kg, c: conv },
@@ -265,7 +265,8 @@
     const box = $("metrics");
     box.innerHTML = metrics.map((mt, i) => {
       const r = mt.c.c / mt.a.c;
-      const rt = r >= 1 ? `AI is ${times(r)} lower` : `AI is ${times(1 / r)} higher`;
+      const call = callLower(mt.a, mt.c);
+      const rt = call === "less" ? `AI is ${times(r)} lower` : call === "more" ? `AI is ${times(1 / r)} higher` : "Too close to call";
       return `<div class="metric">
         <div class="metric-top"><span class="metric-name">${mt.name}</span><span class="metric-ratio">${rt}</span></div>
         <div class="metric-vals">
@@ -301,10 +302,11 @@
     t += `<tr><td>Human work on the AI version</td><td class="num">${cell(unitFmt.usd, ai.laborCost)}</td><td class="num">–</td></tr>`;
     t += "</tbody></table>";
     $("resultTable").innerHTML = t;
-    $("shootSource").textContent = `Shoot figure: ${c.bench.source}.`;
+    $("shootSource").textContent = `Shoot figure: ${c.bench.source}.${c.scopeNote ? "  " + c.scopeNote : ""}`;
 
     renderScenes();
     renderAccess();
+    renderLocal();
   }
 
   /* ---------- Scenes ---------- */
@@ -323,6 +325,7 @@
           <span class="chev" aria-hidden="true">+</span>
         </summary>
         <div class="scene-body">
+          <p class="scene-verdict" data-verdict></p>
           <div class="measure">${sc.body.map((p) => `<p>${p}</p>`).join("")}<p class="hint" style="margin-top:14px">${esc(sc.cost)}</p></div>
           <div class="scene-chart">
             <div class="chart" data-chart></div>
@@ -339,17 +342,52 @@
     });
     $("scene-explosion").open = true;
   }
+  /* Which way of getting the shot is lowest?  Each likely range is read as an 80% interval on a
+     log scale, and a direction is called only when it holds with at least 85% odds.  Otherwise
+     the scene is too close to call. */
+  function erf(x) {
+    const t = 1 / (1 + 0.3275911 * Math.abs(x));
+    const y = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+    return x >= 0 ? y : -y;
+  }
+  function aiLowerOdds(ai, r) {
+    const d = Math.log(r.c / ai.c);
+    const sa = Math.log(d >= 0 ? ai.hi / ai.c : ai.c / ai.lo) / 1.2816;
+    const sr = Math.log(d >= 0 ? r.c / r.lo : r.hi / r.c) / 1.2816;
+    const sd = Math.hypot(sa, sr);
+    return sd ? 0.5 * (1 + erf(d / sd / Math.SQRT2)) : d >= 0 ? 1 : 0;
+  }
+  function callLower(ai, r) {
+    const odds = aiLowerOdds(ai, r);
+    return odds >= 0.85 ? "less" : odds <= 0.15 ? "more" : "close";
+  }
+  function sceneVerdict(cmps) {
+    const part = (x) => (x.dir === "close" ? `too close to call against ${x.noun}` : `about ${times(x.n)} ${x.dir} than ${x.noun}`);
+    let t = cmps[0].dir === "close" ? `AI is ${part(cmps[0])}` : `AI emits ${part(cmps[0])}`;
+    cmps.slice(1).forEach((x, i) => {
+      const prev = cmps[i];
+      if (x.dir === "close") t += prev.dir === "close" ? ` or ${x.noun}` : `, and is ${part(x)}`;
+      else if (prev.dir === "close") t += `, and emits ${part(x)}`;
+      else t += `${x.dir === prev.dir ? " and" : ", but"} ${part(x)}`;
+    });
+    return t + ".";
+  }
   function renderScene(sc) {
     const el = $("scene-" + sc.key);
     const ai = sceneAI(sc);
     let prac = sc.practical;
     if (prac && sceneState[sc.key]) prac = M.add(prac, M.fixed(sceneVehicles[sc.key].add));
-    const alts = [prac, sc.vfx].filter(Boolean);
-    const best = alts.reduce((a, b) => (b.c < a.c ? b : a));
-    const r = best.c / ai.c;
+    const cmps = [
+      prac && { r: prac, short: sc.practicalShort, noun: sc.practicalNoun },
+      { r: sc.vfx, short: sc.vfxShort, noun: sc.vfxNoun },
+    ].filter(Boolean).sort((a, b) => a.r.c - b.r.c).map((x) => ({ ...x, dir: callLower(ai, x.r), n: Math.max(x.r.c / ai.c, ai.c / x.r.c) }));
+    const low = cmps[0];
     const badge = el.querySelector("[data-badge]");
-    badge.className = "badge " + (r >= 1.25 ? "win" : r <= 0.8 ? "lose" : "");
-    badge.textContent = r >= 1.25 ? `AI ${times(r)} lower` : r <= 0.8 ? `AI ${times(1 / r)} higher` : "About even";
+    badge.className = "badge " + (low.dir === "less" ? "win" : low.dir === "more" ? "lose" : "");
+    badge.textContent = low.dir === "less" ? "AI lowest" : low.dir === "more" ? `${low.short} lowest` : "Too close to call";
+    let verdict = sceneVerdict(cmps);
+    if (low.dir !== "less") verdict += `  At about ${fmtRatio(sc.takes.c * low.r.c / ai.c)}, AI would match ${low.noun}.`;
+    el.querySelector("[data-verdict]").textContent = verdict;
     if (!el.open) return;
     const m = D.models[S.model];
     rangeChart(el.querySelector("[data-chart]"), [
@@ -357,9 +395,24 @@
       { label: sc.vfxLabel, r: sc.vfx, cls: "alt", tip: `${esc(sc.vfxLabel)}: ${unitFmt.co2(sc.vfx.c)}<br>Likely ${rangeTxt(unitFmt.co2, sc.vfx)}` },
       { label: `${m.label}, ${S.res}`, r: ai, cls: "ai", tip: `${m.label} at ${S.res}: ${unitFmt.co2(ai.c)}<br>${sc.seconds} s at ${fmtRatio(sc.takes.c)}<br>Likely ${rangeTxt(unitFmt.co2, ai)}` },
     ], unitFmt.co2, { labelW: Math.min(210, Math.max(120, (el.querySelector("[data-chart]").clientWidth || 400) * 0.42)), rowH: 30, stack: true, aria: `${sc.title}: practical ${prac ? unitFmt.co2(prac.c) : "not possible"}, alternative ${unitFmt.co2(sc.vfx.c)}, AI ${unitFmt.co2(ai.c)}` });
-    el.querySelector("[data-line]").textContent = `AI at ${fmtRatio(sc.takes.lo)} to ${fmtRatio(sc.takes.hi)}: ${rangeTxt(unitFmt.co2, ai)}.  Bars show likely ranges on a log scale.`;
+    el.querySelector("[data-line]").textContent = `AI: ${unitFmt.co2(ai.c)} at ${fmtRatio(sc.takes.c)}, likely ${rangeTxt(unitFmt.co2, ai)} once shooting ratios from ${fmtRatio(sc.takes.lo)} to ${fmtRatio(sc.takes.hi)} are allowed for.  Bars show likely ranges on a log scale.`;
   }
   function renderScenes() { D.scenes.forEach(renderScene); }
+
+  /* ---------- Local or cloud ---------- */
+  const fmtWh = (v, d) => unitFmt.kwh(v / 1000, d);
+  function renderLocal() {
+    const L = D.localCompare;
+    const rows = [
+      ...L.cloud.map((r) => {
+        const wh = r.model ? M.perGeneratedSecond(r.model, r.res).facWh : M.combine([r.gpuWh, D.hostMultiplier, D.regions[r.region].pue]);
+        return { label: r.label, r: wh, cls: "ai", tip: `${esc(r.tip)}<br>${fmtWh(wh.c)} per generated second<br>Likely ${rangeTxt(fmtWh, wh)}` };
+      }),
+      ...L.local.map((r) => ({ label: r.label, r: r.wh, cls: "alt", tip: `${esc(r.tip)}<br>${fmtWh(r.wh.c)} per generated second${r.wh.hi > r.wh.lo ? `<br>Likely ${rangeTxt(fmtWh, r.wh)}` : ""}` })),
+    ].sort((a, b) => b.r.c - a.r.c);
+    const host = $("localChart");
+    rangeChart(host, rows, fmtWh, { labelW: Math.min(250, Math.max(150, (host.clientWidth || 400) * 0.45)), rowH: 28, stack: true, aria: "Energy per generated second of video, in a data center against on your own machine" });
+  }
 
   /* ---------- Access ---------- */
   function renderAccess() {
@@ -373,17 +426,23 @@
     const perSec = M.perGeneratedSecond(A.model, A.res).co2Kg;
     const perPersonYr = M.scale(perSec, secsR * 365);
     const total = M.scale(perPersonYr, people);
-    const tentpole = A.rungs.find((r) => r.key === "tentpole").kg;
-    const uk = A.rungs.find((r) => r.key === "ukScreen").kg;
-    const feat = A.rungs.find((r) => r.key === "indie").kg;
+    const rung = (k) => A.rungs.find((r) => r.key === k).kg;
+    const tentpole = rung("tentpole"), feat = rung("indie"), netflix = rung("netflix"), world = rung("worldScreen").c;
     let line = `${people.toLocaleString("en-US")} ${people === 1 ? "person" : "people"} generating ${secsR >= 60 ? sig(secsR / 60, 2) + (secsR / 60 === 1 ? " minute" : " minutes") : secsR + (secsR === 1 ? " second" : " seconds")} a day ${people === 1 ? "emits" : "emit"} about ${unitFmt.co2(total.c)} CO2e a year`;
-    if (total.c >= uk) line += total.c / uk < 1.1 ? ", as much as all UK film and TV production." : `, ${sig(total.c / uk, 2)} times as much as all UK film and TV production.`;
+    const share = total.c / world, pct = `about ${sig(share * 100, 2)}% of all the film and TV production in the world`;
+    if (share >= 0.9) line += share < 1.1 ? ", about as much as all the film and TV production in the world." : `, ${sig(share, 2)} times all the film and TV production in the world.`;
+    else if (total.c >= netflix) line += `, more than Netflix's whole production slate and ${pct}.`;
+    else if (share >= 0.01) line += `, ${pct}.`;
     else if (total.c >= tentpole) line += `, as much as ${sig(total.c / tentpole, 2)} studio tentpoles.`;
     else if (total.c >= feat) line += `, as much as ${sig(total.c / feat, 2)} indie features.`;
     else line += ".";
     $("accessLine").textContent = line;
 
-    const rows = A.rungs.map((r) => ({ label: r.label, r: M.fixed(r.kg), cls: r.cls || "conv", tip: `${esc(r.label)}: ${unitFmt.co2(r.kg)} a year${r.src ? "<br>" + esc(r.src) : ""}` }));
+    const rows = A.rungs.map((r) => {
+      const kg = typeof r.kg === "number" ? M.fixed(r.kg) : r.kg;
+      const val = kg.hi > kg.lo ? `about ${unitFmt.co2(kg.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, kg)}` : `${unitFmt.co2(kg.c)} a year`;
+      return { label: r.label, r: kg, cls: r.cls || "conv", tip: `${esc(r.label)}: ${val}${r.src ? "<br>" + esc(r.src) : ""}` };
+    });
     rows.push({ label: A.world.label, r: A.world.kg, cls: "ai", tip: `${esc(A.world.label)}: about ${unitFmt.co2(A.world.kg.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, A.world.kg)}<br>300–550 million generated seconds a day` });
     rows.push({ label: "Your scenario", r: total, cls: "ai", tip: `Your scenario: ${unitFmt.co2(total.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, total)}` });
     rows.sort((a, b) => a.r.c - b.r.c);
@@ -408,10 +467,10 @@
     $("heroCost").textContent = "$" + p.price.c.toFixed(2);
 
     $("styleTable").querySelector("tbody").innerHTML = Object.values(D.styles).map((s) =>
-      `<tr><td>${esc(s.label)}</td><td>${esc(s.takes)}</td><td class="num">${fmtRatio(s.genPerFinished.lo)} to ${fmtRatio(s.genPerFinished.hi)} (typical ${fmtRatio(s.genPerFinished.c)})</td><td>${esc(s.example)}</td></tr>`).join("");
+      `<tr><td>${rich(s.label)}</td><td>${rich(s.takes)}</td><td class="num">${fmtRatio(s.genPerFinished.lo)} to ${fmtRatio(s.genPerFinished.hi)} (typical ${fmtRatio(s.genPerFinished.c)})</td><td>${rich(s.example)}</td></tr>`).join("");
 
     $("factorTable").querySelector("tbody").innerHTML = D.factorTable.map((r) =>
-      `<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td><td class="num">${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join("");
+      `<tr><td>${rich(r[0])}</td><td class="num">${rich(r[1])}</td><td class="num">${rich(r[2])}</td><td>${rich(r[3])}</td></tr>`).join("");
 
     $("sources").innerHTML = D.sources.map((s) => `<li>${s.u ? `<a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a>` : esc(s.t)}</li>`).join("");
   }

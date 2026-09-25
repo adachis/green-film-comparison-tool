@@ -205,8 +205,16 @@ details.more[open]>summary::before{content:"–"}
 .badge.lose{border-color:#e63946;color:#c1121f}
 :root[data-theme="dark"] .badge.lose{color:#ff8a93}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .badge.lose{color:#ff8a93}}
-.scene-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;padding-bottom:32px}
+.scene-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px 40px;padding-bottom:32px}
 .scene-body p+p{margin-top:12px}
+.scene-verdict{grid-column:1 / -1;font-size:var(--nt-fs-h5);font-weight:600;line-height:1.4;color:var(--nt-text-heading);max-width:62ch}
+
+/* Local or cloud */
+.lc{margin-top:56px;padding-top:40px;border-top:1px solid var(--nt-border-ink)}
+.lc-intro{max-width:72ch;margin-bottom:28px}
+.lc-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start}
+.lc-grid .note-list{margin-top:10px;font-size:var(--nt-fs-body);gap:12px}
+.lc-grid .hint{margin-top:14px}
 
 /* Access */
 .access-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:56px;align-items:start}
@@ -227,6 +235,9 @@ details.more[open]>summary::before{content:"–"}
 .card .fig{font-family:var(--nt-font-display);font-size:34px;font-weight:700;color:var(--nt-text-heading);line-height:1}
 .two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;margin-top:56px}
 .two-col p+p{margin-top:14px}
+.energy-note{margin-top:56px;border-top:1px solid var(--nt-border-inverse);padding-top:28px}
+.energy-note h3{font-size:20px}
+.energy-note .two-col{margin-top:18px}
 
 /* Method */
 .acc{border-top:1px solid var(--nt-border-ink)}
@@ -242,7 +253,7 @@ details.more[open]>summary::before{content:"–"}
 
 @media (max-width:1100px){
   :root{--nt-fs-display-1:64px;--nt-fs-h2:34px;--nt-section-y:72px}
-  .hero,.calc,.access-grid,.scene-body,.two-col{grid-template-columns:minmax(0,1fr)}
+  .hero,.calc,.access-grid,.scene-body,.two-col,.lc-grid{grid-template-columns:minmax(0,1fr)}
   .results{position:static}
   .cards{grid-template-columns:minmax(0,1fr)}
 }
@@ -261,8 +272,11 @@ details.more[open]>summary::before{content:"–"}
   .big-line{font-size:21px}
   .results{padding:20px}
   .verdict{font-size:24px}
-  .scene>summary{grid-template-columns:minmax(0,1fr) auto}
-  .scene>summary .badge{display:none}
+  .scene-verdict{font-size:18px}
+  .scene>summary{grid-template-columns:minmax(0,1fr) auto;row-gap:10px}
+  .scene>summary>div{grid-column:1;grid-row:1}
+  .scene>summary .badge{grid-column:1;grid-row:2;justify-self:start}
+  .scene>summary .chev{grid-column:2;grid-row:1 / span 2}
   .sources{columns:1}
 }
 

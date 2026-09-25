@@ -23,11 +23,32 @@ The GPU was busy 95–100% of each run except LTX-Video's (80%, while it waited 
 
 ## Findings
 
-1. **An image costs well under 1 Wh at the chip.**  SDXL and Z-Image Turbo land at 0.69 and 0.89 Wh.  Stream F's estimate for Z-Image Turbo on a 16-inch M4 Max was about 1.1 Wh at the wall (35 s at 110 W).  The base M4 took five times as long at about a sixth of the power.
-2. **Small video models are cheap, and slow ones aren't.**  LTX-Video's distilled 2B model made 5 seconds in under 2.5 minutes for 0.57 Wh.  Wan 2.1 1.3B needed 3 hours 25 minutes and 50.5 Wh for the same length, because its attention over about 33,000 tokens took almost 7 minutes per step on this GPU.  Stream F puts the same Wan clip at about 35 Wh on an RTX 4090 desktop (261 s at an assumed 490 W), so the Mac used more energy even counting only its chip.  A low-power chip doesn't help if it runs for hours.
-3. **A lightweight upscale costs about the same as generating a short clip.**  Real-ESRGAN took 0.70 Wh to double a 5-second clip.  That supports stream F's "under 1 Wh" at the chip, though wall energy would sit near or a little above 1 Wh.  A diffusion upscaler such as SeedVR2 is still two orders of magnitude more.
-4. **16 GB is the real constraint.**  Z-Image Turbo at 8-bit (Q8_0) pushed macOS into critical memory pressure and grew swap by 2.2 GB in a single run, so the timed runs use the 4-bit Q4_K_M file.  LTX-Video swapped heavily in every configuration tried, including a tiled VAE decode, because its model, T5 encoder, and VAE together hold about 9 GB.  It got one timed run, and its figure includes that swapping.  Wan fit.
-5. **ComfyUI reloads models on a crowded machine.**  Its default RAM-pressure cache dropped Z-Image between runs 3 times out of 5, adding about 5 seconds each, and reloaded LTX and Wan before their timed runs.  Energy stayed within the run-to-run spread, but a 16 GB machine does repeat work that a larger one wouldn't.
+1. **A fast GPU used less than half the energy of the low-power Mac for the same clip.**  Wan 2.1 1.3B took 3 hours 25 minutes and 50.5 Wh at the Mac mini's chip for 81 frames at 832×480 and 30 steps, because its attention over about 33,000 tokens took almost 7 minutes per step on this GPU.  Wan's own efficiency table gives 261.4 s on one RTX 4090 for the same resolution and length at its default 50 steps.  Scaled to our 30 steps, that is about 157–163 s, or about 21 Wh (18–24) at 420–520 W for the whole desktop (stream F's wall-draw range).  The 4090 draws 20–30 times the power but finishes more than 70 times faster, and the rest of a machine draws power for as long as a job runs.  An earlier version of this file compared our 30-step run with the 4090's 50-step time (about 35 Wh), which understated the gap.
+2. **An image costs well under 1 Wh at the chip.**  SDXL and Z-Image Turbo land at 0.69 and 0.89 Wh.  Stream F's estimate for Z-Image Turbo on a 16-inch M4 Max was about 1.1 Wh at the wall (35 s at 110 W).  The base M4 took five times as long at about a sixth of the power.
+3. **Small distilled video models are cheap anywhere.**  LTX-Video's distilled 2B model made 5 seconds in under 2.5 minutes for 0.57 Wh at the chip.  The cost of local video depends far more on the model's size and step count than on the machine.
+4. **A lightweight upscale costs about the same as generating a short clip.**  Real-ESRGAN took 0.70 Wh to double a 5-second clip.  That supports stream F's "under 1 Wh" at the chip, though wall energy would sit near or a little above 1 Wh.  A diffusion upscaler such as SeedVR2 is still two orders of magnitude more.
+5. **16 GB is the real constraint.**  Z-Image Turbo at 8-bit (Q8_0) pushed macOS into critical memory pressure and grew swap by 2.2 GB in a single run, so the timed runs use the 4-bit Q4_K_M file.  LTX-Video swapped heavily in every configuration tried, including a tiled VAE decode, because its model, T5 encoder, and VAE together hold about 9 GB.  It got one timed run, and its figure includes that swapping.  Wan fit.
+6. **ComfyUI reloads models on a crowded machine.**  Its default RAM-pressure cache dropped Z-Image between runs 3 times out of 5, adding about 5 seconds each, and reloaded LTX and Wan before their timed runs.  Energy stayed within the run-to-run spread, but a 16 GB machine does repeat work that a larger one wouldn't.
+
+## Local against cloud
+
+Energy per second of generated video.  Cloud rows are the site's facility-level estimates (GPU energy × host overhead × PUE).  Local rows are whole-desktop wall energy unless marked chip-only.
+
+| Option | Where it runs | Wh per generated second | Basis |
+|---|---|---|---|
+| Seedance 2.5, 720p | ByteDance cloud, Johor | 33 (9.1–82) | Site model, streams A and A1b |
+| Wan 2.2 TI2V 5B, 1280×704, 50 steps | RTX 4090 desktop | 14.3 (13.1–15.3) | Wan's 534.7 s at 420–520 W (stream F) |
+| MiniMax H3, 768p | MiniMax cloud, China | 13 (3.6–40) | Site model |
+| Wan 2.1 1.3B, 832×480, 30 steps | M4 Mac mini, chip only | 9.98 | This stream, measured |
+| Wan 2.1 1.3B, 832×480, 30 steps | RTX 4090 desktop | 4.2 (3.6–4.6) | Wan's 261.4 s for 50 steps, scaled to 30 |
+| Wan 2.1 1.3B, 832×480, 30 steps | One H100 in a US data center | 3.5 (2.8–5.1) | ML.ENERGY's 18.0 Wh GPU for 50 steps, scaled to 30, × host 1.43 × PUE 1.12 |
+| MiniMax H3 Max, 768p | fal cloud | 2.8 (1.1–7.1) | Site model |
+| LTX-2.3 distilled, 1280×768 | 16-inch M4 Max | 1.8 (1.2–2.9) | Stream F estimate |
+| LTX-Video 2B distilled, 768×512, 8 steps | M4 Mac mini, chip only | 0.113 | This stream, measured |
+
+- **Where a model runs matters less than which model runs.**  The same small Wan model costs about the same on a data-center GPU and a fast desktop GPU, and about three times as much at a base Mac's chip.  Big savings come from small, distilled models.
+- **Quality limits the savings.**  In the Artificial Analysis text-to-video arena (fetched 2026-09-25), the open models that fit on one desktop GPU or a Mac score 958–975 (LTX-2.3) and 1,053–1,055 (LTX-2.5), against 1,210 for Seedance 2.0 720p, 1,220 for MiniMax H3, 1,227 for MiniMax H3 Max, and 1,229 for Wan 3.0.  Elo gaps of 155–271 points mean viewers prefer the cloud leader about 71–83% of the time.  MiniMax H3 is open-weight but needs four data-center GPUs.  Wan 2.1, Wan 2.2, LTX-Video 0.9, and HunyuanVideo 1.5 are not on the leaderboard.
+- **Carbon also depends on the grid.**  Seedance's international API runs on Malaysia's grid (about 0.60 kg CO2e per kWh), against about 0.38 for the US average and 0.23 for LADWP (stream A2).
 
 ## Caveats
 

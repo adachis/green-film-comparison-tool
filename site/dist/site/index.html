@@ -222,8 +222,16 @@ details.more[open]>summary::before{content:"–"}
 .badge.lose{border-color:#e63946;color:#c1121f}
 :root[data-theme="dark"] .badge.lose{color:#ff8a93}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .badge.lose{color:#ff8a93}}
-.scene-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:40px;padding-bottom:32px}
+.scene-body{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:28px 40px;padding-bottom:32px}
 .scene-body p+p{margin-top:12px}
+.scene-verdict{grid-column:1 / -1;font-size:var(--nt-fs-h5);font-weight:600;line-height:1.4;color:var(--nt-text-heading);max-width:62ch}
+
+/* Local or cloud */
+.lc{margin-top:56px;padding-top:40px;border-top:1px solid var(--nt-border-ink)}
+.lc-intro{max-width:72ch;margin-bottom:28px}
+.lc-grid{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:40px;align-items:start}
+.lc-grid .note-list{margin-top:10px;font-size:var(--nt-fs-body);gap:12px}
+.lc-grid .hint{margin-top:14px}
 
 /* Access */
 .access-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);gap:56px;align-items:start}
@@ -244,6 +252,9 @@ details.more[open]>summary::before{content:"–"}
 .card .fig{font-family:var(--nt-font-display);font-size:34px;font-weight:700;color:var(--nt-text-heading);line-height:1}
 .two-col{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:48px;margin-top:56px}
 .two-col p+p{margin-top:14px}
+.energy-note{margin-top:56px;border-top:1px solid var(--nt-border-inverse);padding-top:28px}
+.energy-note h3{font-size:20px}
+.energy-note .two-col{margin-top:18px}
 
 /* Method */
 .acc{border-top:1px solid var(--nt-border-ink)}
@@ -259,7 +270,7 @@ details.more[open]>summary::before{content:"–"}
 
 @media (max-width:1100px){
   :root{--nt-fs-display-1:64px;--nt-fs-h2:34px;--nt-section-y:72px}
-  .hero,.calc,.access-grid,.scene-body,.two-col{grid-template-columns:minmax(0,1fr)}
+  .hero,.calc,.access-grid,.scene-body,.two-col,.lc-grid{grid-template-columns:minmax(0,1fr)}
   .results{position:static}
   .cards{grid-template-columns:minmax(0,1fr)}
 }
@@ -278,8 +289,11 @@ details.more[open]>summary::before{content:"–"}
   .big-line{font-size:21px}
   .results{padding:20px}
   .verdict{font-size:24px}
-  .scene>summary{grid-template-columns:minmax(0,1fr) auto}
-  .scene>summary .badge{display:none}
+  .scene-verdict{font-size:18px}
+  .scene>summary{grid-template-columns:minmax(0,1fr) auto;row-gap:10px}
+  .scene>summary>div{grid-column:1;grid-row:1}
+  .scene>summary .badge{grid-column:1;grid-row:2;justify-self:start}
+  .scene>summary .chev{grid-column:2;grid-row:1 / span 2}
   .sources{columns:1}
 }
 
@@ -361,7 +375,7 @@ details.more[open]>summary::before{content:"–"}
             <div class="pills" id="formatPills" role="group" aria-label="What you're making"></div>
           </div>
 
-          <details class="adjust" id="adjust">
+          <details class="adjust" id="adjust" open>
             <summary><span class="adjust-title">Adjust the details</span><span class="adjust-now mono" id="adjustNow"></span></summary>
             <div class="adjust-body">
               <div class="field-row">
@@ -433,7 +447,7 @@ details.more[open]>summary::before{content:"–"}
           <span class="kicker"><span aria-hidden="true">[</span>Scenes<span aria-hidden="true">]</span></span>
           <h2>Scene by scene</h2>
         </div>
-        <p>Some scenes are expensive to shoot, and some cost almost nothing extra.  Each comparison counts only what the scene adds to a shoot that's already happening, and uses the AI model you picked above.  Badges compare AI with the lower of the two other options.</p>
+        <p>Some scenes are expensive to shoot, and some cost almost nothing extra.  Each comparison counts only what the scene adds to a shoot that's already happening, and uses the AI model you picked above.  Each badge names the lowest-carbon way to get the shot, or says it's too close to call when the likely ranges overlap too much to tell.</p>
       </div>
       <div class="scenes" id="sceneList"></div>
     </div>
@@ -464,6 +478,18 @@ details.more[open]>summary::before{content:"–"}
         </div>
       </div>
       <div class="facts" id="accessFacts"></div>
+      <div class="energy-note">
+        <h3 class="upper">The bigger fix is the power itself</h3>
+        <div class="two-col">
+          <div>
+            <p>Almost all of AI video's footprint is electricity, and so is VFX rendering's, so a clean grid shrinks both directly.  Wētā's <i>Avatar</i> rendering would have emitted about a fifth as much on New Zealand's grid as it did on Australia's.  Clean power won't remove the water used for cooling or the carbon in the hardware, but it would remove most of the rest.</p>
+          </div>
+          <div>
+            <p>Filmmaking can't get there on clean electricity alone.  Crews and gear travel by plane and truck, and there's no electric replacement yet for most of the planes in service.  Sets, food, and waste carry their own emissions.  Those can be cut, or properly offset by real reductions elsewhere rather than tree-planting pledges, but the industry is a long way from doing it.</p>
+            <p>So how the world generates its energy matters most.  Cutting filmmaking's footprint, from discarded AI takes to diesel generators, limits the damage while that work gets done.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -507,9 +533,31 @@ details.more[open]>summary::before{content:"–"}
         </div>
         <div class="card">
           <span class="label">Counterintuitive</span>
-          <h3>Local isn't greener by itself</h3>
-          <p class="fig" id="localFig">50 Wh</p>
-          <p id="localText">at the chip for one 5-second Wan 2.1 clip on a base M4 Mac mini, which took 3 hours 25 minutes.  An RTX 4090 makes the same clip in about 4 minutes for roughly 35 Wh.  Local tools help only when they replace cloud video generations.</p>
+          <h3>Fast beats frugal</h3>
+          <p class="fig">21 Wh</p>
+          <p>for a 5-second Wan 2.1 clip on an RTX 4090 desktop, against 50.5 Wh at the chip alone on a base M4 Mac mini.  The 4090 draws 20 to 30 times the power but finishes in under 3 minutes instead of 3 hours 25, so it uses less than half the energy.</p>
+        </div>
+      </div>
+      <div class="lc">
+        <div class="lc-intro">
+          <h3 class="upper" style="font-size:20px;margin-bottom:14px">Local or cloud?</h3>
+          <p>Running a model on your own computer skips the data center, but that alone saves little.  What matters is how big the model is and how fast the hardware finishes the job.  The same small Wan model uses about 3.5 Wh per generated second on a data-center GPU, 4 Wh on an RTX 4090 desktop, and 10 Wh at the Mac mini's chip alone.  The big savings come from small, distilled models, and those are the ones with visibly lower quality.</p>
+        </div>
+        <div class="lc-grid">
+          <div>
+            <div class="chart" id="localChart"></div>
+            <p class="label">Energy per second of generated video, on a log scale.  Each gridline is 10×.  Teal runs in a data center.  Violet runs on your own machine.</p>
+          </div>
+          <div>
+            <p><b>Local generation is worth it when all of these hold:</b></p>
+            <ul class="note-list">
+              <li><b>The model is small.</b>  LTX-Video made 5 seconds on the Mac mini for 0.57 Wh at the chip, a few hundred times less than Seedance 2.5 uses for the same length.  A mid-size Wan model at 720p on a 4090 uses about 14 Wh a second, as much as MiniMax H3 in the cloud.</li>
+              <li><b>The hardware is fast.</b>  A GPU that finishes in minutes beats a frugal chip that runs for hours, because the whole machine draws power for as long as the job runs.</li>
+              <li><b>The quality is enough for the job.</b>  Open models that fit on a desktop GPU or a Mac trail the cloud leaders.  In Artificial Analysis's blind-vote arena, LTX-2.5 scores about 1,055 and LTX-2.3 about 960–975, against 1,210–1,229 for Seedance 2.0, MiniMax H3, and Wan 3.0, so viewers pick the cloud model about 70–80% of the time.  That makes local models useful for previz, animatics, and look tests, and only marginally useful for finished shots.  If a weaker model needs more takes, or the shot gets remade in the cloud anyway, the saving shrinks or disappears.</li>
+              <li><b>Your power is cleaner.</b>  Seedance's international API runs on Malaysia's grid at about 600 g CO2e per kWh, against about 380 g for the US average and 230 g for Los Angeles's utility.</li>
+            </ul>
+            <p class="hint">The cloud has efficient options too.  MiniMax H3 Max, a distilled model, uses roughly 3 Wh a second and scores 1,227.  The one open model in that top group, MiniMax H3, needs four data-center GPUs, so it isn't a home option.</p>
+          </div>
         </div>
       </div>
       <div class="two-col">
@@ -547,6 +595,7 @@ details.more[open]>summary::before{content:"–"}
         <details class="acc">
           <summary>Measured on a Mac mini</summary>
           <div class="acc-body measure">
+            <p>The most useful result is the counterintuitive one.  For the one heavy model, Wan 2.1, the Mac mini used 50.5 Wh at the chip for a 5-second clip.  An RTX 4090 desktop running the same settings uses about 21 Wh at the wall, less than half, because it finishes more than 70 times faster.  Small distilled models were cheap on the Mac: LTX-Video made 5 seconds for 0.57 Wh.</p>
             <p>To check the local figures, we ran five open models in ComfyUI on a base M4 Mac mini with 16 GB of memory and logged the chip's own power (CPU, GPU, and neural engine) once a second with macOS's powermetrics.  That leaves out memory, storage, the fan, and the power supply, so energy at the wall socket is higher.  Each figure is the mean of up to five runs after a warm-up.</p>
             <div class="tbl-wrap"><table class="data-tbl"><thead><tr><th>Model</th><th>Output</th><th>Time</th><th>Energy at the chip</th></tr></thead><tbody>
               <tr><td>SDXL base 1.0, 30 steps</td><td>One 1024×1024 image</td><td>2.6 min</td><td>0.69 Wh</td></tr>
@@ -555,14 +604,16 @@ details.more[open]>summary::before{content:"–"}
               <tr><td>Wan 2.1 1.3B, 30 steps</td><td>5 seconds at 832×480</td><td>3 h 25 min</td><td>50.5 Wh</td></tr>
               <tr><td>Real-ESRGAN 2× upscale</td><td>5 seconds, to 1536×1024</td><td>2.9 min</td><td>0.70 Wh</td></tr>
             </tbody></table></div>
-            <p>16 GB is tight.  LTX-Video and an 8-bit Z-Image pushed the machine into heavy swapping, so the images use a 4-bit Z-Image.  Wan fit, but each of its 30 steps took almost 7 minutes on this GPU, which is why a low-power chip ended up using the most energy.</p>
+            <p>16 GB is tight.  LTX-Video and an 8-bit Z-Image pushed the machine into heavy swapping, so the images use a 4-bit Z-Image.  Wan fit, but each of its 30 steps took almost 7 minutes on this GPU, against about 5 seconds on a 4090.</p>
           </div>
         </details>
         <details class="acc">
           <summary>Conventional production</summary>
           <div class="acc-body measure">
             <p>Benchmarks come from the Sustainable Entertainment Alliance (US studios, 2023–24), BAFTA albert (UK), AdGreen (advertising), and Ecoprod's Carbon'Clap (France).  They measure different things: the US studio benchmark counts fuel, utilities, flights without their high-altitude warming effect, and hotels, while the others also count food, materials, waste, and post.  We raise the US studio figures by 1.3× to close that gap.</p>
-            <p>Industry benchmarks leave out VFX rendering, and it isn't small.  Weta's AWS rendering for <i>Avatar: The Way of Water</i> alone comes to roughly 8–28 GWh.  Rendering a single VFX shot takes about 0.15–5 MWh.</p>
+            <p>Industry benchmarks leave out VFX rendering, and it isn't small.  Weta's cloud rendering for <i>Avatar: The Way of Water</i> alone comes to roughly 8–28 GWh.  Rendering a single VFX shot takes about 0.15–5 MWh.</p>
+            <p><i>Avatar</i> also shows how much the circumstances change the answer.  Weta is in Wellington, and 87% of New Zealand's electricity came from renewables in 2022.  But New Zealand had no AWS region then, so the cloud rendering ran in Australian data centers.  On Australia's grid it comes to roughly 4,800–16,200 t CO2e.  The same work on New Zealand's grid would have been about 850–2,900 t.  Amazon says renewable purchases matched 90% of its electricity use in 2022, which shrinks the figure under market-based accounting, but the servers still drew from Australia's grid.</p>
+            <p>The production side of the same films was unusually clean.  Lightstorm ran the sequels' two Manhattan Beach stages entirely on its own 960 kW rooftop solar array and served 55,000 plant-based meals.  That doesn't cancel the rendering, but it shows how far one production's choices can move its footprint, and how little an industry average says about any single film.</p>
           </div>
         </details>
         <details class="acc">
@@ -689,7 +740,7 @@ const DATA = {
     shortFilm: { label: "Short film", detail: "About 10 minutes", minutes: 10, t: { lo: 2, c: 8, hi: 20 }, scope: "full", cost: { lo: 6000, c: 25000, hi: 60000 }, days: 5, crew: 20, source: "Ecoprod Carbon'Clap 2024, short fiction average 8 t" },
     tvEpisode: { label: "One-hour TV drama episode", detail: "About 50 minutes", minutes: 50, t: { lo: 77, c: 128.6, hi: 398 }, scope: "pear", cost: { lo: 3800000, c: 6000000, hi: 15000000 }, days: 8, crew: 150, source: "Sustainable Entertainment Alliance 2023–24: 128.6 t per episode" },
     indieFeature: { label: "Indie feature", detail: "About 100 minutes", minutes: 100, t: { lo: 77, c: 271, hi: 631 }, scope: "full", cost: { lo: 1000000, c: 3000000, hi: 6000000 }, days: 25, crew: 60, source: "Carbon'Clap French feature average 271 t; Screen Ireland average 77 t; US medium feature 631 t" },
-    tentpole: { label: "Studio tentpole", detail: "About 130 minutes", minutes: 130, t: { lo: 1732, c: 2444, hi: 2996 }, scope: "pear", cost: { lo: 150000000, c: 250000000, hi: 430000000 }, days: 70, crew: 500, source: "Sustainable Entertainment Alliance 2023–24 tentpole bands; excludes VFX rendering" },
+    tentpole: { label: "Studio tentpole", detail: "About 130 minutes", minutes: 130, t: { lo: 1732, c: 2444, hi: 2962 }, scope: "pear", cost: { lo: 150000000, c: 250000000, hi: 430000000 }, days: 70, crew: 500, source: "Sustainable Entertainment Alliance 2023–24 tentpole bands; excludes VFX rendering" },
   },
   pearToFull: { lo: 1.15, c: 1.3, hi: 1.5 },   // assumption: the US benchmark leaves out food, materials, waste, post, and flight RF
 
@@ -721,64 +772,64 @@ const DATA = {
      produces.  takes is generated seconds per finished second for this kind of shot. */
   scenes: [
     { key: "explosion", title: "Bus explosion", seconds: 5, takes: { lo: 10, c: 30, hi: 100 },
-      practical: { lo: 794, c: 2124, hi: 6682 }, practicalLabel: "Practical explosion day",
-      vfx: { lo: 280, c: 525, hi: 1225 }, vfxLabel: "CG explosion shot",
+      practical: { lo: 794, c: 2124, hi: 6682 }, practicalLabel: "Practical explosion day", practicalShort: "Practical", practicalNoun: "a practical explosion day",
+      vfx: { lo: 280, c: 525, hi: 1225 }, vfxLabel: "CG explosion shot", vfxShort: "CG", vfxNoun: "a CG explosion shot",
       body: ["The fireball is the small part.  The biggest film explosion on record, in <i>Spectre</i>, burned 8,418 L of kerosene, about 26 t CO2e, which is under 1% of a tentpole.  A typical bus gag adds crew and effects vehicles, a generator, and trucks for an extra day.",
              "The destroyed vehicle is the swing factor.  A new 12 m bus embodies about 37 t CO2e, while a bus already headed for scrap arguably counts as zero, which is how we count it here."],
       cost: "Practical: $10k–$11k for the stunt team, safety officer, and permits, plus an extra unit day ($15k–$120k on an indie, $315k–$1.6M on a studio film).  CG: $5k–$50k per destruction shot." },
     { key: "chase", title: "Car chase day", seconds: 30, takes: { lo: 15, c: 40, hi: 120 },
-      practical: { lo: 1000, c: 2390, hi: 6000 }, practicalLabel: "One practical chase day",
-      vfx: { lo: 700, c: 1500, hi: 5800 }, vfxLabel: "CG chase, same screen time",
+      practical: { lo: 1000, c: 2390, hi: 6000 }, practicalLabel: "One practical chase day", practicalShort: "Practical", practicalNoun: "a practical chase day",
+      vfx: { lo: 700, c: 1500, hi: 5800 }, vfxLabel: "CG chase, same screen time", vfxShort: "CG", vfxNoun: "a CG chase",
       body: ["A chase day means picture cars in multiples, precision drivers, camera cars, road closures, and police.  <i>Furious 7</i> wrecked more than 230 cars, about 1,650 t CO2e if you count them as new.",
              "Continuity from shot to shot is AI's weak spot, so expect more takes here than for a single wide shot."],
       cost: "Practical: road closures from $312 per location plus police at $67–$78 an hour, before picture cars and crew.  CG: $3k–$50k per shot." },
     { key: "crowd", title: "Crowd of 500 extras", seconds: 15, takes: { lo: 5, c: 10, hi: 30 },
-      practical: { lo: 2000, c: 5000, hi: 12500 }, practicalLabel: "500 extras for a day",
-      vfx: { lo: 108, c: 300, hi: 906 }, vfxLabel: "Digital crowd, 3 shots",
-      body: ["Crowds cost carbon through travel, meals, and holding areas, at about 10 kg per extra per day.  Beef versus vegetarian catering alone is a 6× difference per meal.",
+      practical: { lo: 2000, c: 5000, hi: 12500 }, practicalLabel: "500 extras for a day", practicalShort: "Real extras", practicalNoun: "a day with 500 real extras",
+      vfx: { lo: 108, c: 300, hi: 906 }, vfxLabel: "Digital crowd, 3 shots", vfxShort: "Digital crowd", vfxNoun: "a digital crowd",
+      body: ["Crowds cost carbon through travel, meals, and holding areas, at about 10 kg per extra per day.  Beef versus vegetarian catering alone is a 6–12× difference per meal.",
              "Foreground interaction still favors real people, so the usual answer is a small real crowd extended digitally."],
       cost: "Practical: about $140k–$150k a day in SAG-AFTRA wages and benefits for 500 background actors, before meals, wardrobe, and holding.  CG: $1k–$25k per crowd shot." },
     { key: "aerial", title: "Helicopter aerial day", seconds: 25, takes: { lo: 2, c: 5, hi: 20 },
-      practical: { lo: 1750, c: 2917, hi: 5830 }, practicalLabel: "Helicopter day",
-      vfx: { lo: 20, c: 33, hi: 60 }, vfxLabel: "Drone day instead",
+      practical: { lo: 1750, c: 2917, hi: 5830 }, practicalLabel: "Helicopter day", practicalShort: "Helicopter", practicalNoun: "a helicopter day",
+      vfx: { lo: 20, c: 33, hi: 60 }, vfxLabel: "Drone day instead", vfxShort: "Drone", vfxNoun: "a drone day",
       body: ["An H125 helicopter burns about 190 L of jet fuel an hour, about 580 kg CO2e per flight hour.  A drone removes about 99% of that, so AI's extra saving over a drone is small.",
              "Helicopters still win for altitude, speed, restricted airspace, and heavy camera payloads."],
       cost: "Helicopter: $8k–$30k a day all-in.  Drone with crew: $2.5k–$8.5k.  Stock clip: $55–$499." },
     { key: "abroad", title: "Establishing shots abroad", seconds: 15, takes: { lo: 5, c: 10, hi: 50 },
-      practical: { lo: 9900, c: 15941, hi: 46300 }, practicalLabel: "5 crew, London to Cape Town, a week",
-      vfx: { lo: 240, c: 500, hi: 900 }, vfxLabel: "3 matte paintings",
+      practical: { lo: 9900, c: 15941, hi: 46300 }, practicalLabel: "5 crew, London to Cape Town, a week", practicalShort: "Travel", practicalNoun: "flying a crew abroad",
+      vfx: { lo: 240, c: 500, hi: 900 }, vfxLabel: "3 matte paintings", vfxShort: "Matte paintings", vfxNoun: "three matte paintings",
       body: ["Five crew flying London to Cape Town for a week comes to about 16 t CO2e in economy and about 42 t in business class.  Flights are 65% of all emissions on ad shoots that fly.",
              "This is AI's strongest case, and stock footage's, as long as the generated shot replaces the trip instead of adding to it."],
       cost: "Practical: tens of thousands of dollars in travel.  Matte painting: $5k–$25k per shot.  Stock: $55–$499 per clip." },
     { key: "set", title: "Large period set", seconds: 120, takes: { lo: 10, c: 30, hi: 100 },
-      practical: { lo: 30000, c: 57000, hi: 103000 }, practicalLabel: "Physical build",
-      vfx: { lo: 3000, c: 9450, hi: 28000 }, vfxLabel: "LED volume, 10 days",
+      practical: { lo: 30000, c: 57000, hi: 103000 }, practicalLabel: "Physical build", practicalShort: "Physical set", practicalNoun: "a physical set build",
+      vfx: { lo: 3000, c: 9450, hi: 28000 }, vfxLabel: "LED volume, 10 days", vfxShort: "LED volume", vfxNoun: "10 days on an LED volume",
       body: ["End of life matters as much as materials.  Sending 50 t of set timber to landfill nearly doubles an illustrative build's footprint, while recycling it adds almost nothing.",
              "LED volumes cut most of the build but draw real power: Sony measured one six-day shoot at about 16,000 kWh, 209% above its own spec-sheet estimate."],
       cost: "Practical: a studio tentpole's set construction line ran $19M.  LED volume: $3.5k–$15k+ a day, or $35k–$50k a week for a standing stage." },
     { key: "night", title: "Night exterior", seconds: 120, takes: { lo: 10, c: 30, hi: 100 },
-      practical: { lo: 680, c: 900, hi: 1120 }, practicalLabel: "Diesel-powered night",
-      vfx: { lo: 70, c: 120, hi: 170 }, vfxLabel: "Same night on grid power",
+      practical: { lo: 680, c: 900, hi: 1120 }, practicalLabel: "Diesel-powered night", practicalShort: "Diesel", practicalNoun: "a diesel-powered night",
+      vfx: { lo: 70, c: 120, hi: 170 }, vfxLabel: "Same night on grid power", vfxShort: "Grid power", vfxNoun: "the same night on grid power",
       body: ["Big night exteriors run 18 kW lamps on condors from tow-plant generators, which are usually oversized: 83% of measured production generators never passed half load.",
              "Swapping diesel for a grid tie-in or batteries already removes 60–90% of the lighting footprint."],
       cost: "Mostly crew time at night rates.  A studio tentpole's lighting line ran $7.1M." },
     { key: "rain", title: "Rain scene", seconds: 60, takes: { lo: 5, c: 10, hi: 30 },
-      practical: { lo: 118, c: 300, hi: 590 }, practicalLabel: "Practical rain, 4 hours",
-      vfx: { lo: 1, c: 3, hi: 6 }, vfxLabel: "Library rain elements",
+      practical: { lo: 118, c: 300, hi: 590 }, practicalLabel: "Practical rain, 4 hours", practicalShort: "Practical rain", practicalNoun: "4 hours of practical rain",
+      vfx: { lo: 1, c: 3, hi: 6 }, vfxLabel: "Library rain elements", vfxShort: "Library rain", vfxNoun: "compositing library rain",
       body: ["Practical rain is modest on carbon but heavy on water.  A car-set rain rig runs 500–800 L a minute, so 4 hours uses 48,000–240,000 L.",
              "Real rain on actors still reads best, which pushes productions toward a mix of both."],
       cost: "Practical: part of the effects budget.  Composited rain: $2k–$20k per shot." },
     { key: "impossible", title: "Creature or disaster shot", seconds: 5, takes: { lo: 15, c: 50, hi: 150 },
       practical: null, practicalLabel: "",
-      vfx: { lo: 700, c: 1750, hi: 3150 }, vfxLabel: "Hero CG shot (2–9 MWh)",
-      body: ["When practical isn't possible, the comparison is AI against VFX, and heavy VFX is energy-hungry.  Weta's single longest shot on <i>Avatar: The Way of Water</i> took 13.6 million thread-hours.",
+      vfx: { lo: 700, c: 1750, hi: 3150 }, vfxLabel: "Hero CG shot (2–9 MWh)", vfxShort: "CG", vfxNoun: "a hero CG shot",
+      body: ["When practical isn't possible, the comparison is AI against VFX, and heavy VFX is energy-hungry.  Weta's single longest shot on <i>Avatar: The Way of Water</i> took 13.6 million thread-hours.  Where the render farm sits matters as much: the same shot on New Zealand's mostly renewable grid emits about a quarter of what it would on the US grid.",
              "Netflix's <i>El Eternauta</i> finished its AI building collapse about 10× faster than traditional VFX.  Hero creature performance is still hard to control with AI."],
       cost: "CG creature: $15k–$50k per shot, and $200k–$600k per scene for a hero creature.  Digi-doubles start around $300k per shot." },
     { key: "dialogue", title: "Two people talking", seconds: 120, takes: { lo: 10, c: 30, hi: 300 },
-      practical: { lo: 29, c: 105, hi: 140 }, practicalLabel: "On a standing set",
-      vfx: { lo: 600, c: 860, hi: 1300 }, vfxLabel: "A whole location day",
+      practical: { lo: 29, c: 105, hi: 140 }, practicalLabel: "On a standing set", practicalShort: "Standing set", practicalNoun: "shooting on a standing set",
+      vfx: { lo: 600, c: 860, hi: 1300 }, vfxLabel: "A whole location day", vfxShort: "Location day", vfxNoun: "a whole location day",
       body: ["This is where AI's advantage disappears.  On a set that already exists, the scene adds only a few hours of lighting.",
-             "Performance and lip-sync push rerolls up, and at 30 or more takes per kept clip, AI can exceed the practical footprint."],
+             "Performance and lip-sync push rerolls up, and heavy rerolling puts AI above the practical footprint."],
       cost: "Practical: cheap at the margin on an existing set.  AI still needs heavy human work on performance and lip-sync." },
   ],
 
@@ -787,21 +838,26 @@ const DATA = {
      Rungs are annual kg CO2e.  The scenario uses Seedance 2.5 at 720p. */
   access: {
     model: "seedance25", res: "720p",
+    // kg is a single figure, or {lo, c, hi} for an estimate with a range.
     rungs: [
       { key: "ukPerson", label: "One UK resident's year", kg: 4400, cls: "alt", src: "UK territorial emissions per person" },
       { key: "usPerson", label: "One American's year", kg: 14300, cls: "alt", src: "US territorial emissions per person" },
       { key: "indie", label: "One indie feature", kg: 271000, src: "Ecoprod Carbon'Clap 2024, French feature average" },
       { key: "tentpole", label: "One studio tentpole", kg: 3177200, src: "Sustainable Entertainment Alliance 2023–24, raised 1.3× to full footprint" },
-      { key: "ukScreen", label: "All UK film and TV production, 2024", kg: 174437000, src: "BAFTA albert ACCELERATE 2025: 2,540 footprints" },
+      { key: "ukScreen", label: "UK TV production, 2024", kg: 174437000, src: "BAFTA albert ACCELERATE 2025: 2,540 footprints, most UK TV and few UK features" },
       { key: "netflix", label: "Netflix's production footprint, 2024", kg: 425000000, src: "Netflix 2024 ESG report: 1,037,226 t total, 41% from production" },
+      { key: "worldScreen", label: "All film and TV production worldwide", kg: { lo: 2.0e9, c: 3.5e9, hi: 6.5e9 }, src: "Our estimate from UK, US, French, and Netflix data, 2024.  Production only: no VFX rendering, distribution, or streaming" },
     ],
     // Disclosed volume, early 2026: 300–550 million generated seconds a day across platforms that
     // publish counts.  lo: 300 M s/day at 2 Wh/s; c: about 1.5 TWh a year; hi: 550 M s/day at Seedance 720p.
     world: { label: "All disclosed AI video, 2026", kg: { lo: 0.09e9, c: 0.6e9, hi: 4.4e9 } },
     prose: [
       "The calculator compares one production with one production.  That's the right question for a filmmaker, but it misses what makes generative video different: almost anyone can make it.  Shooting a scene takes a crew, a budget, and weeks of planning.  Generating one takes a text box and a subscription, so people generate far more video than anyone would ever shoot, and a lot of it is never watched by anyone.",
-      "One person generating a minute of Seedance 2.5 a day for a year emits about 480 kg CO2e, around a ninth of a UK resident's annual footprint.  That doesn't register on its own.  Scale changes the picture.  About 560 people at that pace match an indie feature every year, about 6,600 match a studio tentpole, and about 360,000 match all UK film and TV production.",
-      "That line is already behind us.  The platforms that publish counts generated about 300–550 million seconds of video a day in early 2026, the same as 5–9 million people making a minute each, and xAI says Grok Imagine alone made 1.2 billion videos in 30 days.  Most of that runs on lighter models than Seedance.  At an average of 10 Wh per generated second, it comes to roughly 0.6 Mt CO2e a year, about 3.4 times all UK film and TV production and more than Netflix's whole production slate.  At Seedance's energy it would be 2.4–4.4 Mt.  Cheaper tiers push the volume up: MiniMax's monthly generations rose 653% after it launched a new model and a cheaper Fast tier.",
+      "One person generating a minute of Seedance 2.5 a day for a year emits about 480 kg CO2e, around a ninth of a UK resident's annual footprint.  That doesn't register on its own.  Scale changes the picture.  About 560 people at that pace match an indie feature every year, about 6,600 match a studio tentpole, and about 7 million match all the film and TV production in the world.",
+      "The platforms that publish counts generated about 300–550 million seconds of video a day in early 2026, the same as 5–9 million people making a minute each, and xAI says Grok Imagine alone made 1.2 billion videos in 30 days.  Most of that runs on lighter models than Seedance.  At an average of 10 Wh per generated second, it comes to roughly 0.6 Mt CO2e a year, more than Netflix's whole production slate.  At Seedance's energy it would be 2.4–4.4 Mt, about as much as all the world's film and TV production.",
+      "The fair comparison is all of filmmaking against all of AI video, and on that count filmmaking is still bigger.  Nobody publishes a global total, so we estimated one from UK, US, French, and Netflix data: roughly 2–6.5 Mt CO2e a year for all film and TV production, about 3.5 Mt at the center.  Disclosed AI video comes to about a sixth of that, or about a quarter of scripted film and TV alone.",
+      "So AI video hasn't overtaken filmmaking, and shot for shot it's usually lighter.  But a one-to-one comparison buries the lede.  In roughly two years, AI video has added a footprint about three times the size of all UK TV production, and almost none of it is film.  The problem isn't filmmakers using AI.  It's that anyone can now generate a film, or a thousand clips, whenever they want.",
+      "Both sides will change.  Generation keeps growing, and cheaper tiers speed it up: MiniMax's monthly generations rose 653% after it launched a new model and a cheaper Fast tier.  Each generated second will likely take less energy as models are distilled and hardware improves, but nobody can say yet whether efficiency will outrun volume, so the chart shows only what's disclosed today.",
       "Much of it is barely watched.  No platform publishes how much of what it generates gets posted, but professionals keep only one generated second in 57–107, and Volcano Engine says Seedance traffic peaked on weekends, when people play, until its 2.0 release.  In China, more than 95% of the 128,000 micro-dramas launched in early 2026 were AI-made, and only 0.117% of AI animated dramas reach 100 million plays.",
       "Views change the math, too.  A studio tentpole spreads about 3,200 t across something like 100 million viewers, roughly 15 g per hour watched.  A ten-second clip generated five times over and watched by 20 people comes to about 20 kg per hour watched, more than 1,000× worse.  Video that nobody watches has no audience to spread its footprint across at all.",
     ],
@@ -809,6 +865,26 @@ const DATA = {
       { fig: "1.2 billion", text: "videos generated with Grok Imagine in 30 days, by xAI's own count (February 2026)." },
       { fig: "85,000+ hours", text: "of AI video generated each day on platforms that publish counts, more than the world's entire yearly output of fiction features (about 23,000 hours)." },
       { fig: "59%", text: "of a new TikTok account's For You feed was AI-generated in Kapwing's test.  On YouTube Shorts it was 21%." },
+    ],
+  },
+
+  /* ---------- Local or cloud: energy per generated second ----------
+     Cloud rows are facility-level estimates from the models above.  Local rows are whole-machine
+     energy at the wall unless marked chip-only.  The small Wan rows are scaled to the 30 steps of
+     our Mac mini run: Wan's own RTX 4090 time and ML.ENERGY's H100 energy are for 50 steps. */
+  localCompare: {
+    cloud: [
+      { model: "seedance25", res: "720p", label: "Seedance 2.5 · cloud", tip: "Seedance 2.5 at 720p in ByteDance's Johor data center" },
+      { model: "minimaxH3", res: "768p", label: "MiniMax H3 · cloud", tip: "MiniMax H3 at 768p in a Chinese data center" },
+      { model: "minimaxH3Max", res: "768p", label: "MiniMax H3 Max · cloud", tip: "MiniMax H3 Max, a distilled fast version, at 768p" },
+      { gpuWh: { lo: 2.13, c: 2.17, hi: 2.25 }, region: "us", label: "Small Wan model · data center", tip: "Wan 2.1 1.3B at 832×480 on one H100: ML.ENERGY measured 18 Wh for 50 steps.  Scaled to 30 steps, plus servers and cooling." },
+    ],
+    local: [
+      { label: "Mid-size Wan model, 720p · RTX 4090", wh: { lo: 13.1, c: 14.3, hi: 15.3 }, tip: "Wan 2.2 5B at 1280×704, 50 steps: 535 s on one RTX 4090 (Wan's own figure) at 420–520 W for the whole desktop" },
+      { label: "Small Wan model · Mac mini", wh: { lo: 9.98, c: 9.98, hi: 9.98 }, tip: "Wan 2.1 1.3B at 832×480, 30 steps: measured 50.5 Wh at the chip in 3 h 25 min on a base M4 Mac mini.  The wall figure is higher." },
+      { label: "Small Wan model · RTX 4090", wh: { lo: 3.6, c: 4.2, hi: 4.6 }, tip: "Wan 2.1 1.3B at 832×480: Wan's own 261 s on one RTX 4090 for 50 steps, scaled to 30 steps, at 420–520 W for the whole desktop.  About 21 Wh a clip." },
+      { label: "LTX-2.3 · M4 Max laptop", wh: { lo: 1.2, c: 1.8, hi: 2.9 }, tip: "LTX-2.3 distilled at 1280×768: 6–15 Wh a clip, estimated from measured timings on other Apple chips" },
+      { label: "LTX-Video · Mac mini", wh: { lo: 0.113, c: 0.113, hi: 0.113 }, tip: "LTX-Video 2B distilled at 768×512, 8 steps: measured 0.57 Wh at the chip in 2.3 min on a base M4 Mac mini" },
     ],
   },
 
@@ -835,6 +911,7 @@ const DATA = {
     ["Meal", "2.7 kg mixed", "0.8 vegetarian, 9.9 beef", "WRAP and DEFRA"],
     ["Production water", "94 L per person per day", "", "<i>Raised by Wolves</i> season 2, the only published figure"],
     ["VFX shot rendering", "1,500 kWh typical", "150–5,000", "Weta, DreamWorks, and render-farm disclosures"],
+    ["All film and TV production worldwide", "3.5 Mt CO2e a year", "2.0–6.5", "Our estimate from albert, the Sustainable Entertainment Alliance, Carbon'Clap, Netflix, BFI, Ampere, and WIPO data"],
     ["AI artist day rate", "$450", "$250–$1,000", "Freelance rate surveys, 2026"],
   ],
 
@@ -868,6 +945,18 @@ const DATA = {
     { t: "Kapwing, AI slop report", u: "https://www.kapwing.com/blog/ai-slop-report-the-global-rise-of-low-quality-ai-videos/" },
     { t: "IEA, Key Questions on Energy and AI (2026)", u: "https://iea.blob.core.windows.net/assets/3179f7f8-01f6-4dd6-bffa-c9f7b73f1dc9/KeyQuestionsonEnergyandAI.pdf" },
     { t: "Stephen Follows, feature films without a sales agent", u: "https://stephenfollows.com/p/how-many-feature-films-never-sign-with-a-sales-agent" },
+    { t: "Sustainable Entertainment Alliance, Carbon Emissions of Film and Television Production 2023–2024", u: "https://cdn.sanity.io/files/pkrr84s9/production/911be83931fb506a487855de55145557aa363603.pdf" },
+    { t: "WIPO, global film production count for 2024", u: "https://www.wipo.int/en/web/global-innovation-index/w/blogs/2026/lights-camera-records-global-film-production" },
+    { t: "Ampere Analysis, global content spend", u: "https://www.ampereanalysis.com/insight/global-content-investment-to-hit-255bn-in-2026-as-streamers-cement-market-leadership" },
+    { t: "Our estimate of global film and TV production emissions", u: "https://github.com/adachis/green-film-comparison-tool/blob/prompt-vs-camera/research/streams/K_global_production_footprint.md" },
+    { t: "Wan 2.1 and Wan 2.2 computational-efficiency tables", u: "https://github.com/Wan-Video/Wan2.1" },
+    { t: "Artificial Analysis, text-to-video arena leaderboard", u: "https://artificialanalysis.ai/video/leaderboard/text-to-video" },
+    { t: "The Spinoff, how Wētā rendered Avatar: The Way of Water in the cloud (2022)", u: "https://thespinoff.co.nz/business/08-12-2022/like-seeing-the-first-images-from-the-moon-how-weta-gave-avatar-2-its-visual-wow-factor" },
+    { t: "AWS, Avatar: The Way of Water and the future of filmmaking (2023)", u: "https://aws.amazon.com/blogs/media/avatar-the-way-of-water-and-the-future-of-filmmaking/" },
+    { t: "New Zealand MBIE, Energy in New Zealand 2023", u: "https://www.mbie.govt.nz/about/news/energy-in-new-zealand-2023-shows-renewable-electricity-generation-increased-to-87-percent" },
+    { t: "Amazon 2022 Sustainability Report", u: "https://sustainability.aboutamazon.com/2022-sustainability-executive-summary.pdf" },
+    { t: "The Christian Science Monitor, Lightstorm's solar array for the Avatar sequels (2012)", u: "https://www.csmonitor.com/Environment/Energy-Voices/2012/1010/James-Cameron-s-Avatar-films-run-on-clean-energy" },
+    { t: "The Academy, how Avatar: The Way of Water ran a greener set (2022)", u: "https://newsletter.oscars.org/news/post/avatar-the-way-of-wayer-suzy-amis-cameron-interview" },
     { t: "Our energy measurements of five open models on a base M4 Mac mini", u: "https://github.com/adachis/green-film-comparison-tool/blob/prompt-vs-camera/research/streams/J_mac_mini_measurements.md" },
     { t: "Full research streams, calculations, and timing data", u: "https://github.com/adachis/green-film-comparison-tool/tree/prompt-vs-camera/research" },
   ],
@@ -983,6 +1072,8 @@ if (typeof module !== "undefined") module.exports = Model;
   const D = DATA, M = Model;
   const $ = (id) => document.getElementById(id);
   const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  // Escape, then let italic tags through (titles of films and shows in data strings).
+  const rich = (s) => esc(s).replace(/&lt;(\/?)i&gt;/g, "<$1i>");
 
   /* ---------- Number formatting ---------- */
   function sig(n, d = 2) {
@@ -1227,14 +1318,12 @@ if (typeof module !== "undefined") module.exports = Model;
 
     $("compareLine").textContent = `${cap(f.noun)}, ${fmtRuntime(finishedSec)} long, made two ways.`;
     const ratio = conv.c / ai.co2Kg.c;
-    const verdict = $("verdict");
-    if (ratio >= 1.25) verdict.textContent = `Generating it emits about ${times(ratio)} less CO2e.`;
-    else if (ratio > 0.8) verdict.textContent = "On carbon, it's roughly a tie.";
-    else verdict.textContent = `Generating it emits about ${times(1 / ratio)} more CO2e.`;
-    const overlap = ai.co2Kg.hi >= conv.lo && conv.hi >= ai.co2Kg.lo;
+    const co2Call = callLower(ai.co2Kg, conv);
+    $("verdict").textContent = co2Call === "less" ? `Generating it emits about ${times(ratio)} less CO2e.` : co2Call === "more" ? `Generating it emits about ${times(1 / ratio)} more CO2e.` : "On carbon, it's too close to call.";
     const costRatio = convCost.c / aiCost.c;
-    const costLine = costRatio >= 1.25 ? `It also costs about ${times(costRatio)} less, mostly because of people, not generation.` : costRatio > 0.8 ? "Costs come out about even." : `It costs about ${times(1 / costRatio)} more.`;
-    $("verdictSub").textContent = `That's ${sig(ai.genSec, 3)} seconds of AI video (${fmtRatio(S.ratio)}) against ${BENCH_NOUN[f.bench]}.  ${overlap ? "The likely ranges overlap, so the direction is less certain than the headline.  " : ""}${costLine}`;
+    const costCall = callLower(aiCost, convCost);
+    const costLine = costCall === "less" ? `It ${co2Call === "less" ? "also " : ""}costs about ${times(costRatio)} less, mostly because of people, not generation.` : costCall === "more" ? `It costs about ${times(1 / costRatio)} more.` : "On cost, it's too close to call.";
+    $("verdictSub").textContent = `That's ${sig(ai.genSec, 3)} seconds of AI video (${fmtRatio(S.ratio)}) against ${BENCH_NOUN[f.bench]}.  ${co2Call === "close" ? "The likely ranges overlap too much to say which is lower.  " : ""}${costLine}`;
 
     const metrics = [
       { name: "CO2e", fmt: unitFmt.co2, a: ai.co2Kg, c: conv },
@@ -1245,7 +1334,8 @@ if (typeof module !== "undefined") module.exports = Model;
     const box = $("metrics");
     box.innerHTML = metrics.map((mt, i) => {
       const r = mt.c.c / mt.a.c;
-      const rt = r >= 1 ? `AI is ${times(r)} lower` : `AI is ${times(1 / r)} higher`;
+      const call = callLower(mt.a, mt.c);
+      const rt = call === "less" ? `AI is ${times(r)} lower` : call === "more" ? `AI is ${times(1 / r)} higher` : "Too close to call";
       return `<div class="metric">
         <div class="metric-top"><span class="metric-name">${mt.name}</span><span class="metric-ratio">${rt}</span></div>
         <div class="metric-vals">
@@ -1281,10 +1371,11 @@ if (typeof module !== "undefined") module.exports = Model;
     t += `<tr><td>Human work on the AI version</td><td class="num">${cell(unitFmt.usd, ai.laborCost)}</td><td class="num">–</td></tr>`;
     t += "</tbody></table>";
     $("resultTable").innerHTML = t;
-    $("shootSource").textContent = `Shoot figure: ${c.bench.source}.`;
+    $("shootSource").textContent = `Shoot figure: ${c.bench.source}.${c.scopeNote ? "  " + c.scopeNote : ""}`;
 
     renderScenes();
     renderAccess();
+    renderLocal();
   }
 
   /* ---------- Scenes ---------- */
@@ -1303,6 +1394,7 @@ if (typeof module !== "undefined") module.exports = Model;
           <span class="chev" aria-hidden="true">+</span>
         </summary>
         <div class="scene-body">
+          <p class="scene-verdict" data-verdict></p>
           <div class="measure">${sc.body.map((p) => `<p>${p}</p>`).join("")}<p class="hint" style="margin-top:14px">${esc(sc.cost)}</p></div>
           <div class="scene-chart">
             <div class="chart" data-chart></div>
@@ -1319,17 +1411,52 @@ if (typeof module !== "undefined") module.exports = Model;
     });
     $("scene-explosion").open = true;
   }
+  /* Which way of getting the shot is lowest?  Each likely range is read as an 80% interval on a
+     log scale, and a direction is called only when it holds with at least 85% odds.  Otherwise
+     the scene is too close to call. */
+  function erf(x) {
+    const t = 1 / (1 + 0.3275911 * Math.abs(x));
+    const y = 1 - ((((1.061405429 * t - 1.453152027) * t + 1.421413741) * t - 0.284496736) * t + 0.254829592) * t * Math.exp(-x * x);
+    return x >= 0 ? y : -y;
+  }
+  function aiLowerOdds(ai, r) {
+    const d = Math.log(r.c / ai.c);
+    const sa = Math.log(d >= 0 ? ai.hi / ai.c : ai.c / ai.lo) / 1.2816;
+    const sr = Math.log(d >= 0 ? r.c / r.lo : r.hi / r.c) / 1.2816;
+    const sd = Math.hypot(sa, sr);
+    return sd ? 0.5 * (1 + erf(d / sd / Math.SQRT2)) : d >= 0 ? 1 : 0;
+  }
+  function callLower(ai, r) {
+    const odds = aiLowerOdds(ai, r);
+    return odds >= 0.85 ? "less" : odds <= 0.15 ? "more" : "close";
+  }
+  function sceneVerdict(cmps) {
+    const part = (x) => (x.dir === "close" ? `too close to call against ${x.noun}` : `about ${times(x.n)} ${x.dir} than ${x.noun}`);
+    let t = cmps[0].dir === "close" ? `AI is ${part(cmps[0])}` : `AI emits ${part(cmps[0])}`;
+    cmps.slice(1).forEach((x, i) => {
+      const prev = cmps[i];
+      if (x.dir === "close") t += prev.dir === "close" ? ` or ${x.noun}` : `, and is ${part(x)}`;
+      else if (prev.dir === "close") t += `, and emits ${part(x)}`;
+      else t += `${x.dir === prev.dir ? " and" : ", but"} ${part(x)}`;
+    });
+    return t + ".";
+  }
   function renderScene(sc) {
     const el = $("scene-" + sc.key);
     const ai = sceneAI(sc);
     let prac = sc.practical;
     if (prac && sceneState[sc.key]) prac = M.add(prac, M.fixed(sceneVehicles[sc.key].add));
-    const alts = [prac, sc.vfx].filter(Boolean);
-    const best = alts.reduce((a, b) => (b.c < a.c ? b : a));
-    const r = best.c / ai.c;
+    const cmps = [
+      prac && { r: prac, short: sc.practicalShort, noun: sc.practicalNoun },
+      { r: sc.vfx, short: sc.vfxShort, noun: sc.vfxNoun },
+    ].filter(Boolean).sort((a, b) => a.r.c - b.r.c).map((x) => ({ ...x, dir: callLower(ai, x.r), n: Math.max(x.r.c / ai.c, ai.c / x.r.c) }));
+    const low = cmps[0];
     const badge = el.querySelector("[data-badge]");
-    badge.className = "badge " + (r >= 1.25 ? "win" : r <= 0.8 ? "lose" : "");
-    badge.textContent = r >= 1.25 ? `AI ${times(r)} lower` : r <= 0.8 ? `AI ${times(1 / r)} higher` : "About even";
+    badge.className = "badge " + (low.dir === "less" ? "win" : low.dir === "more" ? "lose" : "");
+    badge.textContent = low.dir === "less" ? "AI lowest" : low.dir === "more" ? `${low.short} lowest` : "Too close to call";
+    let verdict = sceneVerdict(cmps);
+    if (low.dir !== "less") verdict += `  At about ${fmtRatio(sc.takes.c * low.r.c / ai.c)}, AI would match ${low.noun}.`;
+    el.querySelector("[data-verdict]").textContent = verdict;
     if (!el.open) return;
     const m = D.models[S.model];
     rangeChart(el.querySelector("[data-chart]"), [
@@ -1337,9 +1464,24 @@ if (typeof module !== "undefined") module.exports = Model;
       { label: sc.vfxLabel, r: sc.vfx, cls: "alt", tip: `${esc(sc.vfxLabel)}: ${unitFmt.co2(sc.vfx.c)}<br>Likely ${rangeTxt(unitFmt.co2, sc.vfx)}` },
       { label: `${m.label}, ${S.res}`, r: ai, cls: "ai", tip: `${m.label} at ${S.res}: ${unitFmt.co2(ai.c)}<br>${sc.seconds} s at ${fmtRatio(sc.takes.c)}<br>Likely ${rangeTxt(unitFmt.co2, ai)}` },
     ], unitFmt.co2, { labelW: Math.min(210, Math.max(120, (el.querySelector("[data-chart]").clientWidth || 400) * 0.42)), rowH: 30, stack: true, aria: `${sc.title}: practical ${prac ? unitFmt.co2(prac.c) : "not possible"}, alternative ${unitFmt.co2(sc.vfx.c)}, AI ${unitFmt.co2(ai.c)}` });
-    el.querySelector("[data-line]").textContent = `AI at ${fmtRatio(sc.takes.lo)} to ${fmtRatio(sc.takes.hi)}: ${rangeTxt(unitFmt.co2, ai)}.  Bars show likely ranges on a log scale.`;
+    el.querySelector("[data-line]").textContent = `AI: ${unitFmt.co2(ai.c)} at ${fmtRatio(sc.takes.c)}, likely ${rangeTxt(unitFmt.co2, ai)} once shooting ratios from ${fmtRatio(sc.takes.lo)} to ${fmtRatio(sc.takes.hi)} are allowed for.  Bars show likely ranges on a log scale.`;
   }
   function renderScenes() { D.scenes.forEach(renderScene); }
+
+  /* ---------- Local or cloud ---------- */
+  const fmtWh = (v, d) => unitFmt.kwh(v / 1000, d);
+  function renderLocal() {
+    const L = D.localCompare;
+    const rows = [
+      ...L.cloud.map((r) => {
+        const wh = r.model ? M.perGeneratedSecond(r.model, r.res).facWh : M.combine([r.gpuWh, D.hostMultiplier, D.regions[r.region].pue]);
+        return { label: r.label, r: wh, cls: "ai", tip: `${esc(r.tip)}<br>${fmtWh(wh.c)} per generated second<br>Likely ${rangeTxt(fmtWh, wh)}` };
+      }),
+      ...L.local.map((r) => ({ label: r.label, r: r.wh, cls: "alt", tip: `${esc(r.tip)}<br>${fmtWh(r.wh.c)} per generated second${r.wh.hi > r.wh.lo ? `<br>Likely ${rangeTxt(fmtWh, r.wh)}` : ""}` })),
+    ].sort((a, b) => b.r.c - a.r.c);
+    const host = $("localChart");
+    rangeChart(host, rows, fmtWh, { labelW: Math.min(250, Math.max(150, (host.clientWidth || 400) * 0.45)), rowH: 28, stack: true, aria: "Energy per generated second of video, in a data center against on your own machine" });
+  }
 
   /* ---------- Access ---------- */
   function renderAccess() {
@@ -1353,17 +1495,23 @@ if (typeof module !== "undefined") module.exports = Model;
     const perSec = M.perGeneratedSecond(A.model, A.res).co2Kg;
     const perPersonYr = M.scale(perSec, secsR * 365);
     const total = M.scale(perPersonYr, people);
-    const tentpole = A.rungs.find((r) => r.key === "tentpole").kg;
-    const uk = A.rungs.find((r) => r.key === "ukScreen").kg;
-    const feat = A.rungs.find((r) => r.key === "indie").kg;
+    const rung = (k) => A.rungs.find((r) => r.key === k).kg;
+    const tentpole = rung("tentpole"), feat = rung("indie"), netflix = rung("netflix"), world = rung("worldScreen").c;
     let line = `${people.toLocaleString("en-US")} ${people === 1 ? "person" : "people"} generating ${secsR >= 60 ? sig(secsR / 60, 2) + (secsR / 60 === 1 ? " minute" : " minutes") : secsR + (secsR === 1 ? " second" : " seconds")} a day ${people === 1 ? "emits" : "emit"} about ${unitFmt.co2(total.c)} CO2e a year`;
-    if (total.c >= uk) line += total.c / uk < 1.1 ? ", as much as all UK film and TV production." : `, ${sig(total.c / uk, 2)} times as much as all UK film and TV production.`;
+    const share = total.c / world, pct = `about ${sig(share * 100, 2)}% of all the film and TV production in the world`;
+    if (share >= 0.9) line += share < 1.1 ? ", about as much as all the film and TV production in the world." : `, ${sig(share, 2)} times all the film and TV production in the world.`;
+    else if (total.c >= netflix) line += `, more than Netflix's whole production slate and ${pct}.`;
+    else if (share >= 0.01) line += `, ${pct}.`;
     else if (total.c >= tentpole) line += `, as much as ${sig(total.c / tentpole, 2)} studio tentpoles.`;
     else if (total.c >= feat) line += `, as much as ${sig(total.c / feat, 2)} indie features.`;
     else line += ".";
     $("accessLine").textContent = line;
 
-    const rows = A.rungs.map((r) => ({ label: r.label, r: M.fixed(r.kg), cls: r.cls || "conv", tip: `${esc(r.label)}: ${unitFmt.co2(r.kg)} a year${r.src ? "<br>" + esc(r.src) : ""}` }));
+    const rows = A.rungs.map((r) => {
+      const kg = typeof r.kg === "number" ? M.fixed(r.kg) : r.kg;
+      const val = kg.hi > kg.lo ? `about ${unitFmt.co2(kg.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, kg)}` : `${unitFmt.co2(kg.c)} a year`;
+      return { label: r.label, r: kg, cls: r.cls || "conv", tip: `${esc(r.label)}: ${val}${r.src ? "<br>" + esc(r.src) : ""}` };
+    });
     rows.push({ label: A.world.label, r: A.world.kg, cls: "ai", tip: `${esc(A.world.label)}: about ${unitFmt.co2(A.world.kg.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, A.world.kg)}<br>300–550 million generated seconds a day` });
     rows.push({ label: "Your scenario", r: total, cls: "ai", tip: `Your scenario: ${unitFmt.co2(total.c)} a year<br>Likely ${rangeTxt(unitFmt.co2, total)}` });
     rows.sort((a, b) => a.r.c - b.r.c);
@@ -1388,10 +1536,10 @@ if (typeof module !== "undefined") module.exports = Model;
     $("heroCost").textContent = "$" + p.price.c.toFixed(2);
 
     $("styleTable").querySelector("tbody").innerHTML = Object.values(D.styles).map((s) =>
-      `<tr><td>${esc(s.label)}</td><td>${esc(s.takes)}</td><td class="num">${fmtRatio(s.genPerFinished.lo)} to ${fmtRatio(s.genPerFinished.hi)} (typical ${fmtRatio(s.genPerFinished.c)})</td><td>${esc(s.example)}</td></tr>`).join("");
+      `<tr><td>${rich(s.label)}</td><td>${rich(s.takes)}</td><td class="num">${fmtRatio(s.genPerFinished.lo)} to ${fmtRatio(s.genPerFinished.hi)} (typical ${fmtRatio(s.genPerFinished.c)})</td><td>${rich(s.example)}</td></tr>`).join("");
 
     $("factorTable").querySelector("tbody").innerHTML = D.factorTable.map((r) =>
-      `<tr><td>${esc(r[0])}</td><td class="num">${esc(r[1])}</td><td class="num">${esc(r[2])}</td><td>${esc(r[3])}</td></tr>`).join("");
+      `<tr><td>${rich(r[0])}</td><td class="num">${rich(r[1])}</td><td class="num">${rich(r[2])}</td><td>${rich(r[3])}</td></tr>`).join("");
 
     $("sources").innerHTML = D.sources.map((s) => `<li>${s.u ? `<a href="${esc(s.u)}" target="_blank" rel="noopener">${esc(s.t)}</a>` : esc(s.t)}</li>`).join("");
   }

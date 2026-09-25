@@ -289,7 +289,7 @@ When practical filming isn't feasible, the comparison is really **VFX against AI
 
 | Example | Figure | Source | Conf. |
 |---|---|---|---|
-| *Avatar: The Way of Water* | **3.3 B thread-hours on AWS** over 8 months; 3,000+ VFX shots (AWS blog, 28 Feb 2023). Longest shot **13.6 M thread-hours**; ≈40% of rendering in the cloud (DCD via search snippet; the DCD page returned 403) | AWS (P); DCD (Sec, unverified) | H / L |
+| *Avatar: The Way of Water* | **3.3 B thread-hours on AWS** over 8 months; 3,000+ VFX shots (AWS blog, 28 Feb 2023). Longest shot **13.6 M thread-hours**.  Correction (2026-09-25): the "40%" in the DCD snippet is the share of the film at 48 fps, not the share rendered in the cloud; no source gives the cloud share | AWS (P); DCD (Sec, unverified) | H / L |
 | *Avatar: Fire and Ash* | **1,248,087,308 render hours** ("142,000 years"); 3,132 VFX shots; 140 PB of disk; 1,200-person crew | FanBolt citing Wētā (Sec) | M |
 | *Aquaman* (Scanline) | **5,381,615 render hours**; 450 shots; 2,000 on-prem nodes + 400 VMs + 600 workstations | AWS (P) | H |
 | *Interstellar* | Some frames took up to **100 h** to render; 800 TB | Wikipedia (Sec) | M |

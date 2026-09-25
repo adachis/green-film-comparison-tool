@@ -25,7 +25,9 @@ The first pass ran eight research streams in parallel.  Follow-ups (the files en
 | `streams/G_scenarios.md` | Ten shot-level scenarios (explosions, chases, crowds, aerials, travel, sets, weather, night work, impossible shots, and dialogue) |
 | `streams/H_access_volume.md` | How much AI video gets generated (Grok Imagine, Kling, Hailuo, Veo, Sora, Seedance), evidence on how little is watched, aggregate energy, and rebound |
 | `streams/I_api_timing_tests.md` | Our own timing runs: Seedance 2.5 through OpenRouter and fal (queue-dominated) and MiniMax H3 direct (resolution and clip-length scaling) |
-| `streams/J_mac_mini_measurements.md` | Our own energy measurements of SDXL, Z-Image Turbo, LTX-Video, Wan 2.1, and Real-ESRGAN in ComfyUI on a base M4 Mac mini (chip power from `powermetrics`) |
+| `streams/J_mac_mini_measurements.md` | Our own energy measurements of SDXL, Z-Image Turbo, LTX-Video, Wan 2.1, and Real-ESRGAN in ComfyUI on a base M4 Mac mini (chip power from `powermetrics`), and how local generation compares with the cloud |
+| `streams/K_global_production_footprint.md` | An estimate of the annual footprint of all film and TV production worldwide, for comparison with all AI video |
+| `streams/L_avatar_energy_context.md` | Where Wētā's cloud rendering for *Avatar: The Way of Water* ran, New Zealand's and Australia's grids, and Lightstorm's solar-powered stages |
 
 ## Central factors used in the brief
 

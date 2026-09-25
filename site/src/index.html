@@ -55,7 +55,7 @@
             <div class="pills" id="formatPills" role="group" aria-label="What you're making"></div>
           </div>
 
-          <details class="adjust" id="adjust">
+          <details class="adjust" id="adjust" open>
             <summary><span class="adjust-title">Adjust the details</span><span class="adjust-now mono" id="adjustNow"></span></summary>
             <div class="adjust-body">
               <div class="field-row">
@@ -127,7 +127,7 @@
           <span class="kicker"><span aria-hidden="true">[</span>Scenes<span aria-hidden="true">]</span></span>
           <h2>Scene by scene</h2>
         </div>
-        <p>Some scenes are expensive to shoot, and some cost almost nothing extra.  Each comparison counts only what the scene adds to a shoot that's already happening, and uses the AI model you picked above.  Badges compare AI with the lower of the two other options.</p>
+        <p>Some scenes are expensive to shoot, and some cost almost nothing extra.  Each comparison counts only what the scene adds to a shoot that's already happening, and uses the AI model you picked above.  Each badge names the lowest-carbon way to get the shot, or says it's too close to call when the likely ranges overlap too much to tell.</p>
       </div>
       <div class="scenes" id="sceneList"></div>
     </div>
@@ -158,6 +158,18 @@
         </div>
       </div>
       <div class="facts" id="accessFacts"></div>
+      <div class="energy-note">
+        <h3 class="upper">The bigger fix is the power itself</h3>
+        <div class="two-col">
+          <div>
+            <p>Almost all of AI video's footprint is electricity, and so is VFX rendering's, so a clean grid shrinks both directly.  Wētā's <i>Avatar</i> rendering would have emitted about a fifth as much on New Zealand's grid as it did on Australia's.  Clean power won't remove the water used for cooling or the carbon in the hardware, but it would remove most of the rest.</p>
+          </div>
+          <div>
+            <p>Filmmaking can't get there on clean electricity alone.  Crews and gear travel by plane and truck, and there's no electric replacement yet for most of the planes in service.  Sets, food, and waste carry their own emissions.  Those can be cut, or properly offset by real reductions elsewhere rather than tree-planting pledges, but the industry is a long way from doing it.</p>
+            <p>So how the world generates its energy matters most.  Cutting filmmaking's footprint, from discarded AI takes to diesel generators, limits the damage while that work gets done.</p>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 
@@ -201,9 +213,31 @@
         </div>
         <div class="card">
           <span class="label">Counterintuitive</span>
-          <h3>Local isn't greener by itself</h3>
-          <p class="fig" id="localFig">50 Wh</p>
-          <p id="localText">at the chip for one 5-second Wan 2.1 clip on a base M4 Mac mini, which took 3 hours 25 minutes.  An RTX 4090 makes the same clip in about 4 minutes for roughly 35 Wh.  Local tools help only when they replace cloud video generations.</p>
+          <h3>Fast beats frugal</h3>
+          <p class="fig">21 Wh</p>
+          <p>for a 5-second Wan 2.1 clip on an RTX 4090 desktop, against 50.5 Wh at the chip alone on a base M4 Mac mini.  The 4090 draws 20 to 30 times the power but finishes in under 3 minutes instead of 3 hours 25, so it uses less than half the energy.</p>
+        </div>
+      </div>
+      <div class="lc">
+        <div class="lc-intro">
+          <h3 class="upper" style="font-size:20px;margin-bottom:14px">Local or cloud?</h3>
+          <p>Running a model on your own computer skips the data center, but that alone saves little.  What matters is how big the model is and how fast the hardware finishes the job.  The same small Wan model uses about 3.5 Wh per generated second on a data-center GPU, 4 Wh on an RTX 4090 desktop, and 10 Wh at the Mac mini's chip alone.  The big savings come from small, distilled models, and those are the ones with visibly lower quality.</p>
+        </div>
+        <div class="lc-grid">
+          <div>
+            <div class="chart" id="localChart"></div>
+            <p class="label">Energy per second of generated video, on a log scale.  Each gridline is 10×.  Teal runs in a data center.  Violet runs on your own machine.</p>
+          </div>
+          <div>
+            <p><b>Local generation is worth it when all of these hold:</b></p>
+            <ul class="note-list">
+              <li><b>The model is small.</b>  LTX-Video made 5 seconds on the Mac mini for 0.57 Wh at the chip, a few hundred times less than Seedance 2.5 uses for the same length.  A mid-size Wan model at 720p on a 4090 uses about 14 Wh a second, as much as MiniMax H3 in the cloud.</li>
+              <li><b>The hardware is fast.</b>  A GPU that finishes in minutes beats a frugal chip that runs for hours, because the whole machine draws power for as long as the job runs.</li>
+              <li><b>The quality is enough for the job.</b>  Open models that fit on a desktop GPU or a Mac trail the cloud leaders.  In Artificial Analysis's blind-vote arena, LTX-2.5 scores about 1,055 and LTX-2.3 about 960–975, against 1,210–1,229 for Seedance 2.0, MiniMax H3, and Wan 3.0, so viewers pick the cloud model about 70–80% of the time.  That makes local models useful for previz, animatics, and look tests, and only marginally useful for finished shots.  If a weaker model needs more takes, or the shot gets remade in the cloud anyway, the saving shrinks or disappears.</li>
+              <li><b>Your power is cleaner.</b>  Seedance's international API runs on Malaysia's grid at about 600 g CO2e per kWh, against about 380 g for the US average and 230 g for Los Angeles's utility.</li>
+            </ul>
+            <p class="hint">The cloud has efficient options too.  MiniMax H3 Max, a distilled model, uses roughly 3 Wh a second and scores 1,227.  The one open model in that top group, MiniMax H3, needs four data-center GPUs, so it isn't a home option.</p>
+          </div>
         </div>
       </div>
       <div class="two-col">
@@ -241,6 +275,7 @@
         <details class="acc">
           <summary>Measured on a Mac mini</summary>
           <div class="acc-body measure">
+            <p>The most useful result is the counterintuitive one.  For the one heavy model, Wan 2.1, the Mac mini used 50.5 Wh at the chip for a 5-second clip.  An RTX 4090 desktop running the same settings uses about 21 Wh at the wall, less than half, because it finishes more than 70 times faster.  Small distilled models were cheap on the Mac: LTX-Video made 5 seconds for 0.57 Wh.</p>
             <p>To check the local figures, we ran five open models in ComfyUI on a base M4 Mac mini with 16 GB of memory and logged the chip's own power (CPU, GPU, and neural engine) once a second with macOS's powermetrics.  That leaves out memory, storage, the fan, and the power supply, so energy at the wall socket is higher.  Each figure is the mean of up to five runs after a warm-up.</p>
             <div class="tbl-wrap"><table class="data-tbl"><thead><tr><th>Model</th><th>Output</th><th>Time</th><th>Energy at the chip</th></tr></thead><tbody>
               <tr><td>SDXL base 1.0, 30 steps</td><td>One 1024×1024 image</td><td>2.6 min</td><td>0.69 Wh</td></tr>
@@ -249,14 +284,16 @@
               <tr><td>Wan 2.1 1.3B, 30 steps</td><td>5 seconds at 832×480</td><td>3 h 25 min</td><td>50.5 Wh</td></tr>
               <tr><td>Real-ESRGAN 2× upscale</td><td>5 seconds, to 1536×1024</td><td>2.9 min</td><td>0.70 Wh</td></tr>
             </tbody></table></div>
-            <p>16 GB is tight.  LTX-Video and an 8-bit Z-Image pushed the machine into heavy swapping, so the images use a 4-bit Z-Image.  Wan fit, but each of its 30 steps took almost 7 minutes on this GPU, which is why a low-power chip ended up using the most energy.</p>
+            <p>16 GB is tight.  LTX-Video and an 8-bit Z-Image pushed the machine into heavy swapping, so the images use a 4-bit Z-Image.  Wan fit, but each of its 30 steps took almost 7 minutes on this GPU, against about 5 seconds on a 4090.</p>
           </div>
         </details>
         <details class="acc">
           <summary>Conventional production</summary>
           <div class="acc-body measure">
             <p>Benchmarks come from the Sustainable Entertainment Alliance (US studios, 2023–24), BAFTA albert (UK), AdGreen (advertising), and Ecoprod's Carbon'Clap (France).  They measure different things: the US studio benchmark counts fuel, utilities, flights without their high-altitude warming effect, and hotels, while the others also count food, materials, waste, and post.  We raise the US studio figures by 1.3× to close that gap.</p>
-            <p>Industry benchmarks leave out VFX rendering, and it isn't small.  Weta's AWS rendering for <i>Avatar: The Way of Water</i> alone comes to roughly 8–28 GWh.  Rendering a single VFX shot takes about 0.15–5 MWh.</p>
+            <p>Industry benchmarks leave out VFX rendering, and it isn't small.  Weta's cloud rendering for <i>Avatar: The Way of Water</i> alone comes to roughly 8–28 GWh.  Rendering a single VFX shot takes about 0.15–5 MWh.</p>
+            <p><i>Avatar</i> also shows how much the circumstances change the answer.  Weta is in Wellington, and 87% of New Zealand's electricity came from renewables in 2022.  But New Zealand had no AWS region then, so the cloud rendering ran in Australian data centers.  On Australia's grid it comes to roughly 4,800–16,200 t CO2e.  The same work on New Zealand's grid would have been about 850–2,900 t.  Amazon says renewable purchases matched 90% of its electricity use in 2022, which shrinks the figure under market-based accounting, but the servers still drew from Australia's grid.</p>
+            <p>The production side of the same films was unusually clean.  Lightstorm ran the sequels' two Manhattan Beach stages entirely on its own 960 kW rooftop solar array and served 55,000 plant-based meals.  That doesn't cancel the rendering, but it shows how far one production's choices can move its footprint, and how little an industry average says about any single film.</p>
           </div>
         </details>
         <details class="acc">
