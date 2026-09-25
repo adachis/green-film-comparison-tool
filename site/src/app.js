@@ -63,9 +63,9 @@
   };
   const regionFor = () => S.region || D.models[S.model].region;
   const BENCH_NOUN = {
-    micro: "small local shoot", musicVideo: "local music video shoot", commercial: "typical commercial shoot",
-    commercialHigh: "high-budget commercial shoot", shortFilm: "short film shoot", tvEpisode: "one-hour TV drama episode",
-    indieFeature: "indie feature shoot", tentpole: "studio tentpole",
+    micro: "a small local shoot", musicVideo: "a local music video shoot", commercial: "a typical commercial shoot",
+    commercialHigh: "a high-budget commercial shoot", shortFilm: "a short film shoot", tvEpisode: "a one-hour TV drama episode",
+    indieFeature: "an indie feature shoot", tentpole: "a studio tentpole",
   };
 
   /* ---------- Tooltip ---------- */
@@ -302,7 +302,7 @@
       const c = M.benchmarkProduction({ prodKey: S.bench, finishedSec, fullScope: S.full });
       const ex = benchExtras(c.bench, c);
       conv = c.co2Kg; convKWh = ex.kWh; convWater = ex.water; convCost = c.cost;
-      convLabel = BENCH_NOUN[S.bench] || c.bench.label.toLowerCase();
+      convLabel = BENCH_NOUN[S.bench] || "the benchmark";
       $("benchSource").textContent = `Source: ${c.bench.source}.`;
       if (c.scopeNote) convNotes.push(c.scopeNote);
       if (c.runtimeScale > 3 || c.runtimeScale < 0.34) convNotes.push(`The benchmark is for about ${sig(c.bench.minutes)} minutes of finished video, so we scaled it by ${sig(c.runtimeScale, 2)}×.  Shoots don't scale that neatly, so treat this as rough.`);
@@ -321,7 +321,7 @@
     const overlap = ai.co2Kg.hi >= conv.lo && conv.hi >= ai.co2Kg.lo;
     const costRatio = convCost.c / aiCost.c;
     const costLine = costRatio >= 1.25 ? `It costs about ${times(costRatio)} less, mostly because of people, not generation.` : costRatio > 0.8 ? "Costs come out about even." : `It costs about ${times(1 / costRatio)} more.`;
-    $("verdictSub").textContent = `${sig(ai.genSec, 3)} generated seconds for ${fmtRuntime(finishedSec)} of finished video (${fmtRatio(S.ratio)}), against ${/^[aeiou]/.test(convLabel) ? "an" : "a"} ${convLabel}.  ${overlap ? "The likely ranges overlap, so the direction is less certain than the headline.  " : ""}${costLine}`;
+    $("verdictSub").textContent = `${sig(ai.genSec, 3)} generated seconds for ${fmtRuntime(finishedSec)} of finished video (${fmtRatio(S.ratio)}), against ${convLabel}.  ${overlap ? "The likely ranges overlap, so the direction is less certain than the headline.  " : ""}${costLine}`;
 
     const metrics = [
       { name: "CO2e", fmt: unitFmt.co2, a: ai.co2Kg, c: conv },
@@ -445,7 +445,7 @@
     const tentpole = A.rungs.find((r) => r.key === "tentpole").kg;
     const uk = A.rungs.find((r) => r.key === "ukScreen").kg;
     const feat = A.rungs.find((r) => r.key === "indie").kg;
-    let line = `${people.toLocaleString("en-US")} ${people === 1 ? "person" : "people"} generating ${secsR >= 60 ? sig(secsR / 60, 2) + (secsR / 60 === 1 ? " minute" : " minutes") : secsR + (secsR === 1 ? " second" : " seconds")} a day emit about ${unitFmt.co2(total.c)} CO2e a year`;
+    let line = `${people.toLocaleString("en-US")} ${people === 1 ? "person" : "people"} generating ${secsR >= 60 ? sig(secsR / 60, 2) + (secsR / 60 === 1 ? " minute" : " minutes") : secsR + (secsR === 1 ? " second" : " seconds")} a day ${people === 1 ? "emits" : "emit"} about ${unitFmt.co2(total.c)} CO2e a year`;
     if (total.c >= uk) line += total.c / uk < 1.1 ? ", as much as all UK film and TV production." : `, ${sig(total.c / uk, 2)} times as much as all UK film and TV production.`;
     else if (total.c >= tentpole) line += `, as much as ${sig(total.c / tentpole, 2)} studio tentpoles.`;
     else if (total.c >= feat) line += `, as much as ${sig(total.c / feat, 2)} indie features.`;
