@@ -1,5 +1,5 @@
 <title>Prompt vs. Camera</title>
-<meta name="description" content="Compare the carbon, energy, water, and cost of making video with generative AI against shooting it for real.">
+<meta name="description" content="Film and generative AI both have a significant carbon, energy, water, and financial cost.  This tool can help you compare those costs in specific scenarios and understand the nuances of the impact.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,400..700&family=Plus+Jakarta+Sans:wght@400..800&display=swap">
@@ -318,28 +318,28 @@ details.more[open]>summary::before{content:"–"}
     <div class="site-head">
       <span class="wordmark">Prompt vs. Camera</span>
       <nav class="site-nav" aria-label="Sections">
-        <a href="#calculator">Calculator</a>
-        <a href="#scenes">Scenes</a>
-        <a href="#access">Access</a>
-        <a href="#practice">In practice</a>
-        <a href="#method">Method</a>
+        <a href="#calculator">Cost Calculator</a>
+        <a href="#scenes">Scene Breakdown</a>
+        <a href="#access">The Access Problem</a>
+        <a href="#practice">AI Filmmaking in Practice</a>
+        <a href="#method">Methodology</a>
       </nav>
     </div>
     <div class="hero">
       <div>
         <span class="kicker"><span aria-hidden="true">[</span>Carbon, water, and cost<span aria-hidden="true">]</span></span>
         <h1>Prompt vs. <span class="fade">camera</span></h1>
-        <p class="hero-sub">Compare making a scene with Seedance 2.5 or MiniMax H3 against shooting it for real, using published production data and the best estimates available for AI video.</p>
+        <p class="hero-sub">This tool lets you compare the environmental and financial costs of using top generative AI models to do the same work as a traditional film production.  Comparisons are made using real global production data and the median estimated costs of AI-generated video.</p>
       </div>
       <div class="hero-stat">
-        <span class="label">One generated second of Seedance 2.5 at 720p</span>
+        <span class="label">One second of AI-generated video (Seedance 2.5 at 720p)</span>
         <div class="hero-fig" id="heroWh">33<small>Wh</small></div>
         <div class="hero-row">
           <div><b id="heroCo2">22 g</b><span class="muted">CO2e</span></div>
           <div><b id="heroWater">70 mL</b><span class="muted">water</span></div>
           <div><b id="heroCost">$0.23</b><span class="muted">list price</span></div>
         </div>
-        <p class="muted" style="font-size:14px">That's about two full phone charges.  The catch is that nobody generates a second only once.</p>
+        <p class="muted" style="font-size:14px">Each second of video generated is the equivalent of about two full phone charges.</p>
       </div>
     </div>
   </div>
@@ -353,7 +353,7 @@ details.more[open]>summary::before{content:"–"}
           <span class="kicker"><span aria-hidden="true">[</span>Calculator<span aria-hidden="true">]</span></span>
           <h2>Make it both ways</h2>
         </div>
-        <p>Pick what you're making.  We compare shooting it for real with generating the same finished video with AI, and every number shows its likely range.</p>
+        <p>Pick what you're making and we'll compare shooting it for real against generating the same finished video with AI.  Every number shows its likely range.</p>
       </div>
 
       <div class="calc">
@@ -382,7 +382,7 @@ details.more[open]>summary::before{content:"–"}
                   <input id="takes" type="range" min="0" max="1000" step="1" value="476">
                   <output id="takesOut" for="takes">80:1</output>
                 </div>
-                <p class="hint">Seconds of AI video generated for every second that makes the final cut.  Every discarded take still used energy, so this setting moves the AI footprint more than any other.</p>
+                <p class="hint">Seconds of AI video generated for every second that makes the final cut.  Every discarded take still uses energy, so this setting moves the AI footprint more than any other.</p>
                 <p class="hint" id="takesTypical"></p>
               </div>
               <div class="field-row">
@@ -400,9 +400,9 @@ details.more[open]>summary::before{content:"–"}
 
           <div class="counts">
             <span class="label">What each side counts</span>
-            <p><b>Shot for real:</b> the fuel, power, travel, hotels, food, sets, and waste of a typical shoot like this one, from industry carbon reports, scaled to your length.</p>
-            <p><b>Made with AI:</b> every clip generated along the way, not just the ones that make the cut, including data-center power, cooling, and hardware.  Its cost also includes the people who prompt and edit.</p>
-            <p><b>Units:</b> CO2e, or carbon dioxide equivalent, counts every greenhouse gas as the amount of CO2 that would warm the planet as much.  Energy is in watt-hours (Wh): a full phone charge is about 15 Wh, and a kilowatt-hour (kWh) is 1,000 Wh.</p>
+            <p><b>Shot for real:</b> the fuel, power, travel, hotels, food, sets, and waste of a typical shoot like this one, taken from industry carbon reports and scaled to your length.</p>
+            <p><b>Made with AI:</b> every clip generated along the way (not just the ones that make the cut), including data-center power, cooling, and hardware.  The cost also includes the people who prompt and edit.</p>
+            <p><b>Units:</b> CO2e, or carbon dioxide equivalent, counts every greenhouse gas as the amount of CO2 that would warm the planet as much.  Energy is in watt-hours (Wh), where a full phone charge is about 15 Wh and a kilowatt-hour (kWh) is 1,000 Wh.</p>
           </div>
         </div>
 
@@ -414,7 +414,7 @@ details.more[open]>summary::before{content:"–"}
           <div class="legend" aria-hidden="true">
             <span class="key"><i class="ai"></i>Made with AI</span>
             <span class="key"><i class="conv"></i>Shot for real</span>
-            <span class="key muted">Bars show the likely range.  Each gridline is 10 times the one before, so small and huge values fit on one chart.</span>
+            <span class="key muted">The bars show the likely range.  Each gridline is 10 times the one before it, so small and huge values fit on the same chart.</span>
           </div>
           <div id="metrics"></div>
           <ul class="note-list" id="notes"></ul>
@@ -423,7 +423,7 @@ details.more[open]>summary::before{content:"–"}
             <div class="tbl-wrap" id="resultTable" hidden></div>
           </div>
           <p class="hint" id="shootSource"></p>
-          <a class="bigger" href="#access">One project is the small picture.  The bigger effect of AI video is how much more of it gets made.</a>
+          <a class="bigger" href="#access">A single project is just the small picture.  The bigger impact of AI video is how much more of it gets made.</a>
         </aside>
       </div>
     </div>
@@ -436,7 +436,7 @@ details.more[open]>summary::before{content:"–"}
           <span class="kicker"><span aria-hidden="true">[</span>Scenes<span aria-hidden="true">]</span></span>
           <h2>Scene by scene</h2>
         </div>
-        <p>Some scenes are expensive to shoot, and some cost almost nothing extra.  Each comparison counts only what the scene adds to a shoot that's already happening, and uses the AI model you picked above.  Each badge names the lowest-carbon way to get the shot, or says it's too close to call when the likely ranges overlap too much to tell.</p>
+        <p>Some scenes are expensive to shoot, and some cost almost nothing extra.  Each comparison here only counts what the scene adds to a shoot that's already happening, using the AI model you picked above.  The badge shows the lowest-carbon way to get the shot, or says it's too close to call when the likely ranges overlap too much to tell.</p>
       </div>
       <div class="scenes" id="sceneList"></div>
     </div>
@@ -463,7 +463,7 @@ details.more[open]>summary::before{content:"–"}
             <div class="range"><input id="aSecs" type="range" min="0" max="3.41" step="0.01" value="1.78"><output id="aSecsOut" for="aSecs">60 s</output></div>
           </div>
           <div class="chart" id="ladder"></div>
-          <p class="label" id="ladderTitle">CO2e per year.  Each gridline is 10 times the one before.  Teal is AI video, amber is filmmaking, violet is one person's whole year, and gray is other parts of the economy.</p>
+          <p class="label" id="ladderTitle">CO2e per year.  Each gridline is 10 times the one before it.  Teal is AI video, amber is filmmaking, violet is one person's whole year, and gray is other parts of the economy.</p>
         </div>
       </div>
       <div class="facts" id="accessFacts"></div>
@@ -471,11 +471,11 @@ details.more[open]>summary::before{content:"–"}
         <h3 class="upper">The bigger fix is the power itself</h3>
         <div class="two-col">
           <div>
-            <p>Almost all of AI video's footprint is electricity, and so is VFX rendering's, so a clean grid shrinks both directly.  Wētā's <i>Avatar</i> rendering would have emitted about a fifth as much on New Zealand's grid as it did on Australia's.  Clean power won't remove the water used for cooling or the carbon from manufacturing the hardware, but it would remove most of the rest.</p>
+            <p>Almost all of AI video's footprint comes from electricity, and it's the same for VFX rendering, so a clean grid shrinks both directly.  Wētā's <i>Avatar</i> rendering would've emitted about a fifth as much on New Zealand's grid as it did on Australia's.  Clean power won't get rid of the water used for cooling or the carbon from manufacturing the hardware, but it would remove most of the rest.</p>
           </div>
           <div>
-            <p>Filmmaking can't get there on clean electricity alone.  Crews and gear travel by plane and truck, and there's no electric replacement yet for most of the planes in service.  Sets, food, and waste carry their own emissions.  Those can be cut, or properly offset by real reductions elsewhere rather than tree-planting pledges, but the industry is a long way from doing it.</p>
-            <p>So how the world generates its energy matters most.  Cutting filmmaking's footprint, from discarded AI takes to diesel generators, limits the damage while that work gets done.</p>
+            <p>Filmmaking can't get there on clean electricity alone.  Crews and gear have to travel by plane and truck, and there's no electric replacement yet for most of the planes in service.  Sets, food, and waste also carry their own emissions.  Those can be cut, or properly offset with real reductions elsewhere instead of tree-planting pledges, but the industry is a long way from actually doing it.</p>
+            <p>So how the world generates its energy is what matters most.  Cutting filmmaking's footprint, from discarded AI takes to diesel generators, limits the damage while that work gets done.</p>
           </div>
         </div>
       </div>
@@ -489,7 +489,7 @@ details.more[open]>summary::before{content:"–"}
           <span class="kicker"><span aria-hidden="true">[</span>In practice<span aria-hidden="true">]</span></span>
           <h2>How AI filmmaking actually works</h2>
         </div>
-        <p>Nobody generates a shot once.  How many takes a production throws away changes the answer more than which model it uses.</p>
+        <p>Nobody generates a shot just once.  How many takes a production throws away changes the answer more than which model it uses.</p>
       </div>
       <div class="tbl-wrap">
         <table class="data-tbl" id="styleTable">
@@ -499,12 +499,12 @@ details.more[open]>summary::before{content:"–"}
       </div>
       <div class="two-col">
         <div>
-          <p>Professionals mostly start from prepared images and animate them, a workflow called image-to-video.  In long-form studio work, AI shows up mainly in previz, crowds, environments, and individual VFX shots.  <i>House of David</i> generated about 20 takes for every AI shot it used.</p>
-          <p>ByteDance's own quality tests rate clips animated from images lower, clip for clip, than clips made from text alone.  Starting from prepared images helps keep shots consistent with each other, which those tests don't measure, so the calculator leaves the shooting ratio up to you.</p>
+          <p>Professionals mostly start with prepared images and animate them (a workflow called image-to-video).  In long-form studio work, AI shows up mainly in previz, crowds, environments, and individual VFX shots.  <i>House of David</i> generated about 20 takes for every AI shot it actually used.</p>
+          <p>ByteDance's own quality tests rate clips animated from images lower, clip for clip, than clips made from text alone.  However, starting from prepared images helps keep shots consistent with each other, which those tests don't measure, so the calculator leaves the shooting ratio up to you.</p>
         </div>
         <div>
-          <p>"Unlimited" plans deserve suspicion.  Artlist, Runway, Higgsfield, and Krea have all run unlimited-Seedance promotions, which make one more take free to you while its energy stays exactly the same.  This site counts the seconds generated, not the money spent.</p>
-          <p>Money is its own question.  Generation is cheap, and people are the expensive part.  Svedka's AI Super Bowl ad is the cautionary tale: the brand's CMO said it "didn't save much money and certainly not a ton of time."</p>
+          <p>"Unlimited" plans deserve suspicion.  Artlist, Runway, Higgsfield, and Krea have all run unlimited-Seedance promotions, which make generating another take free to you while the energy it uses stays exactly the same.  This site counts the seconds you generate, not the money you spend.</p>
+          <p>Money is a separate question.  Generation is cheap, and people are the expensive part.  Svedka's AI Super Bowl ad is the cautionary tale: the brand's CMO said it "didn't save much money and certainly not a ton of time."</p>
         </div>
       </div>
       <div class="cards" style="margin-top:56px">
@@ -512,25 +512,25 @@ details.more[open]>summary::before{content:"–"}
           <span class="label">Biggest lever</span>
           <h3>Draft first</h3>
           <p class="fig">65–80%</p>
-          <p>less energy per kept shot when you explore at 480p and render only the keepers at full resolution.  A Seedance 2.5 draft costs 18% as much as a 1080p render.  Cheap drafts can invite more drafts, though.</p>
+          <p>less energy per kept shot when you explore at 480p and render just the keepers at full resolution.  A Seedance 2.5 draft costs 18% as much as a 1080p render.  Cheap drafts can invite more drafts, though.</p>
         </div>
         <div class="card">
           <span class="label">Use carefully</span>
           <h3>Generate small, upscale at home</h3>
           <p class="fig">0.7 Wh</p>
-          <p>for a Mac mini's processor to double the resolution of a 5-second clip with a simple upscaler (Real-ESRGAN), about a twentieth of a phone charge.  AI upscalers that repaint detail, such as SeedVR2, can use about 125 Wh for the same clip, which can cancel out the energy saved by generating small.</p>
+          <p>for a Mac mini's processor to double the resolution of a 5-second clip with a simple upscaler (Real-ESRGAN), about a twentieth of a phone charge.  AI upscalers that repaint detail, like SeedVR2, can use about 125 Wh for the same clip, which can cancel out the energy you saved by generating small.</p>
         </div>
         <div class="card">
           <span class="label">Counterintuitive</span>
           <h3>Fast beats frugal</h3>
           <p class="fig">21 Wh</p>
-          <p>for a gaming PC with an RTX 4090 graphics card to make a 5-second clip with the open model Wan 2.1, against 50.5 Wh for a Mac mini's processor alone.  The PC draws 20 to 30 times the power but finishes in under 3 minutes instead of 3 hours 25, so it uses less than half the energy.</p>
+          <p>for a gaming PC with an RTX 4090 graphics card to make a 5-second clip with the open model Wan 2.1, compared to 50.5 Wh for a Mac mini's processor alone.  The PC draws 20 to 30 times the power, but it finishes in under 3 minutes instead of 3 hours 25, so it uses less than half the energy.</p>
         </div>
       </div>
       <div class="lc">
         <div class="lc-intro">
           <h3 class="upper" style="font-size:20px;margin-bottom:14px">Local or cloud?</h3>
-          <p>Running a model on your own computer skips the data center, but that alone saves little.  What matters is how big the model is and how fast the machine finishes the job.  The same small Wan model uses about 3.5 Wh per generated second on a data-center graphics chip, 4 Wh on a gaming PC with an RTX 4090, and 10 Wh on a Mac mini's processor alone.  The big savings come from small, stripped-down models, and those are the ones with visibly lower quality.</p>
+          <p>Running a model on your own computer skips the data center, but that doesn't save much on its own.  What really matters is how big the model is and how fast the machine finishes the job.  The same small Wan model uses about 3.5 Wh per generated second on a data-center graphics chip, 4 Wh on a gaming PC with an RTX 4090, and 10 Wh on a Mac mini's processor alone.  The big savings come from small, stripped-down models, and those have visibly lower quality.</p>
         </div>
         <div class="lc-grid">
           <div>
@@ -538,25 +538,25 @@ details.more[open]>summary::before{content:"–"}
             <p class="label">Energy for each second of generated video.  Each gridline is 10 times the one before.  Teal runs in a data center.  Violet runs on your own computer.</p>
           </div>
           <div>
-            <p><b>Local generation is worth it when all of these hold:</b></p>
+            <p><b>Local generation is worth it when all of these are true:</b></p>
             <ul class="note-list">
-              <li><b>The model is small.</b>  LTX-Video, a small open model, made 5 seconds on the Mac mini for 0.57 Wh, a few hundred times less than Seedance 2.5 uses for the same length.  A mid-size Wan model at 720p on a gaming PC uses about 14 Wh a second, as much as MiniMax H3 in the cloud.</li>
-              <li><b>The hardware is fast.</b>  A powerful graphics card that finishes in minutes beats a frugal chip that runs for hours, because the whole computer draws power for as long as the job runs.</li>
-              <li><b>The quality is enough for the job.</b>  Open models, which anyone can download and run, trail the cloud leaders once they're small enough for a home computer.  In blind side-by-side votes run by Artificial Analysis, viewers pick the leading cloud models (Seedance 2.0, MiniMax H3, and Wan 3.0) over the best of these home models (LTX-2.5 and LTX-2.3) about 70–80% of the time.  That makes local models useful for previz, animatics, and look tests, and only marginally useful for finished shots.  If a weaker model needs more takes, or the shot gets remade in the cloud anyway, the saving shrinks or disappears.</li>
+              <li><b>The model is small.</b>  LTX-Video (a small open model) made 5 seconds of video on the Mac mini for 0.57 Wh, a few hundred times less than Seedance 2.5 uses for the same length.  A mid-size Wan model at 720p on a gaming PC uses about 14 Wh a second, as much as MiniMax H3 in the cloud.</li>
+              <li><b>The hardware is fast.</b>  A powerful graphics card that finishes in minutes beats a frugal chip that runs for hours, since the whole computer draws power for as long as the job runs.</li>
+              <li><b>The quality is enough for the job.</b>  Open models (which anyone can download and run) fall behind the cloud leaders once they're small enough to fit on a home computer.  In blind side-by-side votes run by Artificial Analysis, viewers pick the leading cloud models (Seedance 2.0, MiniMax H3, and Wan 3.0) over the best of these home models (LTX-2.5 and LTX-2.3) about 70–80% of the time.  That makes local models useful for previz, animatics, and look tests, and only marginally useful for finished shots.  If a weaker model needs more takes, or you end up remaking the shot in the cloud anyway, the savings shrink or disappear.</li>
               <li><b>Your power is cleaner.</b>  Seedance's international service runs on Malaysia's power grid, which emits about 600 grams of CO2e per kWh, against about 380 grams for the average US grid and 230 grams for Los Angeles's utility.</li>
             </ul>
-            <p class="hint">The cloud has efficient options too.  MiniMax H3 Max, a stripped-down fast model, uses roughly 3 Wh a second and ranks with the best.  The one open model in that top group, MiniMax H3, needs four data-center graphics chips, so it isn't a home option.</p>
+            <p class="hint">The cloud has efficient options too.  MiniMax H3 Max (a stripped-down fast model) uses roughly 3 Wh a second and ranks with the best.  The one open model in that top group, MiniMax H3, needs four data-center graphics chips, so it's not a home option.</p>
           </div>
         </div>
       </div>
       <div class="two-col">
         <div>
           <h3 class="upper" style="font-size:20px;margin-bottom:14px">Guided platforms like Krea</h3>
-          <p>Krea offers every Seedance and MiniMax tier alongside cheap tools for exploring: a real-time draft image costs about 1/2,000 as much as a Seedance clip in Krea's own credits, and its visual workflow editor shows the cost of each step and skips steps that haven't changed.  Settling on a shot with those cheap tools before paying for premium video probably saves energy.  Nobody has measured it, though, and live video previews and automated assistants keep the servers busy for the whole session.</p>
+          <p>Krea offers every Seedance and MiniMax tier alongside cheap tools for exploring ideas.  A real-time draft image costs about 1/2,000 as much as a Seedance clip (in Krea's own credits), and its visual workflow editor shows the cost of each step and skips steps that haven't changed.  Settling on a shot with those cheap tools before paying for premium video probably saves energy.  Nobody has measured it, though, and live video previews and automated assistants keep the servers busy for the whole session.</p>
         </div>
         <div>
           <h3 class="upper" style="font-size:20px;margin-bottom:14px">Voices and music</h3>
-          <p>Voice and music models running on your own computer use under 2 Wh per minute of audio.  Turning off a video model's built-in sound saves only the energy it spends on sound, about 21–34% of the work for LTX-2.  Seedance 2.5 and MiniMax H3 make sound and picture together and don't charge less for silent clips.</p>
+          <p>Voice and music models running on your own computer use under 2 Wh per minute of audio.  Turning off a video model's built-in sound only saves the energy it spends on audio, about 21–34% of the work for LTX-2.  Seedance 2.5 and MiniMax H3 generate sound and picture together and don't charge any less for silent clips.</p>
         </div>
       </div>
     </div>
@@ -569,23 +569,23 @@ details.more[open]>summary::before{content:"–"}
           <span class="kicker"><span aria-hidden="true">[</span>Method<span aria-hidden="true">]</span></span>
           <h2>How the numbers work</h2>
         </div>
-        <p>No video company publishes energy per clip, so the AI side is always an estimate.  Here's what each estimate rests on.</p>
+        <p>No AI video company publishes energy usage per clip, so the AI side is always an estimate.  Here's what those estimates are based on.</p>
       </div>
       <div>
         <details class="acc" open>
           <summary>AI energy, carbon, and water</summary>
           <div class="acc-body measure">
-            <p>Our estimate starts from how long a clip keeps a data center's graphics chips busy.  For Seedance 2.5 at 720p, three separate methods land at 17–24 Wh per generated second for the chips alone: how long clips take through OpenRouter, a service that resells access to AI models; a comparison with Jegham, Gamazaychikov, and Luccioni's 2026 academic estimate for Seedance 1.5; and ByteDance's reported 70% gross margin, which implies how much it spends running the service.  We use 18 Wh.  MiniMax H3's figure comes from MiniMax's own speed test of the version anyone can download.</p>
-            <p>We then add the rest of each server, machines kept idle in reserve, and cooling (a 2025 Google study found a whole data center uses about 1.7 times the energy of its AI chips alone), apply how much carbon the local power grid emits for each kWh, and add a share for manufacturing the hardware and 5% for training the model.  Water counts cooling at the data center plus the water used to generate its electricity.</p>
-            <p>Ranges combine the uncertainty in each of these steps.  The AI shooting ratio isn't part of the range because you set it.</p>
-            <p>We timed MiniMax H3 through MiniMax's own service, which reports when each job actually starts.  A 2K clip took about 1.7 times as long as a 768p clip, close to the 1.5 times we assume, and 15-second clips took about 15% less time per second than 5-second clips.  Timing Seedance 2.5 through resellers mostly measured time spent waiting in line, so it can't pin down how much computing Seedance uses.</p>
+            <p>Our estimate starts with how long a clip keeps a data center's graphics chips busy.  For Seedance 2.5 at 720p, we used three separate methods that all landed at 17–24 Wh per generated second for the chips alone.  One measures how long clips take to run through OpenRouter (a service that resells access to AI models).  One compares against Jegham, Gamazaychikov, and Luccioni's 2026 academic estimate for Seedance 1.5.  And one works backward from ByteDance's reported 70% gross margin, which implies how much they spend running the service.  We use 18 Wh.  The MiniMax H3 figure comes from MiniMax's own speed test of the version anyone can download.</p>
+            <p>From there, we add the rest of each server, machines kept idle in reserve, and cooling (a 2025 Google study found a whole data center uses about 1.7 times the energy of its AI chips alone).  Then we apply how much carbon the local power grid emits for each kWh, and add a share for manufacturing the hardware and 5% for training the model.  Water counts cooling at the data center plus the water used to generate its electricity.</p>
+            <p>The ranges combine the uncertainty in each of these steps.  The AI shooting ratio isn't part of the range because you set that yourself.</p>
+            <p>We timed MiniMax H3 through MiniMax's own service, which reports when each job actually starts.  A 2K clip took about 1.7 times as long as a 768p clip, which is pretty close to the 1.5 times we assume, and 15-second clips took about 15% less time per second than 5-second clips.  Timing Seedance 2.5 through resellers mostly just measured time spent waiting in line, so that can't pin down how much computing Seedance actually uses.</p>
           </div>
         </details>
         <details class="acc">
           <summary>Measured on a Mac mini</summary>
           <div class="acc-body measure">
-            <p>The most useful result is the counterintuitive one.  For the one heavy model, Wan 2.1, the Mac mini's processor used 50.5 Wh for a 5-second clip.  A gaming PC with an RTX 4090 running the same settings uses about 21 Wh for the whole computer, less than half, because it finishes more than 70 times faster.  Small, stripped-down models were cheap on the Mac: LTX-Video made 5 seconds for 0.57 Wh.</p>
-            <p>To check the figures for running AI at home, we ran five open models on a base M4 Mac mini with 16 GB of memory, using the free ComfyUI app, and recorded the processor's power once a second with macOS's built-in power monitor.  That leaves out memory, storage, the fan, and the power supply, so the whole computer uses more.  Each figure is the average of up to five runs after a warm-up.</p>
+            <p>The most useful result here is the counterintuitive one.  For the one heavy model, Wan 2.1, the Mac mini's processor used 50.5 Wh for a 5-second clip.  A gaming PC with an RTX 4090 running the same settings uses about 21 Wh for the whole computer, less than half, because it finishes more than 70 times faster.  Small, stripped-down models were cheap on the Mac, though.  LTX-Video made 5 seconds of video for 0.57 Wh.</p>
+            <p>To check the figures for running AI at home, we ran five open models on a base M4 Mac mini with 16 GB of memory using the free ComfyUI app, and we recorded the processor's power once a second with macOS's built-in power monitor.  That leaves out memory, storage, the fan, and the power supply, so the whole computer uses more.  Each figure is the average of up to five runs after a warm-up.</p>
             <div class="tbl-wrap"><table class="data-tbl"><thead><tr><th>Model</th><th>Output</th><th>Time</th><th>Processor energy</th></tr></thead><tbody>
               <tr><td>SDXL base 1.0, 30 steps</td><td>One 1024×1024 image</td><td>2.6 min</td><td>0.69 Wh</td></tr>
               <tr><td>Z-Image Turbo, 4-bit, 8 steps</td><td>One 1024×1024 image</td><td>3.1 min</td><td>0.89 Wh</td></tr>
@@ -593,16 +593,16 @@ details.more[open]>summary::before{content:"–"}
               <tr><td>Wan 2.1 1.3B, 30 steps</td><td>5 seconds at 832×480</td><td>3 h 25 min</td><td>50.5 Wh</td></tr>
               <tr><td>Real-ESRGAN 2× upscale</td><td>5 seconds, to 1536×1024</td><td>2.9 min</td><td>0.70 Wh</td></tr>
             </tbody></table></div>
-            <p>16 GB of memory is tight.  LTX-Video and a larger version of Z-Image ran short of memory and had to spill over onto the disk, so the image tests use a smaller, compressed version of Z-Image.  Wan fit, but each of its 30 refinement passes took almost 7 minutes on this chip, against about 5 seconds on an RTX 4090.</p>
+            <p>16 GB of memory is pretty tight.  LTX-Video and a larger version of Z-Image ran short of memory and had to spill over onto the disk, so the image tests use a smaller, compressed version of Z-Image instead.  Wan fit in memory, but each of its 30 refinement passes took almost 7 minutes on this chip, compared to about 5 seconds on an RTX 4090.</p>
           </div>
         </details>
         <details class="acc">
           <summary>Conventional production</summary>
           <div class="acc-body measure">
-            <p>Benchmarks come from the Sustainable Entertainment Alliance (US studios, 2023–24), BAFTA albert (UK), AdGreen (advertising), and Ecoprod's Carbon'Clap (France).  They measure different things: the US studio benchmark counts fuel, utilities, flights without their high-altitude warming effect, and hotels, while the others also count food, materials, waste, and post-production.  We raise the US studio figures by 1.3 times to close that gap.  For indie features we show two figures: a general estimate of 150 metric tons and the French indie average of 271 metric tons, which comes from films with bigger budgets than most indies.</p>
-            <p>Industry benchmarks leave out VFX rendering, and it isn't small.  Weta's cloud rendering for <i>Avatar: The Way of Water</i> alone came to roughly 8–28 GWh, about what 750–2,600 American homes use in a year.  Rendering a single VFX shot takes about 0.15–5 MWh, what one home uses in 5 days to 6 months.</p>
-            <p><i>Avatar</i> also shows how much the circumstances change the answer.  Weta is in Wellington, and 87% of New Zealand's electricity came from renewables in 2022.  But Amazon had no cloud data centers in New Zealand then, so the cloud rendering ran in Australia.  On Australia's grid it comes to roughly 4,800–16,200 metric tons of CO2e.  The same work on New Zealand's grid would have been about 850–2,900 metric tons.  Amazon says it bought enough renewable energy to match 90% of its electricity use in 2022, which lowers the figure if you count those purchases, but the servers still ran on Australia's grid.</p>
-            <p>The production side of the same films was unusually clean.  Lightstorm ran the sequels' two Manhattan Beach stages entirely on its own 960 kW rooftop solar array and served 55,000 plant-based meals.  That doesn't cancel the rendering, but it shows how far one production's choices can move its footprint, and how little an industry average says about any single film.</p>
+            <p>Our benchmarks come from the Sustainable Entertainment Alliance (US studios, 2023–24), BAFTA albert (UK), AdGreen (advertising), and Ecoprod's Carbon'Clap (France).  They all measure different things.  The US studio benchmark counts fuel, utilities, flights without their high-altitude warming effect, and hotels, while the others also count food, materials, waste, and post-production.  So we raise the US studio figures by 1.3 times to close that gap.  For indie features, we show two figures: a general estimate of 150 metric tons, and the French indie average of 271 metric tons, which comes from films with bigger budgets than most indies.</p>
+            <p>Industry benchmarks leave out VFX rendering, and it isn't small.  Weta's cloud rendering for <i>Avatar: The Way of Water</i> alone came to roughly 8–28 GWh, which is about what 750–2,600 American homes use in a year.  Rendering a single VFX shot takes about 0.15–5 MWh, or what one home uses in 5 days to 6 months.</p>
+            <p><i>Avatar</i> also shows how much the circumstances change the answer.  Weta is in Wellington, and 87% of New Zealand's electricity came from renewables in 2022.  However, Amazon didn't have any cloud data centers in New Zealand then, so the cloud rendering ran in Australia.  On Australia's grid, that comes out to roughly 4,800–16,200 metric tons of CO2e.  The same work on New Zealand's grid would've been about 850–2,900 metric tons.  Amazon says it bought enough renewable energy to match 90% of its electricity use in 2022, which lowers the figure if you count those purchases, but the servers still ran on Australia's grid.</p>
+            <p>The production side of those same films was unusually clean.  Lightstorm ran the sequels' two Manhattan Beach stages entirely on its own 960 kW rooftop solar array and served 55,000 plant-based meals.  That doesn't cancel out the rendering, but it shows how far a single production's choices can move its footprint, and how little an industry average tells you about any one film.</p>
           </div>
         </details>
         <details class="acc">
@@ -614,9 +614,9 @@ details.more[open]>summary::before{content:"–"}
           <div class="acc-body measure">
             <ul class="note-list">
               <li>MIT Technology Review's figure of 3.4 megajoules (about 940 Wh) for one five-second video is about 5 times ML.ENERGY's measurement of what appears to be the same model on the same kind of chip.</li>
-              <li>"Native 4K" for Seedance 2.5 appears in press coverage, but ByteDance's own service tops out at 1080p.</li>
-              <li>Weta's 3.3 billion hours of processor time for <i>Avatar: The Way of Water</i> covers only the rendering done in Amazon's cloud, not the whole film.</li>
-              <li>Several "AI statistics" sites publish invented production-carbon figures.  None of them appear here.</li>
+              <li>"Native 4K" for Seedance 2.5 shows up in press coverage, but ByteDance's own service tops out at 1080p.</li>
+              <li>Weta's 3.3 billion hours of processor time for <i>Avatar: The Way of Water</i> only covers the rendering done in Amazon's cloud, not the whole film.</li>
+              <li>Several "AI statistics" sites publish made-up production-carbon figures.  None of them appear here.</li>
             </ul>
           </div>
         </details>
@@ -634,7 +634,7 @@ details.more[open]>summary::before{content:"–"}
 <footer class="band-ink">
   <div class="wrap site-foot">
     <span class="wordmark">Prompt vs. Camera</span>
-    <span class="muted">Research as of September 25, 2026.  Estimates, not disclosures.</span>
+    <span class="muted">Research as of September 25, 2026.  These are estimates, not disclosures.</span>
   </div>
 </footer>
 <div class="tooltip" id="tip" hidden></div>
@@ -763,62 +763,62 @@ const DATA = {
     { key: "explosion", title: "Bus explosion", seconds: 5, takes: { lo: 10, c: 30, hi: 100 },
       practical: { lo: 794, c: 2124, hi: 6682 }, practicalLabel: "Practical explosion day", practicalShort: "Practical", practicalNoun: "a practical explosion day",
       vfx: { lo: 280, c: 525, hi: 1225 }, vfxLabel: "CG explosion shot", vfxShort: "CG", vfxNoun: "a CG explosion shot",
-      body: ["The fireball is the small part.  The biggest film explosion on record, in <i>Spectre</i>, burned 8,418 liters of kerosene, about 26 metric tons of CO2e, which is under 1% of a tentpole's footprint.  A typical bus gag adds crew and effects vehicles, a generator, and trucks for an extra day.",
-             "The destroyed vehicle is the swing factor.  Building a new 12 m bus emits about 37 metric tons of CO2e, while a bus already headed for scrap arguably counts as zero, which is how we count it here."],
+      body: ["The fireball is actually the small part.  The biggest film explosion on record, in <i>Spectre</i>, burned 8,418 liters of kerosene (about 26 metric tons of CO2e), which is under 1% of a tentpole's footprint.  A typical bus gag adds crew and effects vehicles, a generator, and trucks for an extra day.",
+             "The destroyed vehicle is the swing factor.  Building a new 12 m bus emits about 37 metric tons of CO2e, but a bus that's already headed for scrap arguably counts as zero, which is how we count it here."],
       cost: "Practical: $10k–$11k for the stunt team, safety officer, and permits, plus an extra unit day ($15k–$120k on an indie, $315k–$1.6M on a studio film).  CG: $5k–$50k per destruction shot." },
     { key: "chase", title: "Car chase day", seconds: 30, takes: { lo: 15, c: 40, hi: 120 },
       practical: { lo: 1000, c: 2390, hi: 6000 }, practicalLabel: "One practical chase day", practicalShort: "Practical", practicalNoun: "a practical chase day",
       vfx: { lo: 700, c: 1500, hi: 5800 }, vfxLabel: "CG chase, same screen time", vfxShort: "CG", vfxNoun: "a CG chase",
-      body: ["A chase day means picture cars in multiples, precision drivers, camera cars, road closures, and police.  <i>Furious 7</i> wrecked more than 230 cars, about 1,650 metric tons of CO2e if you count them as new.",
-             "Continuity from shot to shot is AI's weak spot, so expect more takes here than for a single wide shot."],
+      body: ["A chase day means picture cars in multiples, precision drivers, camera cars, road closures, and police.  <i>Furious 7</i> wrecked more than 230 cars, which is about 1,650 metric tons of CO2e if you count them as new.",
+             "Continuity from shot to shot is AI's weak spot, so you can expect more takes here than you'd need for a single wide shot."],
       cost: "Practical: road closures from $312 per location plus police at $67–$78 an hour, before picture cars and crew.  CG: $3k–$50k per shot." },
     { key: "crowd", title: "Crowd of 500 extras", seconds: 15, takes: { lo: 5, c: 10, hi: 30 },
       practical: { lo: 2000, c: 5000, hi: 12500 }, practicalLabel: "500 extras for a day", practicalShort: "Real extras", practicalNoun: "a day with 500 real extras",
       vfx: { lo: 108, c: 300, hi: 906 }, vfxLabel: "Digital crowd, 3 shots", vfxShort: "Digital crowd", vfxNoun: "a digital crowd",
-      body: ["Crowds cost carbon through travel, meals, and holding areas, at about 10 kg per extra per day.  Beef versus vegetarian catering alone is a 6–12× difference per meal.",
-             "Foreground interaction still favors real people, so the usual answer is a small real crowd extended digitally."],
+      body: ["Crowds cost carbon because of travel, meals, and holding areas, which comes out to about 10 kg per extra per day.  Beef versus vegetarian catering alone is a 6–12× difference per meal.",
+             "Foreground interaction still favors real people, so the usual fix is to shoot a small real crowd and extend it digitally."],
       cost: "Practical: about $140k–$150k a day in SAG-AFTRA wages and benefits for 500 background actors, before meals, wardrobe, and holding.  CG: $1k–$25k per crowd shot." },
     { key: "aerial", title: "Helicopter aerial day", seconds: 25, takes: { lo: 2, c: 5, hi: 20 },
       practical: { lo: 1750, c: 2917, hi: 5830 }, practicalLabel: "Helicopter day", practicalShort: "Helicopter", practicalNoun: "a helicopter day",
       vfx: { lo: 20, c: 33, hi: 60 }, vfxLabel: "Drone day instead", vfxShort: "Drone", vfxNoun: "a drone day",
-      body: ["A typical camera helicopter, the Airbus H125, burns about 190 liters of jet fuel an hour, about 580 kg of CO2e per flight hour.  A drone cuts about 99% of that, so AI's extra saving over a drone is small.",
+      body: ["A typical camera helicopter (the Airbus H125) burns about 190 liters of jet fuel an hour, which is about 580 kg of CO2e per flight hour.  A drone cuts about 99% of that, so AI's extra savings over a drone are pretty small.",
              "Helicopters still win for altitude, speed, restricted airspace, and heavy camera payloads."],
       cost: "Helicopter: $8k–$30k a day all-in.  Drone with crew: $2.5k–$8.5k.  Stock clip: $55–$499." },
     { key: "abroad", title: "Establishing shots abroad", seconds: 15, takes: { lo: 5, c: 10, hi: 50 },
       practical: { lo: 9900, c: 15941, hi: 46300 }, practicalLabel: "5 crew, London to Cape Town, a week", practicalShort: "Travel", practicalNoun: "flying a crew abroad",
       vfx: { lo: 240, c: 500, hi: 900 }, vfxLabel: "3 matte paintings", vfxShort: "Matte paintings", vfxNoun: "three matte paintings",
-      body: ["Five crew flying London to Cape Town for a week comes to about 16 metric tons of CO2e in economy and about 42 in business class.  Flights are 65% of all emissions on ad shoots that fly.",
-             "This is AI's strongest case, and stock footage's, as long as the generated shot replaces the trip instead of adding to it."],
+      body: ["Flying five crew from London to Cape Town for a week comes out to about 16 metric tons of CO2e in economy, and about 42 in business class.  Flights make up 65% of all emissions on ad shoots that fly.",
+             "This is the strongest case for AI (and stock footage), as long as the generated shot actually replaces the trip instead of adding to it."],
       cost: "Practical: tens of thousands of dollars in travel.  Matte painting: $5k–$25k per shot.  Stock: $55–$499 per clip." },
     { key: "set", title: "Large period set", seconds: 120, takes: { lo: 10, c: 30, hi: 100 },
       practical: { lo: 30000, c: 57000, hi: 103000 }, practicalLabel: "Physical build", practicalShort: "Physical set", practicalNoun: "a physical set build",
       vfx: { lo: 3000, c: 9450, hi: 28000 }, vfxLabel: "LED volume, 10 days", vfxShort: "LED volume", vfxNoun: "10 days on an LED volume",
-      body: ["What happens to a set afterward matters as much as what it's made of.  Sending 50 metric tons of set timber to landfill nearly doubles an example build's footprint, while recycling it adds almost nothing.",
-             "LED volumes replace most of the build but use a lot of electricity: Sony measured one six-day shoot at about 16,000 kWh, about three times its own estimate from the equipment's specs."],
+      body: ["What happens to a set afterward matters just as much as what it's made of.  Sending 50 metric tons of set timber to a landfill nearly doubles an example build's footprint, while recycling it adds almost nothing.",
+             "LED volumes replace most of the physical build but use a lot of electricity (Sony measured one six-day shoot at about 16,000 kWh, about three times its own estimate from the equipment's specs)."],
       cost: "Practical: a studio tentpole's set construction line ran $19M.  LED volume: $3.5k–$15k+ a day, or $35k–$50k a week for a standing stage." },
     { key: "night", title: "Night exterior", seconds: 120, takes: { lo: 10, c: 30, hi: 100 },
       practical: { lo: 680, c: 900, hi: 1120 }, practicalLabel: "Diesel-powered night", practicalShort: "Diesel", practicalNoun: "a diesel-powered night",
       vfx: { lo: 70, c: 120, hi: 170 }, vfxLabel: "Same night on grid power", vfxShort: "Grid power", vfxNoun: "the same night on grid power",
-      body: ["Big night exteriors run 18K lamps on condors from tow-plant generators, which are usually oversized: 83% of the production generators that were measured never ran above half their capacity.",
-             "Swapping diesel for a grid tie-in or batteries already removes 60–90% of the lighting footprint."],
+      body: ["Big night exteriors run 18K lamps on condors from tow-plant generators, which are usually oversized, since 83% of the production generators that were measured never ran above half their capacity.",
+             "Swapping diesel for a grid tie-in or batteries already gets rid of 60–90% of the lighting footprint."],
       cost: "Mostly crew time at night rates.  A studio tentpole's lighting line ran $7.1M." },
     { key: "rain", title: "Rain scene", seconds: 60, takes: { lo: 5, c: 10, hi: 30 },
       practical: { lo: 118, c: 300, hi: 590 }, practicalLabel: "Practical rain, 4 hours", practicalShort: "Practical rain", practicalNoun: "4 hours of practical rain",
       vfx: { lo: 1, c: 3, hi: 6 }, vfxLabel: "Library rain elements", vfxShort: "Library rain", vfxNoun: "compositing library rain",
-      body: ["Practical rain is modest on carbon but heavy on water.  A rain rig for a car scene runs 500–800 liters a minute, so 4 hours of rain uses about 120,000–190,000 liters.",
-             "Real rain on actors still reads best, which pushes productions toward a mix of both."],
+      body: ["Practical rain is modest on carbon but heavy on water, since a rain rig for a car scene runs 500–800 liters a minute.  So 4 hours of rain uses about 120,000–190,000 liters.",
+             "Real rain on actors still looks best, which pushes productions to use a mix of both."],
       cost: "Practical: part of the effects budget.  Composited rain: $2k–$20k per shot." },
     { key: "impossible", title: "Creature or disaster shot", seconds: 5, takes: { lo: 15, c: 50, hi: 150 },
       practical: null, practicalLabel: "",
       vfx: { lo: 700, c: 1750, hi: 3150 }, vfxLabel: "Hero CG shot (2–9 MWh)", vfxShort: "CG", vfxNoun: "a hero CG shot",
-      body: ["When practical isn't possible, the comparison is AI against VFX, and heavy VFX uses a lot of energy.  Weta's single longest shot on <i>Avatar: The Way of Water</i> took 13.6 million hours of processor time.  Where the render farm sits matters as much: the same shot on New Zealand's mostly renewable grid emits about a quarter of what it would on the US grid.",
-             "Netflix's <i>El Eternauta</i> finished its AI building collapse about 10× faster than traditional VFX.  Hero creature performance is still hard to control with AI."],
+      body: ["When shooting practically isn't possible, you're comparing AI against VFX, and heavy VFX uses a lot of energy.  Weta's single longest shot on <i>Avatar: The Way of Water</i> took 13.6 million hours of processor time.  Where the render farm sits matters as much, because running that same shot on New Zealand's mostly renewable grid emits about a quarter of what it would on the US grid.",
+             "Netflix's <i>El Eternauta</i> finished its AI building collapse about 10× faster than traditional VFX.  However, hero creature performance is still hard to control with AI."],
       cost: "CG creature: $15k–$50k per shot, and $200k–$600k per scene for a hero creature.  Digi-doubles start around $300k per shot." },
     { key: "dialogue", title: "Two people talking", seconds: 120, takes: { lo: 10, c: 30, hi: 300 },
       practical: { lo: 29, c: 105, hi: 140 }, practicalLabel: "On a standing set", practicalShort: "Standing set", practicalNoun: "shooting on a standing set",
       vfx: { lo: 600, c: 860, hi: 1300 }, vfxLabel: "A whole location day", vfxShort: "Location day", vfxNoun: "a whole location day",
-      body: ["This is where AI's advantage disappears.  On a set that already exists, the scene adds only a few hours of lighting.",
-             "Performance and lip-sync take more generated takes to get right, and enough of them puts AI above the practical footprint."],
+      body: ["This is where AI's advantage disappears, since on a set that already exists, shooting the scene only adds a few hours of lighting.",
+             "Performance and lip-sync take more generated takes to get right, and doing enough of them puts AI above the practical footprint."],
       cost: "Practical: little extra cost on a set that already exists.  AI still needs heavy human work on performance and lip-sync." },
   ],
 
@@ -848,19 +848,19 @@ const DATA = {
     // publish counts.  lo: 300 M s/day at 2 Wh/s; c: about 1.5 TWh a year; hi: 550 M s/day at Seedance 720p.
     world: { label: "All disclosed AI video, 2026", kg: { lo: 0.09e9, c: 0.6e9, hi: 4.4e9 } },
     prose: [
-      "The calculator compares one production with one production.  That's the right question for a filmmaker, but it misses what makes generative video different: almost anyone can make it.  Shooting a scene takes a crew, a budget, and weeks of planning.  Generating one takes a text box and a subscription, so people generate far more video than anyone would ever shoot, and a lot of it is never watched by anyone.",
-      "One person generating a minute of Seedance 2.5 a day for a year emits about 480 kg of CO2e, around a ninth of a UK resident's yearly footprint.  That doesn't register on its own.  Scale changes the picture.  About 310 people at that pace match a typical indie feature every year, about 6,600 match a studio tentpole, and about 7 million match all the film and TV production in the world.",
-      "The platforms that publish counts generated about 300–550 million seconds of video a day in early 2026, the same as 5–9 million people making a minute each, and xAI says Grok Imagine alone made 1.2 billion videos in 30 days.  Most of that runs on lighter models than Seedance.  At an average of 10 Wh per generated second, it comes to roughly 600,000 metric tons of CO2e a year, more than Netflix's whole production slate.  If it all used as much energy as Seedance, it would be 2.4–4.4 million metric tons, about as much as all the world's film and TV production.",
-      "The fair comparison is all of filmmaking against all of AI video, and on that count filmmaking is still bigger.  Nobody publishes a global total, so we estimated one from UK, US, French, and Netflix data: roughly 2–6.5 million metric tons of CO2e a year for all film and TV production, about 3.5 million at the center.  The AI video we know about comes to about a sixth of that, or about a quarter of scripted film and TV alone.",
-      "So AI video hasn't overtaken filmmaking, and shot for shot it's usually lighter.  But a one-to-one comparison buries the lede.  In roughly two years, AI video has added a footprint about three times the size of all UK TV production, and almost none of it is film.  The problem isn't filmmakers using AI.  It's that anyone can now generate a film, or a thousand clips, whenever they want.",
-      "Both sides will change.  Generation keeps growing, and cheaper tiers speed it up: MiniMax's monthly generations rose 653% after it launched a new model and a cheaper Fast tier.  Each generated second will likely take less energy as models get leaner and hardware improves, but nobody can say yet whether efficiency will outrun volume, so the chart shows only what's disclosed today.",
-      "Much of it is barely watched.  No platform publishes how much of what it generates gets posted, but professionals keep only one generated second in 57–107, and Volcano Engine, ByteDance's cloud business, says Seedance use peaked on weekends, when people play, until its 2.0 release.  In China, more than 95% of the 128,000 micro-dramas launched in early 2026 were AI-made, and only 0.117% of AI animated dramas reach 100 million plays.",
-      "Views change the math, too.  A studio tentpole spreads about 3,200 metric tons across something like 100 million viewers, roughly 15 grams per hour watched.  A ten-second clip generated five times over and watched by 20 people comes to about 20 kg per hour watched, more than 1,000 times worse.  Video that nobody watches has no audience to spread its footprint across at all.",
+      "The calculator compares one production to one production.  That's the right question for a filmmaker, but it misses what makes generative video different.  Almost anyone can make it.  Shooting a scene takes a crew, a budget, and weeks of planning.  Generating one just takes a text box and a subscription, so people generate way more video than anyone would ever shoot, and a lot of it is never watched by anyone.",
+      "One person generating a minute of Seedance 2.5 a day for a year emits about 480 kg of CO2e, around a ninth of a UK resident's yearly footprint.  That doesn't really register on its own.  Scale changes the picture.  About 310 people going at that pace match a typical indie feature every year, about 6,600 match a studio tentpole, and about 7 million match all of the film and TV production in the world.",
+      "The platforms that publish counts generated about 300–550 million seconds of video a day in early 2026 (the same as 5–9 million people making a minute each), and xAI says Grok Imagine alone made 1.2 billion videos in 30 days.  Most of that runs on lighter models than Seedance, though.  At an average of 10 Wh per generated second, it comes out to roughly 600,000 metric tons of CO2e a year, more than Netflix's whole production slate.  If it all used as much energy as Seedance, it'd be 2.4–4.4 million metric tons, about as much as all the world's film and TV production.",
+      "The fair comparison is all of filmmaking against all of AI video, and on that count filmmaking is still bigger.  Nobody publishes a global total, so we estimated one from UK, US, French, and Netflix data.  It comes out to roughly 2–6.5 million metric tons of CO2e a year for all film and TV production, with about 3.5 million at the center.  The AI video we know about is about a sixth of that, or about a quarter of scripted film and TV alone.",
+      "So AI video hasn't overtaken filmmaking, and shot for shot it's usually lighter.  But a one-to-one comparison buries the lede.  In roughly two years, AI video has added a footprint about three times the size of all UK TV production, and almost none of it is actually film.  The problem isn't filmmakers using AI.  It's that anyone can now generate a film, or a thousand clips, whenever they want.",
+      "Both sides are going to change.  Generation keeps growing, and cheaper tiers speed that up (MiniMax's monthly generations rose 653% after it launched a new model and a cheaper Fast tier).  Each generated second will probably take less energy as models get leaner and hardware improves, but nobody can say yet whether efficiency will outrun volume, so the chart just shows what's disclosed today.",
+      "A lot of it is barely watched.  No platform publishes how much of what it generates actually gets posted, but professionals only keep one generated second in 57–107.  Also, Volcano Engine (ByteDance's cloud business) says Seedance use peaked on weekends, when people play, until its 2.0 release.  In China, more than 95% of the 128,000 micro-dramas launched in early 2026 were AI-made, and only 0.117% of AI animated dramas reach 100 million plays.",
+      "Views change the math, too.  A studio tentpole spreads about 3,200 metric tons across something like 100 million viewers, roughly 15 grams per hour watched.  A ten-second clip generated five times over and watched by 20 people comes out to about 20 kg per hour watched, more than 1,000 times worse.  Video that nobody watches has no audience to spread its footprint across at all.",
     ],
     facts: [
       { fig: "1.2 billion", text: "videos generated with Grok Imagine in 30 days, by xAI's own count (February 2026)." },
       { fig: "85,000+ hours", text: "of AI video generated each day on platforms that publish counts, more than the world's entire yearly output of fiction features (about 23,000 hours)." },
-      { fig: "59%", text: "of a new TikTok account's For You feed was AI-generated in Kapwing's test.  On YouTube Shorts it was 21%." },
+      { fig: "59%", text: "of a new TikTok account's For You feed was AI-generated in Kapwing's test.  On YouTube Shorts, it was 21%." },
     ],
   },
 
@@ -873,12 +873,12 @@ const DATA = {
       { model: "seedance25", res: "720p", label: "Seedance 2.5 · cloud", tip: "Seedance 2.5 at 720p, run in ByteDance's data center in Johor, Malaysia" },
       { model: "minimaxH3", res: "768p", label: "MiniMax H3 · cloud", tip: "MiniMax H3 at 768p, run in a data center in China" },
       { model: "minimaxH3Max", res: "768p", label: "MiniMax H3 Max · cloud", tip: "MiniMax H3 Max, a faster, stripped-down version, at 768p" },
-      { gpuWh: { lo: 2.13, c: 2.17, hi: 2.25 }, region: "us", label: "Small Wan model · data center", tip: "The small Wan 2.1 model at 832×480 on one data-center H100 chip, from ML.ENERGY's measurement, adjusted to the settings of our Mac mini test and including servers and cooling" },
+      { gpuWh: { lo: 2.13, c: 2.17, hi: 2.25 }, region: "us", label: "Small Wan model · data center", tip: "The small Wan 2.1 model at 832×480 on one data-center H100 chip, from ML.ENERGY's measurement, adjusted to match our Mac mini test settings and including servers and cooling" },
     ],
     local: [
       { label: "Mid-size Wan model, 720p · gaming PC", wh: { lo: 13.1, c: 14.3, hi: 15.3 }, tip: "Wan 2.2's mid-size model at 1280×704 on a gaming PC with an RTX 4090: Wan's own timing of 535 s, at 420–520 W for the whole computer" },
       { label: "Small Wan model · Mac mini", wh: { lo: 9.98, c: 9.98, hi: 9.98 }, tip: "The small Wan 2.1 model at 832×480 on a base M4 Mac mini: we measured 50.5 Wh for the processor alone over 3 h 25 min.  The whole computer uses more." },
-      { label: "Small Wan model · gaming PC", wh: { lo: 3.6, c: 4.2, hi: 4.6 }, tip: "The small Wan 2.1 model at 832×480 on a gaming PC with an RTX 4090: Wan's own timing, adjusted to the settings of our Mac mini test, at 420–520 W for the whole computer.  About 21 Wh a clip." },
+      { label: "Small Wan model · gaming PC", wh: { lo: 3.6, c: 4.2, hi: 4.6 }, tip: "The small Wan 2.1 model at 832×480 on a gaming PC with an RTX 4090: Wan's own timing, adjusted to match our Mac mini test settings, at 420–520 W for the whole computer.  About 21 Wh a clip." },
       { label: "LTX-2.3 · MacBook Pro (M4 Max)", wh: { lo: 1.2, c: 1.8, hi: 2.9 }, tip: "LTX-2.3, a stripped-down open model, at 1280×768 on a MacBook Pro with an M4 Max: 6–15 Wh a clip, estimated from timings measured on other Apple chips" },
       { label: "LTX-Video · Mac mini", wh: { lo: 0.113, c: 0.113, hi: 0.113 }, tip: "LTX-Video, a small, stripped-down open model, at 768×512 on a base M4 Mac mini: we measured 0.57 Wh for the processor alone over 2.3 min" },
     ],
@@ -1051,7 +1051,7 @@ const Model = (() => {
     let scopeNote = "";
     if (fullScope && b.scope === "pear") {
       t = combine([t, D.pearToFull]);
-      scopeNote = "Raised by 1.3 times (1.15–1.5) to add what the US studio reports leave out: food, materials, post-production, and the extra warming from flights at high altitude.";
+      scopeNote = "We raised this by 1.3 times (1.15–1.5) to account for what the US studio reports leave out: food, materials, post-production, and the extra warming from high-altitude flights.";
     } else if (!fullScope && b.scope === "full") {
       t = combine([t, { lo: 1 / D.pearToFull.hi, c: 1 / D.pearToFull.c, hi: 1 / D.pearToFull.lo }]);
       scopeNote = "Lowered by 1.3× to match the narrower US studio benchmark scope.";
@@ -1335,13 +1335,13 @@ if (typeof module !== "undefined") module.exports = Model;
     const costRatio = convCost.c / aiCost.c;
     const costCall = callLower(aiCost, convCost);
     const costLine = costCall === "less" ? `It ${co2Call === "less" ? "also " : ""}costs about ${times(costRatio)} less, and the gap is mostly people's time, not generation fees.` : costCall === "more" ? `It costs about ${times(1 / costRatio)} more.` : "On cost, it's too close to call.";
-    $("verdictSub").textContent = `That's ${sig(ai.genSec, 3)} seconds of AI video (${fmtRatio(S.ratio)}) against ${BENCH_NOUN[f.bench]}.  ${co2Call === "close" ? "The likely ranges overlap too much to say which is lower.  " : ""}${costLine}`;
+    $("verdictSub").textContent = `That's ${sig(ai.genSec, 3)} seconds of AI video (${fmtRatio(S.ratio)}) compared to ${BENCH_NOUN[f.bench]}.  ${co2Call === "close" ? "The likely ranges overlap too much to say which one is lower.  " : ""}${costLine}`;
 
     const metrics = [
       { name: "CO2e", fmt: unitFmt.co2, a: ai.co2Kg, c: conv },
       { name: "Energy", fmt: unitFmt.kwh, a: ai.kWh, c: convKWh, note: "Shoot reports list carbon, not energy, so we estimate energy from the fuel and power that make up about 70% of a shoot's footprint." },
-      { name: "Water", fmt: unitFmt.water, a: ai.waterL, c: convWater, note: "AI water counts the water used to cool the data center and to generate its electricity.  Shoot water counts only what's used on set." },
-      { name: "Cost", fmt: unitFmt.usd, a: aiCost, c: convCost, note: `AI cost is ${unitFmt.usd(ai.genCost.c)} of generation at list price plus ${sig(ai.laborDays, 2)} days of human work.` },
+      { name: "Water", fmt: unitFmt.water, a: ai.waterL, c: convWater, note: "AI water counts the water used to cool the data center and generate its electricity, but shoot water only counts what's used on set." },
+      { name: "Cost", fmt: unitFmt.usd, a: aiCost, c: convCost, note: `AI cost is ${unitFmt.usd(ai.genCost.c)} for generation at list price, plus ${sig(ai.laborDays, 2)} days of human work.` },
     ];
     const box = $("metrics");
     box.innerHTML = metrics.map((mt, i) => {
@@ -1366,7 +1366,7 @@ if (typeof module !== "undefined") module.exports = Model;
     // Notes
     const notes = [];
     const breakEven = conv.c / (ai.perSecond.co2Kg.c * finishedSec);
-    if (breakEven > S.ratio) notes.push(`Generating would match the shoot at a shooting ratio of about ${fmtRatio(breakEven)}.  You're at ${fmtRatio(S.ratio)}.`);
+    if (breakEven > S.ratio) notes.push(`Generating would match the shoot at a shooting ratio of about ${fmtRatio(breakEven)}, and you're at ${fmtRatio(S.ratio)}.`);
     else notes.push(`Generating already passes the shoot at a shooting ratio of ${fmtRatio(breakEven)}, and you're at ${fmtRatio(S.ratio)}.`);
     const st = D.styles[f.style];
     notes.push(`At the usual ${fmtRatio(st.genPerFinished.lo)} to ${fmtRatio(st.genPerFinished.hi)} for projects like this, the AI footprint lands between ${co2Words(ai.co2AtTakes.lo)} and ${co2Words(ai.co2AtTakes.hi)} of CO2e.`);
@@ -1492,7 +1492,7 @@ if (typeof module !== "undefined") module.exports = Model;
       ...L.local.map((r) => ({ label: r.label, r: r.wh, cls: "alt", tip: `${esc(r.tip)}<br>${fmtWh(r.wh.c)} per generated second${r.wh.hi > r.wh.lo ? `<br>Likely ${rangeTxt(fmtWh, r.wh)}` : ""}` })),
     ].sort((a, b) => b.r.c - a.r.c);
     const host = $("localChart");
-    rangeChart(host, rows, fmtWh, { labelW: Math.min(250, Math.max(150, (host.clientWidth || 400) * 0.45)), rowH: 28, stack: true, aria: "Energy per generated second of video, in a data center against on your own machine" });
+    rangeChart(host, rows, fmtWh, { labelW: Math.min(250, Math.max(150, (host.clientWidth || 400) * 0.45)), rowH: 28, stack: true, aria: "Energy per generated second of video, in a data center or on your own machine" });
   }
 
   /* ---------- Access ---------- */

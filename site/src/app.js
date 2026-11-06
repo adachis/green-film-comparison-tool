@@ -264,13 +264,13 @@
     const costRatio = convCost.c / aiCost.c;
     const costCall = callLower(aiCost, convCost);
     const costLine = costCall === "less" ? `It ${co2Call === "less" ? "also " : ""}costs about ${times(costRatio)} less, and the gap is mostly people's time, not generation fees.` : costCall === "more" ? `It costs about ${times(1 / costRatio)} more.` : "On cost, it's too close to call.";
-    $("verdictSub").textContent = `That's ${sig(ai.genSec, 3)} seconds of AI video (${fmtRatio(S.ratio)}) against ${BENCH_NOUN[f.bench]}.  ${co2Call === "close" ? "The likely ranges overlap too much to say which is lower.  " : ""}${costLine}`;
+    $("verdictSub").textContent = `That's ${sig(ai.genSec, 3)} seconds of AI video (${fmtRatio(S.ratio)}) compared to ${BENCH_NOUN[f.bench]}.  ${co2Call === "close" ? "The likely ranges overlap too much to say which one is lower.  " : ""}${costLine}`;
 
     const metrics = [
       { name: "CO2e", fmt: unitFmt.co2, a: ai.co2Kg, c: conv },
       { name: "Energy", fmt: unitFmt.kwh, a: ai.kWh, c: convKWh, note: "Shoot reports list carbon, not energy, so we estimate energy from the fuel and power that make up about 70% of a shoot's footprint." },
-      { name: "Water", fmt: unitFmt.water, a: ai.waterL, c: convWater, note: "AI water counts the water used to cool the data center and to generate its electricity.  Shoot water counts only what's used on set." },
-      { name: "Cost", fmt: unitFmt.usd, a: aiCost, c: convCost, note: `AI cost is ${unitFmt.usd(ai.genCost.c)} of generation at list price plus ${sig(ai.laborDays, 2)} days of human work.` },
+      { name: "Water", fmt: unitFmt.water, a: ai.waterL, c: convWater, note: "AI water counts the water used to cool the data center and generate its electricity, but shoot water only counts what's used on set." },
+      { name: "Cost", fmt: unitFmt.usd, a: aiCost, c: convCost, note: `AI cost is ${unitFmt.usd(ai.genCost.c)} for generation at list price, plus ${sig(ai.laborDays, 2)} days of human work.` },
     ];
     const box = $("metrics");
     box.innerHTML = metrics.map((mt, i) => {
@@ -295,7 +295,7 @@
     // Notes
     const notes = [];
     const breakEven = conv.c / (ai.perSecond.co2Kg.c * finishedSec);
-    if (breakEven > S.ratio) notes.push(`Generating would match the shoot at a shooting ratio of about ${fmtRatio(breakEven)}.  You're at ${fmtRatio(S.ratio)}.`);
+    if (breakEven > S.ratio) notes.push(`Generating would match the shoot at a shooting ratio of about ${fmtRatio(breakEven)}, and you're at ${fmtRatio(S.ratio)}.`);
     else notes.push(`Generating already passes the shoot at a shooting ratio of ${fmtRatio(breakEven)}, and you're at ${fmtRatio(S.ratio)}.`);
     const st = D.styles[f.style];
     notes.push(`At the usual ${fmtRatio(st.genPerFinished.lo)} to ${fmtRatio(st.genPerFinished.hi)} for projects like this, the AI footprint lands between ${co2Words(ai.co2AtTakes.lo)} and ${co2Words(ai.co2AtTakes.hi)} of CO2e.`);
@@ -421,7 +421,7 @@
       ...L.local.map((r) => ({ label: r.label, r: r.wh, cls: "alt", tip: `${esc(r.tip)}<br>${fmtWh(r.wh.c)} per generated second${r.wh.hi > r.wh.lo ? `<br>Likely ${rangeTxt(fmtWh, r.wh)}` : ""}` })),
     ].sort((a, b) => b.r.c - a.r.c);
     const host = $("localChart");
-    rangeChart(host, rows, fmtWh, { labelW: Math.min(250, Math.max(150, (host.clientWidth || 400) * 0.45)), rowH: 28, stack: true, aria: "Energy per generated second of video, in a data center against on your own machine" });
+    rangeChart(host, rows, fmtWh, { labelW: Math.min(250, Math.max(150, (host.clientWidth || 400) * 0.45)), rowH: 28, stack: true, aria: "Energy per generated second of video, in a data center or on your own machine" });
   }
 
   /* ---------- Access ---------- */
